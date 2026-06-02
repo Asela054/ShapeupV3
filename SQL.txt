@@ -1,0 +1,5 @@
+ALTER TABLE tbl_customer
+ADD COLUMN customerid VARCHAR(50) NOT NULL UNIQUE AFTER idtbl_customer,
+ADD COLUMN longitude DECIMAL(10,8) NULL AFTER ref,
+ADD COLUMN latitude DECIMAL(10,8) NULL AFTER longitude,
+ADD COLUMN nonvisit INT(11) NULL AFTER numofvisitdays;
