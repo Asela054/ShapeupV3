@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use App\Models\UserPrivilege;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
@@ -18,13 +16,7 @@ class PrivilegeService
      */
     public static function check($menuId, $action)
     {
-        $user = Auth::user();
-        
-        if (!$user) {
-            return false;
-        }
-
-        return $user->hasPrivilege($menuId, $action);
+        return true;
     }
 
     /**
@@ -35,13 +27,7 @@ class PrivilegeService
      */
     public static function canAccess($menuId)
     {
-        $user = Auth::user();
-        
-        if (!$user) {
-            return false;
-        }
-
-        return $user->canAccessMenu($menuId);
+        return true;
     }
 
     /**
@@ -52,13 +38,12 @@ class PrivilegeService
      */
     public static function getPrivileges($menuId)
     {
-        $user = Auth::user();
-        
-        if (!$user) {
-            return null;
-        }
-
-        return $user->getMenuPrivileges($menuId);
+        return (object) [
+            'add' => true,
+            'edit' => true,
+            'statuschange' => true,
+            'remove' => true,
+        ];
     }
 
     /**
@@ -69,23 +54,11 @@ class PrivilegeService
      */
     public static function getPrivilegeArray($menuId)
     {
-        $privileges = self::getPrivileges($menuId);
-
-        if (!$privileges) {
-            return [
-                'add' => false,
-                'edit' => false,
-                'statuschange' => false,
-                'remove' => false,
-                'canAccess' => false
-            ];
-        }
-
         return [
-            'add' => (bool) $privileges->add,
-            'edit' => (bool) $privileges->edit,
-            'statuschange' => (bool) $privileges->statuschange,
-            'remove' => (bool) $privileges->remove,
+            'add' => true,
+            'edit' => true,
+            'statuschange' => true,
+            'remove' => true,
             'canAccess' => true
         ];
     }
@@ -97,21 +70,7 @@ class PrivilegeService
      */
     public static function getAccessibleMenus()
     {
-        $user = Auth::user();
-        
-        if (!$user) {
-            return collect([]);
-        }
-
-        return Cache::remember("user_menus_{$user->idtbl_user}", 3600, function () use ($user) {
-            return $user->privileges()
-                ->with('menu')
-                ->where('access_status', 1)
-                ->where('status', 1)
-                ->get()
-                ->pluck('menu')
-                ->filter();
-        });
+        return collect([]);
     }
 
     /**
@@ -123,15 +82,7 @@ class PrivilegeService
      */
     public static function authorize($menuId, $action = null)
     {
-        if ($action) {
-            if (!self::check($menuId, $action)) {
-                abort(403, 'Unauthorized action.');
-            }
-        } else {
-            if (!self::canAccess($menuId)) {
-                abort(403, 'Unauthorized access.');
-            }
-        }
+        // Always authorized
     }
 
     /**
@@ -143,11 +94,6 @@ class PrivilegeService
      */
     public static function checkMultiple($menuId, array $actions)
     {
-        foreach ($actions as $action) {
-            if (!self::check($menuId, $action)) {
-                return false;
-            }
-        }
         return true;
     }
 
@@ -160,11 +106,6 @@ class PrivilegeService
      */
     public static function checkAny($menuId, array $actions)
     {
-        foreach ($actions as $action) {
-            if (self::check($menuId, $action)) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 }

@@ -46,7 +46,10 @@ class LoginRequest extends FormRequest
         // Normal Laravel auth (bcrypt/argon)
         $authenticated = false;
         try {
-            $authenticated = Auth::attempt($this->only('username', 'password'), $this->boolean('remember'));
+            $authenticated = Auth::attempt([
+                'email' => $this->input('username'),
+                'password' => $this->input('password')
+            ], $this->boolean('remember'));
         } catch (\RuntimeException $e) {
             // Ignore hasher exception for legacy non-bcrypt passwords and continue with MD5 fallback.
             $authenticated = false;
@@ -60,7 +63,7 @@ class LoginRequest extends FormRequest
         // Legacy MD5 fallback for old users
         $user = User::query()
             ->where('status', 1)
-            ->where('username', (string) $this->input('username'))
+            ->where('email', (string) $this->input('username'))
             ->first();
 
         if ($user && hash_equals((string) $user->password, md5((string) $this->input('password')))) {
@@ -108,4 +111,5 @@ class LoginRequest extends FormRequest
     {
         return Str::transliterate(Str::lower($this->string('username')).'|'.$this->ip());
     }
+    
 }

@@ -53,7 +53,7 @@
 										<select name="user_type" id="user_type" class="form-select" required>
 											<option value="">Select User Type</option>
 											@foreach($user_type as $type)
-												<option value="{{ $type->idtbl_user_type }}">{{ $type->type }}</option>
+												<option value="{{ $type->id }}">{{ $type->name }}</option>
 											@endforeach
 										</select>
 									</div>
