@@ -55,3 +55,4 @@ Route::get('/activitylog', [ActivitylogController::class, 'index'])->name('activ
 Route::get('/activitylog/{id}', [ActivitylogController::class, 'show'])->name('activitylog.show');
 
 require __DIR__ . '/auth.php';
+require __DIR__ . '/organization.php';

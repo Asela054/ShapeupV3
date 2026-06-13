@@ -23,19 +23,43 @@
 					</a>
 				</div>
 				
-					<div data-kt-menu-trigger="click"
-						class="menu-item">
-						<span class="menu-link">
-							<span class="menu-icon"><i class="ki-duotone ki-user fs-2"><span class="path1"></span><span class="path2"></span></i></span>
-							<span class="menu-title">User Account</span>
-							<span class="menu-arrow"></span>
+				<div data-kt-menu-trigger="click"
+					class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-briefcase fs-2">
+								<span class="path1"></span><span class="path2"></span>
+							</i>
 						</span>
-						<div class="menu-sub menu-sub-accordion">
-							<div class="menu-item"><a class="menu-link" href="{{ route('userslist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">User Account</span></a></div>
-							<div class="menu-item"><a class="menu-link" href="{{ route('userstypelist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Type</span></a></div>
-							<div class="menu-item"><a class="menu-link " href="{{ route('usersprivilegelist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Privilege</span></a></div>
-						</div>
+						<span class="menu-title">Organization</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item"><a class="menu-link" href="{{ route('company') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Company</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Bank</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Category</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Salary Adjustments</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Deductions</span></a></div>
 					</div>
+				</div>
+
+				<div data-kt-menu-trigger="click"
+					class="menu-item menu-accordion{{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? ' here show' : '' }}">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-user fs-2">
+								<span class="path1"></span><span class="path2"></span>
+							</i>
+						</span>
+						<span class="menu-title">User Account</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item"><a class="menu-link{{ request()->routeIs('userslist') ? ' active' : '' }}" href="{{ route('userslist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">User Account</span></a></div>
+						<div class="menu-item"><a class="menu-link{{ request()->routeIs('userstypelist') ? ' active' : '' }}" href="{{ route('userstypelist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Type</span></a></div>
+						<div class="menu-item"><a class="menu-link{{ request()->routeIs('usersprivilegelist') ? ' active' : '' }}" href="{{ route('usersprivilegelist') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Privilege</span></a></div>
+					</div>
+				</div>
 				
 			</div>
 			<!--end::Menu-->

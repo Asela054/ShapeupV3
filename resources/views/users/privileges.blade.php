@@ -17,128 +17,26 @@
 
 		<div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-fluid">
-				@if (hasAnyPrivilege(1, ['edit', 'add']))
-
-					<div class="card mb-5 mb-xl-10">
-						<div class="card-header">
-							<h3 class="card-title fw-bold">Assign Privileges to User</h3>
-						</div>
-						<div class="card-body">
-							<form id="privilegeForm">
-								@csrf
-								<input type="hidden" id="privilege_id" name="privilege_id" />
-								<div class="row mb-8">
-									<div class="col-md-6">
-										<div class="form-group mb-3">
-											<label class="form-label required fw-bold">User</label>
-											<select name="user_id" id="user_id" class="form-select form-select-sm"
-												data-control="select2" data-placeholder="Select user..." required>
-												<option value="">Select User</option>
-												@isset($users)
-
-													@foreach ($users as $user)
-														<option value="{{ $user->idtbl_user }}">{{ $user->name }} -
-															{{ $user->username }}
-														</option>
-													@endforeach
-												@else
-													<option value="">No users available</option>
-												@endisset
-
-											</select>
-										</div>
-									</div>
-								</div>
-
-								<div class="row mb-8">
-									<div class="col-md-12">
-										<div class="form-group mb-3">
-											<label class="form-label required fw-bold">Access Menu</label>
-											<select class="form-select form-select-sm" id="menu_id" name="menu_id" multiple
-												required>
-
-												@isset($menus)
-													@foreach ($menus as $menu)
-														<option value="{{ $menu->idtbl_menu_list }}">{{ $menu->menu }}</option>
-													@endforeach
-												@endisset
-											</select>
-
-											<small class="form-text text-muted">Select one or more menus to assign
-												permissions</small>
-										</div>
-									</div>
-								</div>
-
-								<div class="row mb-8">
-									<div class="col-md-12">
-										<label class="form-label required fw-bold">User Privilege</label>
-										<div class="d-flex flex-column gap-3">
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" name="access_status"
-													id="access_status" value="1" />
-												<label class="form-check-label" for="access_status">
-													Access Privilege
-												</label>
-											</div>
-
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" name="add" id="add" value="1" />
-												<label class="form-check-label" for="add">
-													Add Privilege
-												</label>
-											</div>
-
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" name="edit" id="edit"
-													value="1" />
-												<label class="form-check-label" for="edit">
-													Edit Privilege
-												</label>
-											</div>
-
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" name="statuschange"
-													id="statuschange" value="1" />
-												<label class="form-check-label" for="statuschange">
-													Status Privilege
-												</label>
-											</div>
-
-											<div class="form-check">
-												<input class="form-check-input" type="checkbox" name="remove" id="remove"
-													value="1" />
-												<label class="form-check-label" for="remove">
-													Delete Privilege
-												</label>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="d-flex justify-content-end">
-									<button type="reset" class="btn btn-light me-3">Clear</button>
-									<button type="submit" id="submitBtn" class="btn btn-primary">Add Privilege</button>
-								</div>
-							</form>
-						</div>
-					</div>
-				@endif
-
 				<div class="card">
-					<div class="card-header border-0 pt-6">
-						<div class="card-title">
-							<div class="d-flex align-items-center position-relative my-1">
-								<i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
-								<input type="text" data-kt-table-filter="search"
-									class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
-							</div>
-						</div>
-					</div>
 					<div class="card-body pt-0">
+						<div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+							<div class="card-title my-0">
+								<div class="d-flex align-items-center position-relative my-1">
+									<i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+										<span class="path1"></span>
+										<span class="path2"></span>
+									</i>
+									<input type="text" data-kt-table-filter="search"
+										class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
+								</div>
+							</div>
+							@if (checkPrivilege(1, 'add'))
+							<div>
+								<button type="button" class="btn btn-primary" name="create_record" id="create_record"><i class="fas fa-plus mr-2"></i>Assign Privilege</button>
+							</div>
+							@endif
+						</div>
+
 						<div class="table-responsive">
 							<table class="table align-middle table-row-dashed fs-6 gy-5" id="privilegeTable">
 								<thead>
@@ -162,6 +60,106 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Privilege Modal -->
+	<div class="modal fade" id="privilegeModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="fw-bold" id="modalTitle">Assign Privileges to User</h2>
+					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<i class="ki-duotone ki-cross fs-1">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="privilegeForm">
+						@csrf
+						<input type="hidden" id="privilege_id" name="privilege_id" />
+						<div class="row g-4">
+							<div class="col-md-12">
+								<label class="form-label required fw-bold">User</label>
+								<select name="user_id" id="user_id" class="form-select form-select-sm"
+									data-placeholder="Select user..." required>
+									<option value="">Select User</option>
+									@isset($users)
+										@foreach ($users as $user)
+											<option value="{{ $user->idtbl_user }}">{{ $user->name }} - {{ $user->username }}</option>
+										@endforeach
+									@else
+										<option value="">No users available</option>
+									@endisset
+								</select>
+							</div>
+
+							<div class="col-md-12">
+								<label class="form-label required fw-bold">Access Menu</label>
+								<select class="form-select form-select-sm" id="menu_id" name="menu_id" multiple required>
+									@isset($menus)
+										@foreach ($menus as $menu)
+											<option value="{{ $menu->idtbl_menu_list }}">{{ $menu->menu }}</option>
+										@endforeach
+									@endisset
+								</select>
+								<small class="form-text text-muted">Select one or more menus to assign permissions</small>
+							</div>
+
+							<div class="col-md-12">
+								<label class="form-label required fw-bold">User Privilege</label>
+								<div class="d-flex flex-column gap-3">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="access_status"
+											id="access_status" value="1" />
+										<label class="form-check-label" for="access_status">
+											Access Privilege
+										</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="add" id="add" value="1" />
+										<label class="form-check-label" for="add">
+											Add Privilege
+										</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="edit" id="edit"
+											value="1" />
+										<label class="form-check-label" for="edit">
+											Edit Privilege
+										</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="statuschange"
+											id="statuschange" value="1" />
+										<label class="form-check-label" for="statuschange">
+											Status Privilege
+										</label>
+									</div>
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" name="remove" id="remove"
+											value="1" />
+										<label class="form-check-label" for="remove">
+											Delete Privilege
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+                        <br>
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" id="submitBtn" class="btn btn-primary">Add Privilege</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 
 
@@ -174,7 +172,15 @@
 				closeOnSelect: false,
 				allowClear: true,
 				minimumResultsForSearch: 0,
-				width: '100%'
+				width: '100%',
+				dropdownParent: $('#privilegeModal')
+			});
+			$('#user_id').select2({
+				placeholder: 'Select user...',
+				allowClear: true,
+				minimumResultsForSearch: 0,
+				width: '100%',
+				dropdownParent: $('#privilegeModal')
 			});
 		});
 		$(document).ready(function () {
@@ -414,6 +420,8 @@
 							$('#menu_id').val(null).trigger('change');
 							editingPrivilegeId = null;
 							$('#submitBtn').text('Add Privilege');
+							$('#modalTitle').text('Assign Privileges to User');
+							$('#privilegeModal').modal('hide');
 						});
 						$('#privilegeTable').DataTable().ajax.reload(null, false);
 					},
@@ -439,6 +447,7 @@
 					$('#status').prop('checked', true);
 					editingPrivilegeId = null;
 					$('#submitBtn').text('Add Privilege');
+					$('#modalTitle').text('Assign Privileges to User');
 				}, 100);
 			});
 
@@ -460,7 +469,8 @@
 						$('#statuschange').prop('checked', data.statuschange == 1);
 						$('#remove').prop('checked', data.remove == 1);
 						$('#submitBtn').text('Update Privilege');
-						$('html, body').animate({ scrollTop: $('#privilegeForm').offset().top - 100 }, 300);
+						$('#modalTitle').text('Edit Privilege');
+						$('#privilegeModal').modal('show');
 					},
 					error: function (xhr) {
 						const message = getErrorMessage(xhr, 'Failed to load privilege');
@@ -495,6 +505,17 @@
 						}
 					});
 				});
+			});
+
+			// Create Privilege action handler
+			$('#create_record').on('click', function () {
+				$('#privilegeForm')[0].reset();
+				$('#user_id').val(null).trigger('change');
+				$('#menu_id').val(null).trigger('change');
+				editingPrivilegeId = null;
+				$('#submitBtn').text('Add Privilege');
+				$('#modalTitle').text('Assign Privileges to User');
+				$('#privilegeModal').modal('show');
 			});
 		});
 	</script>
