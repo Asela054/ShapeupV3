@@ -16,78 +16,25 @@
 
 		<div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-fluid">
-				@if (hasAnyPrivilege(3, ['add', 'edit']))
-
-					<div class="card mb-5 mb-xl-10">
-						<div class="card-header">
-							<h3 class="card-title fw-bold">Add User Account</h3>
-						</div>
-						<div class="card-body">
-							<form id="userAccountForm" enctype="multipart/form-data" method="POST"
-								action="{{ route('users.store') }}">
-								@csrf
-								<div class="row g-5 mb-8">
-									<div class="col-md-6">
-										<label class="form-label required">Name</label>
-										<input type="text" name="name" id="name" class="form-control" required />
-									</div>
-									<div class="col-md-6">
-										<label class="form-label required">Email</label>
-										<input type="email" name="email" id="email" class="form-control" />
-									</div>
-									<div class="col-md-6">
-										<label class="form-label required">Username</label>
-										<input type="text" name="username" id="username" class="form-control" required />
-									</div>
-									<div class="col-md-6 password-field">
-										<label class="form-label required">Password</label>
-										<input type="password" name="password" id="password" class="form-control" required />
-									</div>
-									<div class="col-md-6 password-field">
-										<label class="form-label required">Retype Password</label>
-										<input type="password" name="password_confirmation" id="password_confirmation"
-											class="form-control" required />
-									</div>
-									<div class="col-md-6">
-										<label class="form-label required">User Type</label>
-										<select name="user_type" id="user_type" class="form-select" required>
-											<option value="">Select User Type</option>
-											@foreach($user_type as $type)
-												<option value="{{ $type->id }}">{{ $type->name }}</option>
-											@endforeach
-										</select>
-									</div>
-									<div class="col-md-6">
-										<label class="form-label">Image</label>
-										<input type="file" name="image" id="image" class="form-control" accept="image/*" />
-									</div>
-								</div>
-								<div class="d-flex justify-content-end">
-									<button type="reset" id="resetForm" class="btn btn-light me-3">Clear</button>
-									<button type="submit" class="btn btn-primary">Add User</button>
-								</div>
-
-							</form>
-						</div>
-					</div>
-				@endif
-
-
-
 				<div class="card">
-					<div class="card-header border-0 pt-6">
-						<div class="card-title">
-							<div class="d-flex align-items-center position-relative my-1">
-								<i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
-									<span class="path1"></span>
-									<span class="path2"></span>
-								</i>
-								<input type="text" data-kt-table-filter="search"
-									class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
+					<div class="card-body pt-0">
+						<div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+							<div class="card-title my-0">
+								<div class="d-flex align-items-center position-relative my-1">
+									<i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+										<span class="path1"></span>
+										<span class="path2"></span>
+									</i>
+									<input type="text" data-kt-table-filter="search"
+										class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
+								</div>
+							</div>
+							<div>
+								<button type="button" class="btn btn-primary" name="create_record" id="create_record"><i class="fas fa-plus mr-2"></i>Create User</button>
 							</div>
 						</div>
-					</div>
-					<div class="card-body pt-0">
+
+
 						<div class="table-responsive">
 							<table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
 								<thead>
@@ -103,6 +50,66 @@
 							</table>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- User Modal -->
+	<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="fw-bold" id="modalTitle">Add User Account</h2>
+					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<i class="ki-duotone ki-cross fs-1">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="userAccountForm" enctype="multipart/form-data" method="POST" action="{{ route('users.store') }}">
+						@csrf
+						<div class="row">
+							<div class="col-md-12">
+								<label class="form-label required">Name</label>
+								<input type="text" name="name" id="name" class="form-control" required />
+							</div>
+							<div class="col-md-12">
+								<label class="form-label required">Email</label>
+								<input type="email" name="email" id="email" class="form-control" />
+							</div>
+							<div class="col-md-12 password-field">
+								<label class="form-label required">Password</label>
+								<input type="password" name="password" id="password" class="form-control" required />
+							</div>
+							<div class="col-md-12 password-field">
+								<label class="form-label required">Retype Password</label>
+								<input type="password" name="password_confirmation" id="password_confirmation"
+									class="form-control" required />
+							</div>
+							<div class="col-md-12">
+								<label class="form-label required">Role</label>
+								<select name="user_type" id="user_type" class="form-select" required>
+									<option value="">Select Role</option>
+									@foreach($user_type as $type)
+										<option value="{{ $type->id }}">{{ $type->name }}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="col-md-12">
+								<label class="form-label">Image</label>
+								<input type="file" name="image" id="image" class="form-control" accept="image/*" />
+							</div>
+						</div>
+                        <br>
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add User</button>
+						</div>
+
+					</form>
 				</div>
 			</div>
 		</div>
@@ -259,13 +266,12 @@
 							$('#userAccountForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
 
-						// Change button text
+						// Change button text and modal title
 						$('#userAccountForm button[type="submit"]').text('Update User');
+						$('#modalTitle').text('Edit User Account');
 
-						// Scroll to form
-						$('html, body').animate({
-							scrollTop: $('#userAccountForm').offset().top - 100
-						}, 400);
+						// Show modal
+						$('#userModal').modal('show');
 					},
 					error: function () {
 						Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to load user data' });
@@ -344,15 +350,11 @@
 				updateUserStatus($(this).data('id'), 2, 'Deactivate this user?');
 			});
 
-			// Reset form handler
-			$('#resetForm').on('click', function () {
+			$('#create_record').on('click', function () {
 				$('#userAccountForm')[0].reset();
-				$('#userAccountForm').attr('action', "{{ route('users.store') }}");
-				$('#userAccountForm input[name="_method"]').remove();
-				$('#password').prop('required', true);
-				$('#password_confirmation').prop('required', true);
-
 				$('#userAccountForm button[type="submit"]').text('Add User');
+				$('#modalTitle').text('Add User Account');
+				$('#userModal').modal('show');
 			});
 		});
 	</script>

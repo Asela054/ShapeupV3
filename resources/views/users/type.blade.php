@@ -17,43 +17,26 @@
 
 		<div id="kt_app_content" class="app-content flex-column-fluid">
 			<div id="kt_app_content_container" class="app-container container-fluid">
-            @if (hasAnyPrivilege(2, ['add','edit']))
-				<div class="card mb-5 mb-xl-10">
-					<div class="card-header">
-						<h3 class="card-title fw-bold">Add User Type</h3>
-					</div>
-					<div class="card-body">
-						<form id="userTypeForm" method="POST" action="{{ route('users.addusertype') }}">
-							@csrf
-							<div class="row g-5 mb-8">
-								<div class="col-md-6">
-									<label class="form-label required">Type Name</label>
-									<input type="text" name="type" id="type" class="form-control" placeholder="e.g., Admin, Manager, Staff" required />
-									<small class="form-text text-muted">Enter the user type name</small>
+				<div class="card">
+					<div class="card-body pt-0">
+						<div class="d-flex justify-content-between align-items-center mb-5 mt-5">
+							<div class="card-title my-0">
+								<div class="d-flex align-items-center position-relative my-1">
+									<i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
+										<span class="path1"></span>
+										<span class="path2"></span>
+									</i>
+									<input type="text" data-kt-table-filter="search"
+										class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
 								</div>
 							</div>
-							<div class="d-flex justify-content-end gap-3">
-								<button type="reset" class="btn btn-light">Clear</button>
-								<button type="submit" class="btn btn-primary">Add User Type</button>
+							@if (checkPrivilege(2, 'add'))
+							<div>
+								<button type="button" class="btn btn-primary" name="create_record" id="create_record"><i class="fas fa-plus mr-2"></i>Create User Type</button>
 							</div>
-						</form>
-					</div>
-        
-				</div>
-                @endif
-            				<div class="card">
-					<div class="card-header border-0 pt-6">
-						<div class="card-title">
-                            <div class="d-flex align-items-center position-relative my-1">
-                                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-                                <input type="text" data-kt-table-filter="search" class="form-control form-control-solid w-250px ps-13" placeholder="Search" />
-                            </div>
-                        </div>
-					</div>
-					<div class="card-body pt-0">
+							@endif
+						</div>
+
 						<div class="table-responsive">
 							<table class="table align-middle table-row-dashed fs-6 gy-5" id="datatable">
 								<thead>
@@ -67,6 +50,40 @@
 							</table>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- User Type Modal -->
+	<div class="modal fade" id="userTypeModal" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="fw-bold" id="modalTitle">Add User Type</h2>
+					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<i class="ki-duotone ki-cross fs-1">
+							<span class="path1"></span>
+							<span class="path2"></span>
+						</i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="userTypeForm" method="POST" action="{{ route('users.addusertype') }}">
+						@csrf
+						<div class="row">
+							<div class="col-md-12">
+								<label class="form-label required">Type Name</label>
+								<input type="text" name="type" id="type" class="form-control" placeholder="e.g., Admin, Manager, Staff" required />
+								<small class="form-text text-muted">Enter the user type name</small>
+							</div>
+						</div>
+                        <br>
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" class="btn btn-primary">Add User Type</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -195,13 +212,12 @@
 							$('#userTypeForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
 
-						// Change button text
+						// Change button text and modal title
 						$('#userTypeForm button[type="submit"]').text('Update User Type');
+						$('#modalTitle').text('Edit User Type');
 
-						// Scroll to form
-						$('html, body').animate({
-							scrollTop: $('#userTypeForm').offset().top - 100
-						}, 400);
+						// Show modal
+						$('#userTypeModal').modal('show');
 					},
 					error: function () {
 						Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to load user type data' });
@@ -279,16 +295,15 @@
 				e.preventDefault();
 				updateUserStatus($(this).data('id'), 2, 'Deactivate this user?');
 			});
-			
-			// Reset form handler
-			$('#resetForm').on('click', function () {
-				$('#userAccountForm')[0].reset();
-				$('#userAccountForm').attr('action', "{{ route('users.store') }}");
-				$('#userAccountForm input[name="_method"]').remove();
-				$('#password').prop('required', true);
-				$('#password_confirmation').prop('required', true);
 
-				$('#userAccountForm button[type="submit"]').text('Add User');
+			// Create User Type action handler
+			$('#create_record').on('click', function () {
+				$('#userTypeForm')[0].reset();
+				$('#userTypeForm').attr('action', "{{ route('users.addusertype') }}");
+				$('#userTypeForm input[name="_method"]').remove();
+				$('#userTypeForm button[type="submit"]').text('Add User Type');
+				$('#modalTitle').text('Add User Type');
+				$('#userTypeModal').modal('show');
 			});
 		});
 	</script>
