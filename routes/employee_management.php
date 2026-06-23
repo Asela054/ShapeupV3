@@ -63,3 +63,20 @@ Route::get('/issue_letter', function () {
     return view('employee_management.employeeletters.issue_letter');
 })->name('issue_letter');
 
+Route::get('/training_type', function () {
+    return view('employee_management/trainingmanagement/training_type');
+})->name('training_type');
+
+Route::get('/training_allocation', function () {
+    return view('employee_management/trainingmanagement/training_allocation');
+})->name('training_allocation');
+
+Route::get('/training_points', function () {
+    return view('employee_management/trainingmanagement/training_points');
+})->name('training_points');
+
+Route::get('/training_summary', function () {
+    return view('employee_management/trainingmanagement/training_summary');
+})->name('training_summary');
+
+

@@ -106,10 +106,10 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Type</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Allocation</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Points</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Summary</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('training_type') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Type</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('training_allocation') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Allocation</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('training_points') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Points</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('training_summary') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Summary</span></a></div>
 							</div>
 						</div>
 
