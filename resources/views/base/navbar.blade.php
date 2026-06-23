@@ -80,7 +80,7 @@
 						</div>
 
 						<div class="menu-item">
-							<a class="menu-link" href="#">
+							<a class="menu-link" href="{{ route('details') }}">
 								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
 								<span class="menu-title">Employee Details</span>
 							</a>
@@ -93,9 +93,9 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Letter Type</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Letter Template</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Issued Letter</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('letter_type') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Letter Type</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('letter_template') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Letter Template</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('issue_letter') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Issued Letter</span></a></div>
 							</div>
 						</div>
 

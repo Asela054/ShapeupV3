@@ -46,3 +46,20 @@ Route::get('/gns_division', function () {
 Route::get('/police_station', function () {
     return view('employee_management.masterdata.police_station');
 })->name('police_station');
+
+Route::get('/details', function () {
+    return view('employee_management.details');
+})->name('details');
+
+Route::get('/letter_type', function () {
+    return view('employee_management.employeeletters.letter_type');
+})->name('letter_type');
+
+Route::get('/letter_template', function () {
+    return view('employee_management.employeeletters.letter_template');
+})->name('letter_template');
+
+Route::get('/issue_letter', function () {
+    return view('employee_management.employeeletters.issue_letter');
+})->name('issue_letter');
+
