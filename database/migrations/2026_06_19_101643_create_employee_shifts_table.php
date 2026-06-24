@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('remark', 255)->nullable();
             $table->integer('status')->default(0);
             $table->integer('approval_status')->default(0);
+            $table->integer('status')->default(0);
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->timestamps();

@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('shift_location', 255);
             $table->string('start_time', 255);
             $table->string('end_time', 255);
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

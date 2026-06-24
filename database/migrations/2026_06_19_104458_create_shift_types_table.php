@@ -40,6 +40,9 @@ return new class extends Migration
             $table->double('weekend_max_normal_ot_hrs')->nullable();
             $table->double('weekend_max_double_ot_hrs')->nullable();
             $table->integer('deleted');
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }
