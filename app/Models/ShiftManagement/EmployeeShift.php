@@ -18,6 +18,7 @@ class EmployeeShift extends Model
         'remark',
         'status',
         'approval_status',
+        'status',
         'created_by',
         'updated_by',
     ];

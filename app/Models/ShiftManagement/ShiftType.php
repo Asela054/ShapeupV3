@@ -39,5 +39,8 @@ class ShiftType extends Model
         'weekend_max_normal_ot_hrs',
         'weekend_max_double_ot_hrs',
         'deleted',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 }

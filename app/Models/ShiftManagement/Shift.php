@@ -17,5 +17,8 @@ class Shift extends Model
         'shift_location',
         'start_time',
         'end_time',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 }
