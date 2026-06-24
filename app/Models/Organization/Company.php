@@ -27,6 +27,7 @@ class Company extends Model
         'svat_no',
         'company_type',
         'paysheet_language',
+        'status',
         'create_by',
         'update_by',
     ];

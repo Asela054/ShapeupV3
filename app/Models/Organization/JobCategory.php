@@ -60,5 +60,8 @@ class JobCategory extends Model
         'salary_advance_min_date',
         'late_deduct_calculation',
         'full_day_work_hours',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 }

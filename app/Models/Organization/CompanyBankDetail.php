@@ -17,5 +17,8 @@ class CompanyBankDetail extends Model
         'branch_code',
         'bank_account_number',
         'bank_account_name',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 }

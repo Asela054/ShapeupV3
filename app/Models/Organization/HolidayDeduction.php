@@ -16,5 +16,8 @@ class HolidayDeduction extends Model
         'remuneration_id',
         'day_count',
         'amount',
+        'status',
+        'created_by',
+        'updated_by',
     ];
 }

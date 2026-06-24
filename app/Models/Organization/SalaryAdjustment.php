@@ -22,6 +22,7 @@ class SalaryAdjustment extends Model
         'approved_status',
         'approved_by',
         'approved_at',
+        'status',
         'created_by',
         'updated_by',
     ];
