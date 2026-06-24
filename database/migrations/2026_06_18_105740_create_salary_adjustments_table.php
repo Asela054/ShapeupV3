@@ -25,6 +25,9 @@ return new class extends Migration
             $table->dateTime('approved_at')->nullable();
             $table->string('created_by', 255)->nullable();
             $table->string('updated_by', 255)->nullable();
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

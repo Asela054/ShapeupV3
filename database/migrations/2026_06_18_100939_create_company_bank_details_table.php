@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('branch_code', 10);
             $table->string('bank_account_number', 20);
             $table->string('bank_account_name', 50);
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

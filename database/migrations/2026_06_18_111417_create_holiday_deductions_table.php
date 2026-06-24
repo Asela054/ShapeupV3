@@ -17,6 +17,9 @@ return new class extends Migration
             $table->integer('remuneration_id');
             $table->double('day_count');
             $table->double('amount');
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }

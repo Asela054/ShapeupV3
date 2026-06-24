@@ -61,6 +61,9 @@ return new class extends Migration
             $table->double('salary_advance_min_date')->nullable();
             $table->integer('late_deduct_calculation')->default(1)->comment('1=nopay, 2=normalOT, 3=doubleOT');
             $table->double('full_day_work_hours')->nullable();
+            $table->integer('status')->default(0);
+            $table->integer('created_by');
+            $table->integer('updated_by')->nullable();
             $table->timestamps();
         });
     }
