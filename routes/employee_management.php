@@ -48,7 +48,7 @@ Route::get('/police_station', function () {
 })->name('police_station');
 
 Route::get('/details', function () {
-    return view('employee_management.details');
+    return view('employee_management.details.details');
 })->name('details');
 
 Route::get('/letter_type', function () {
