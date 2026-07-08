@@ -12,4 +12,9 @@ class Skill extends Model
     protected $fillable = [
         'skill',
     ];
+
+    public function employeeSkills()
+    {
+        return $this->hasMany(\App\Models\EmpDetail\EmployeeSkill::class, 'emp_skill', 'id');
+    }
 }

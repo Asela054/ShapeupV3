@@ -13,4 +13,9 @@ class AssignedDevice extends Model
         'device_name',
         'remarks',
     ];
+
+    public function assignedToEmployees()
+    {
+        return $this->hasMany(\App\Models\EmpDetail\EmployeeAssignedDevice::class, 'device_type', 'id');
+    }
 }

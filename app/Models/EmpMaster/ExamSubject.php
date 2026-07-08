@@ -16,4 +16,9 @@ class ExamSubject extends Model
         'created_by',
         'updated_by',
     ];
+
+    public function examResults()
+    {
+        return $this->hasMany(\App\Models\EmpDetail\EmployeeExamResult::class, 'subject_id', 'id');
+    }
 }
