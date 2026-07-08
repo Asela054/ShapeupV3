@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ActivitylogController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserTypeController;
+use App\Http\Controllers\UserPrivilegeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,22 +36,22 @@ Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.de
 Route::post('/users/{id}/status', [UserController::class, 'updateStatus'])->name('users.status');
 
 // User Type Routes
-Route::get('/userstypelist', [UserController::class, 'typeIndex'])->name('userstypelist');
-Route::get('/users/typedata', [UserController::class, 'getUsertypeData'])->name('users.typedata');
-Route::post('/users/addusertype', [UserController::class, 'addUserType'])->name('users.addusertype');
-Route::get('/users/typedata/{id}/edit', [UserController::class, 'editUserType'])->name('users.typedata.edit');
-Route::put('/users/typedata/{id}', [UserController::class, 'updateUserType'])->name('users.typedata.update');
-Route::delete('/users/typedata/{id}', [UserController::class, 'destroyUserType'])->name('users.typedata.destroy');
-Route::post('/users/typedata/{id}/status', [UserController::class, 'updateUserTypeStatus'])->name('users.typedata.status');
+Route::get('/userstypelist', [UserTypeController::class, 'typeIndex'])->name('userstypelist');
+Route::get('/users/typedata', [UserTypeController::class, 'getUsertypeData'])->name('users.typedata');
+Route::post('/users/addusertype', [UserTypeController::class, 'addUserType'])->name('users.addusertype');
+Route::get('/users/typedata/{id}/edit', [UserTypeController::class, 'editUserType'])->name('users.typedata.edit');
+Route::put('/users/typedata/{id}', [UserTypeController::class, 'updateUserType'])->name('users.typedata.update');
+Route::delete('/users/typedata/{id}', [UserTypeController::class, 'destroyUserType'])->name('users.typedata.destroy');
+Route::post('/users/typedata/{id}/status', [UserTypeController::class, 'updateUserTypeStatus'])->name('users.typedata.status');
 
 // User Privilege Routes
-Route::get('/usersprivilegelist', [UserController::class, 'privilegeIndex'])->name('usersprivilegelist');
-Route::get('/users/privilege/data', [UserController::class, 'getPrivilegeData'])->name('users.privilege.data');
-Route::post('/users/privilege', [UserController::class, 'privilegeAdd'])->name('users.privilege.add');
-Route::get('/users/privilege/{id}/edit', [UserController::class, 'getPrivilege'])->name('users.privilege.edit');
-Route::put('/users/privilege/{id}', [UserController::class, 'editPrivilege'])->name('users.privilege.update');
-Route::delete('/users/privilege/{id}/delete', [UserController::class, 'deletePrivilege'])->name('users.privilege.delete');
-Route::post('/users/privilege/{id}/status', [UserController::class, 'updatePrivilegeStatus'])->name('users.privilege.status');
+Route::get('/usersprivilegelist', [UserPrivilegeController::class, 'privilegeIndex'])->name('usersprivilegelist');
+Route::get('/users/privilege/data', [UserPrivilegeController::class, 'getPrivilegeData'])->name('users.privilege.data');
+Route::post('/users/privilege', [UserPrivilegeController::class, 'privilegeAdd'])->name('users.privilege.add');
+Route::get('/users/privilege/{id}/edit', [UserPrivilegeController::class, 'getPrivilege'])->name('users.privilege.edit');
+Route::put('/users/privilege/{id}', [UserPrivilegeController::class, 'editPrivilege'])->name('users.privilege.update');
+Route::delete('/users/privilege/{id}/delete', [UserPrivilegeController::class, 'deletePrivilege'])->name('users.privilege.delete');
+Route::post('/users/privilege/{id}/status', [UserPrivilegeController::class, 'updatePrivilegeStatus'])->name('users.privilege.status');
 
 Route::get('/activitylog', [ActivitylogController::class, 'index'])->name('activitylog.index');
 Route::get('/activitylog/{id}', [ActivitylogController::class, 'show'])->name('activitylog.show');
