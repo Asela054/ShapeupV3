@@ -75,14 +75,17 @@
 							<div class="col-md-12">
 								<label class="form-label required">Name</label>
 								<input type="text" name="name" id="name" class="form-control" required />
+								<span class="text-danger" id="error_name"></span>
 							</div>
 							<div class="col-md-12">
 								<label class="form-label required">Email</label>
 								<input type="email" name="email" id="email" class="form-control" />
+								<span class="text-danger" id="error_email"></span>
 							</div>
 							<div class="col-md-12 password-field">
 								<label class="form-label required">Password</label>
 								<input type="password" name="password" id="password" class="form-control" required />
+								<span class="text-danger" id="error_password"></span>
 							</div>
 							<div class="col-md-12 password-field">
 								<label class="form-label required">Retype Password</label>
@@ -97,10 +100,12 @@
 										<option value="{{ $type->id }}">{{ $type->name }}</option>
 									@endforeach
 								</select>
+								<span class="text-danger" id="error_user_type"></span>
 							</div>
 							<div class="col-md-12">
 								<label class="form-label">Image</label>
 								<input type="file" name="image" id="image" class="form-control" accept="image/*" />
+								<span class="text-danger" id="error_image"></span>
 							</div>
 						</div>
                         <br>
@@ -125,9 +130,6 @@
 		@endif
 		@if(session('error'))
 			Swal.fire({ icon: 'error', title: 'Error', text: '{{ session('error') }}' });
-		@endif
-		@if ($errors->any())
-			Swal.fire({ icon: 'error', title: 'Validation Error', html: '{!! implode('<br>', $errors->all()) !!}' });
 		@endif
 
 		//datatable
@@ -234,6 +236,43 @@
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 				}
+			});
+
+			function clearFormErrors() {
+				$('#userAccountForm .text-danger').text('');
+				$('#userAccountForm .form-control, #userAccountForm .form-select').removeClass('is-invalid');
+			}
+
+			$('#userAccountForm').on('submit', function (e) {
+				e.preventDefault();
+				clearFormErrors();
+
+				const form = $(this);
+				const formData = new FormData(this);
+
+				$.ajax({
+					url: form.attr('action'),
+					type: 'POST', // _method=PUT is spoofed via hidden input when editing
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$('#userModal').modal('hide');
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message });
+						$('#datatable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						if (xhr.status === 422) {
+							const errors = xhr.responseJSON.errors;
+							$.each(errors, function (field, messages) {
+								$('#' + field).addClass('is-invalid');
+								$('#error_' + field).text(messages[0]);
+							});
+						} else {
+							Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong' });
+						}
+					}
+				});
 			});
 
 			// Edit user handler
