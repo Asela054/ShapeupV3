@@ -1,11 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Organization\CompanyController;
 
 
-Route::get('/company', function () {
-    return view('organization.company');
-})->name('company');
+Route::prefix('organization')->name('organization.')->group(function () {
+    Route::get('company', [CompanyController::class, 'index'])->name('company');
+    Route::get('company/data', [CompanyController::class, 'data'])->name('company.data');
+    Route::post('company', [CompanyController::class, 'store'])->name('company.store');
+    Route::get('company/{company}/edit', [CompanyController::class, 'edit'])->name('company.edit');
+    Route::put('company/{company}', [CompanyController::class, 'update'])->name('company.update');
+    Route::delete('company/{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
+});
 
 Route::get('/bank', function () {
     return view('organization.bank');
