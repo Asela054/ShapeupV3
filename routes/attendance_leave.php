@@ -67,6 +67,14 @@ Route::get('/allocation', function () {
     return view('attendance_leave/locationwiseattendance/allocation');
 })->name('allocation');
 
+Route::get('/location_attendance', function () {
+    return view('attendance_leave/locationwiseattendance/location_attendance');
+})->name('location_attendance');
+
+Route::get('/location_attendance_approve', function () {
+    return view('attendance_leave/locationwiseattendance/location_attendance_approve');
+})->name('location_attendance_approve');
+
 Route::get('/unauthorized_location_attendance_approve', function () {
     return view('attendance_leave/locationwiseattendance/unauthorized_location_attendance_approve');
 })->name('unauthorized_location_attendance_approve');

@@ -182,8 +182,8 @@
 							</span>
 							<div class="menu-sub menu-sub-accordion">
 								<div class="menu-item"><a class="menu-link" href="{{ route('allocation') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Allocation</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance Approve</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('location_attendance') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('location_attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance Approve</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('unauthorized_location_attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Unauthorized Location Attendance Approve</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('location_allowance_approval') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Allowance Approval</span></a></div>
 							</div>
