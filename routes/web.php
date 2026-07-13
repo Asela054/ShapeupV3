@@ -57,3 +57,4 @@ Route::get('/activitylog/{id}', [ActivitylogController::class, 'show'])->name('a
 require __DIR__ . '/auth.php';
 require __DIR__ . '/organization.php';
 require __DIR__.'/employee_management.php';
+require __DIR__.'/attendance_leave.php';
