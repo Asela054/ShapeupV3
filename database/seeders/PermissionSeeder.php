@@ -36,6 +36,16 @@ class PermissionSeeder extends Seeder
             ['name' => 'Permission-Create', 'module_name' => 'Permission'],
             ['name' => 'Permission-Edit', 'module_name' => 'Permission'],
             ['name' => 'Permission-Delete', 'module_name' => 'Permission'],
+            ['name' => 'Access-Company', 'module_name' => 'Company'],
+            ['name' => 'Company-List', 'module_name' => 'Company'],
+            ['name' => 'Company-Create', 'module_name' => 'Company'],
+            ['name' => 'Company-Edit', 'module_name' => 'Company'],
+            ['name' => 'Company-Delete', 'module_name' => 'Company'],
+            ['name' => 'Access-Branch', 'module_name' => 'Branch'],
+            ['name' => 'Branch-List', 'module_name' => 'Branch'],
+            ['name' => 'Branch-Create', 'module_name' => 'Branch'],
+            ['name' => 'Branch-Edit', 'module_name' => 'Branch'],
+            ['name' => 'Branch-Delete', 'module_name' => 'Branch'],
         ];
 
         foreach ($permissions as $permission) {
