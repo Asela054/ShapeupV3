@@ -31,8 +31,8 @@ return new class extends Migration
             $table->integer('company_type')->default(0);
             $table->integer('paysheet_language')->default(1)->comment('1=English, 2=Sinhala, 3=Tamil');
             $table->integer('status')->default(0);
-            $table->string('create_by');
-            $table->string('update_by');
+            $table->string('created_by');
+            $table->string('updated_by');
             $table->timestamps();
         });
     }
