@@ -163,14 +163,14 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Request</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Apply</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Type</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Approvals</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ignore Days</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">CoverUp Details</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="#"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday Deduction</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_request') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Request</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_apply') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Apply</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_type') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Type</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_approvel') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Approvals</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('holidays') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('ignore_days') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ignore Days</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('coverup_details') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">CoverUp Details</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('holiday_deduction') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday Deduction</span></a></div>
 							</div>
 						</div>
 
