@@ -4,6 +4,7 @@ namespace App\Services\Organization;
 
 use App\Models\Organization\JobCategory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class JobCategoryService
 {
