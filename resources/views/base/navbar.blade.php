@@ -37,7 +37,7 @@
 					<div class="menu-sub menu-sub-accordion">
 						<div class="menu-item"><a class="menu-link" href="{{ route('organization.company') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Company</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('bank') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Bank</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('jobcategory') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Category</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('organization.jobcategory') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Category</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('salaryadjustment') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Salary Adjustments</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('leavededuction') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Deductions</span></a></div>
 					</div>
