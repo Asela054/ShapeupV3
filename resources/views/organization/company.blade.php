@@ -82,74 +82,104 @@
 							<div class="col-md-6">
 								<label class="form-label required">Name</label>
 								<input type="text" name="name" id="name" class="form-control" required />
+								<span class="text-danger" id="error_name"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label required">Code</label>
 								<input type="text" name="code" id="code" class="form-control" required />
+								<span class="text-danger" id="error_code"></span>
 							</div>
 							<div class="col-md-12">
-								<label class="form-label">Address</label>
-								<input type="text" name="address" id="address" class="form-control" />
+								<label class="form-label required">Address</label>
+								<input type="text" name="address" id="address" class="form-control" required />
+								<span class="text-danger" id="error_address"></span>
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Mobile</label>
-								<input type="text" name="mobile" id="mobile" class="form-control" />
+								<label class="form-label required">Mobile</label>
+								<input type="text" name="mobile" id="mobile" class="form-control" required />
+								<span class="text-danger" id="error_mobile"></span>
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Landline</label>
-								<input type="text" name="land" id="land" class="form-control" />
+								<label class="form-label required">Landline</label>
+								<input type="text" name="land" id="land" class="form-control" required />
+								<span class="text-danger" id="error_land"></span>
 							</div>
 							<div class="col-md-6">
-								<label class="form-label">Email</label>
-								<input type="email" name="email" id="email" class="form-control" />
+								<label class="form-label required">Email</label>
+								<input type="email" name="email" id="email" class="form-control" required />
+								<span class="text-danger" id="error_email"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Domain Name</label>
 								<input type="text" name="domain_name" id="domain_name" class="form-control" />
+								<span class="text-danger" id="error_domain_name"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">EPF No</label>
 								<input type="text" name="epf" id="epf" class="form-control" />
+								<span class="text-danger" id="error_epf"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">ETF No</label>
 								<input type="text" name="etf" id="etf" class="form-control" />
+								<span class="text-danger" id="error_etf"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Ref No</label>
 								<input type="text" name="ref_no" id="ref_no" class="form-control" />
+								<span class="text-danger" id="error_ref_no"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">VAT No</label>
 								<input type="text" name="vat_reg_no" id="vat_reg_no" class="form-control" />
+								<span class="text-danger" id="error_vat_reg_no"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">SVAT No</label>
 								<input type="text" name="svat_no" id="svat_no" class="form-control" />
+								<span class="text-danger" id="error_svat_no"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Zone Code</label>
 								<input type="text" name="zone_code" id="zone_code" class="form-control" />
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Bank Account Name</label>
-								<input type="text" name="bank_account_name" id="bank_account_name" class="form-control" />
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Bank Account No</label>
-								<input type="text" name="bank_account_number" id="bank_account_number" class="form-control" />
-							</div>
-							<div class="col-md-6">
-								<label class="form-label">Branch Code</label>
-								<input type="text" name="bank_account_branch_code" id="bank_account_branch_code" class="form-control" />
+								<span class="text-danger" id="error_zone_code"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Employer Number</label>
 								<input type="text" name="employer_number" id="employer_number" class="form-control" />
+								<span class="text-danger" id="error_employer_number"></span>
 							</div>
 							<div class="col-md-6">
 								<label class="form-label">Logo</label>
 								<input type="file" name="logo" id="logo" class="form-control" accept="image/*" />
+								<span class="text-danger" id="error_logo"></span>
+								<div class="mt-2">
+									<img id="logo_preview" src="" alt="Current logo" width="60" height="60" class="rounded d-none">
+								</div>
+							</div>
+						</div>
+						<div class="form-row mb-1">
+							<div class="col-12">
+								<div class="center-block fix-width scroll-inner">
+									<table class="table table-striped table-bordered table-sm small nowrap display" id="allocationtbl" style="width:100%;">
+										<thead>
+											<tr>
+												<th>Bank Name</th>
+												<th>Branch Name</th>
+												<th>Account No</th>
+												<th>Account Name</th>
+												<th style="white-space: nowrap;">ACTION</th>
+											</tr>
+										</thead>
+										<tbody id="emplistbody">
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-12">
+								<button type="button" class="btn btn-primary btn-sm px-4" id="add_detail_row">
+									<i class="fas fa-plus"></i> Bank Details
+								</button>
 							</div>
 						</div>
                         <br>
@@ -172,26 +202,72 @@
 		@if(session('error'))
 			Swal.fire({ icon: 'error', title: 'Error', text: '{{ session('error') }}' });
 		@endif
-		@if ($errors->any())
-			Swal.fire({ icon: 'error', title: 'Validation Error', html: '{!! implode('<br>', $errors->all()) !!}' });
-		@endif
 
 		$(document).ready(function () {
-            // Create action
+			let bankRowIndex = 0;
+
+			$.ajaxSetup({
+				headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+			});
+
+			function clearFormErrors() {
+				$('#companyForm .text-danger').text('');
+				$('#companyForm .form-control, #companyForm .form-select').removeClass('is-invalid');
+				$('#companyForm [name^="banks"]').removeClass('is-invalid');
+			}
+			
+			function bankRow(index, data = {}) {
+				return `<tr data-row="${index}">
+					<td><input type="text" name="banks[${index}][bank_code]" class="form-control form-control-sm" value="${data.bank_code ?? ''}"></td>
+					<td><input type="text" name="banks[${index}][branch_code]" class="form-control form-control-sm" value="${data.branch_code ?? ''}"></td>
+					<td><input type="text" name="banks[${index}][bank_account_number]" class="form-control form-control-sm" value="${data.bank_account_number ?? ''}"></td>
+					<td><input type="text" name="banks[${index}][bank_account_name]" class="form-control form-control-sm" value="${data.bank_account_name ?? ''}"></td>
+					<td><button type="button" class="btn btn-sm btn-danger remove_detail_row"><i class="fas fa-trash-can"></i></button></td>
+				</tr>`;
+			}
+
+			function addBankRow(data = {}) {
+				$('#emplistbody').append(bankRow(bankRowIndex, data));
+				bankRowIndex++;
+			}
+
+			function resetBankRows(list = []) {
+				$('#emplistbody').empty();
+				bankRowIndex = 0;
+				if (list.length) {
+					list.forEach(b => addBankRow(b));
+				} else {
+					addBankRow();
+				}
+			}
+
+			$('#add_detail_row').on('click', function () {
+				addBankRow();
+			});
+
+			$(document).on('click', '.remove_detail_row', function () {
+				if ($('#emplistbody tr').length > 1) {
+					$(this).closest('tr').remove();
+				}
+			});
+
+			// Create action
 			$('#create_record').on('click', function () {
 				$('#companyForm')[0].reset();
-				$('#companyForm').attr('action', "");
+				clearFormErrors();
+				$('#companyForm').attr('action', "{{ route('organization.company.store') }}");
 				$('#companyForm input[name="_method"]').remove();
 				$('#companyForm button[type="submit"]').text('Add Company');
 				$('#modalTitle').text('Add New Company');
+				resetBankRows();
+				$('#logo_preview').addClass('d-none').attr('src', '');
 				$('#companyModal').modal('show');
 			});
 
-            
 			var table = $('#companyTable').DataTable({
 				processing: true,
 				serverSide: true,
-				// ajax: "",
+				ajax: "{{ route('organization.company.data') }}",
 				columns: [
 					{ data: 'id', name: 'id', width: '50px' },
 					{ data: 'name', name: 'name' },
@@ -258,23 +334,15 @@
 				table.search(this.value).draw();
 			});
 
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
-			});
-
-			
-
-			// Edit action handler
+			// Edit action
 			$(document).on('click', '.editCompany', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
+
 				$.ajax({
 					url: `/organization/company/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
-						// Populate form fields
 						$('#name').val(data.name);
 						$('#code').val(data.code);
 						$('#address').val(data.address);
@@ -288,12 +356,17 @@
 						$('#vat_reg_no').val(data.vat_reg_no);
 						$('#svat_no').val(data.svat_no);
 						$('#zone_code').val(data.zone_code);
-						$('#bank_account_name').val(data.bank_account_name);
-						$('#bank_account_number').val(data.bank_account_number);
-						$('#bank_account_branch_code').val(data.bank_account_branch_code);
 						$('#employer_number').val(data.employer_number);
 
-						// Form action and method
+						if (data.logo) {
+							$('#logo_preview').attr('src', '/storage/' + data.logo).removeClass('d-none');
+						} else {
+							$('#logo_preview').addClass('d-none').attr('src', '');
+						}
+
+						resetBankRows(data.bank_details || []);
+						clearFormErrors();
+
 						$('#companyForm').attr('action', `/organization/company/${id}`);
 						if ($('#companyForm input[name="_method"]').length === 0) {
 							$('#companyForm').append('<input type="hidden" name="_method" value="PUT">');
@@ -309,7 +382,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action
 			$(document).on('click', '.deleteCompany', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -328,22 +401,61 @@
 							url: `/organization/company/${id}`,
 							type: 'DELETE',
 							success: function (response) {
-								Swal.fire({
-									icon: 'success',
-									title: 'Deleted!',
-									text: response.message,
-									timer: 2000
-								});
+								Swal.fire({ icon: 'success', title: 'Deleted!', text: response.message, timer: 2000 });
 								$('#companyTable').DataTable().ajax.reload(null, false);
 							},
-							error: function (xhr) {
-								Swal.fire({
-									icon: 'error',
-									title: 'Error',
-									text: 'Failed to delete company'
-								});
+							error: function () {
+								Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to delete company' });
 							}
 						});
+					}
+				});
+			});
+
+			// Create / Update submit (AJAX, handles file upload + dynamic bank rows)
+			$('#companyForm').on('submit', function (e) {
+				e.preventDefault();
+
+				const form = this;
+				const url = $(form).attr('action');
+				const formData = new FormData(form);
+
+				$.ajax({
+					url: url,
+					type: 'POST', // _method spoofs PUT on edit
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$('#companyModal').modal('hide');
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						$('#companyTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						clearFormErrors();
+
+						if (xhr.status === 422) {
+							const errors = xhr.responseJSON.errors;
+							$.each(errors, function (field, messages) {
+								// top-level fields (name, code, email, etc.)
+								if ($('#' + field).length) {
+									$('#' + field).addClass('is-invalid');
+									$('#error_' + field).text(messages[0]);
+								}
+								// bank rows: "banks.0.bank_code" -> input[name="banks[0][bank_code]"]
+								else if (field.startsWith('banks.')) {
+									const parts = field.split('.'); // ['banks', '0', 'bank_code']
+									const inputName = `banks[${parts[1]}][${parts[2]}]`;
+									const input = $(`#companyForm [name="${inputName}"]`);
+									input.addClass('is-invalid');
+									if (!input.next('.invalid-feedback').length) {
+										input.after(`<div class="invalid-feedback">${messages[0]}</div>`);
+									}
+								}
+							});
+						} else {
+							Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong' });
+						}
 					}
 				});
 			});
