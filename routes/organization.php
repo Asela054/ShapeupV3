@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Organization\CompanyController;
 use App\Http\Controllers\Organization\JobCategoryController;
+use App\Http\Controllers\Organization\SalaryAdjustmentController;
 
 
 Route::prefix('organization')->name('organization.')->group(function () {
@@ -21,17 +22,18 @@ Route::prefix('organization')->name('organization.')->group(function () {
     Route::get('jobcategory/{jobCategory}/edit', [JobCategoryController::class, 'edit'])->name('jobcategory.edit');
     Route::put('jobcategory/{jobCategory}', [JobCategoryController::class, 'update'])->name('jobcategory.update');
     Route::delete('jobcategory/{jobCategory}', [JobCategoryController::class, 'destroy'])->name('jobcategory.destroy');
+
+    //Salary Adjustments
+    Route::get('salaryadjustments', [SalaryAdjustmentController::class, 'index'])->name('salaryadjustments');
+    Route::get('salaryadjustments/data', [SalaryAdjustmentController::class, 'data'])->name('salaryadjustments.data');
+    Route::post('salaryadjustments', [SalaryAdjustmentController::class, 'store'])->name('salaryadjustments.store');
+    Route::delete('salaryadjustments/{salaryAdjustment}', [SalaryAdjustmentController::class, 'destroy'])->name('salaryadjustments.destroy');
 });
 
 Route::get('/bank', function () {
     return view('organization.bank');
 })->name('bank');
 
-
-
-Route::get('/salaryadjustment', function () {
-    return view('organization.salaryadjustments');
-})->name('salaryadjustment');
 
 Route::get('/leavededuction', function () {
     return view('organization.leavedeductions');
