@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Organization\CompanyController;
 use App\Http\Controllers\Organization\JobCategoryController;
 use App\Http\Controllers\Organization\SalaryAdjustmentController;
+use App\Http\Controllers\Organization\LeaveDeductionController;
 
 
 Route::prefix('organization')->name('organization.')->group(function () {
@@ -28,13 +29,16 @@ Route::prefix('organization')->name('organization.')->group(function () {
     Route::get('salaryadjustments/data', [SalaryAdjustmentController::class, 'data'])->name('salaryadjustments.data');
     Route::post('salaryadjustments', [SalaryAdjustmentController::class, 'store'])->name('salaryadjustments.store');
     Route::delete('salaryadjustments/{salaryAdjustment}', [SalaryAdjustmentController::class, 'destroy'])->name('salaryadjustments.destroy');
+
+    //Leave Deductions
+    Route::get('leavededuction', [LeaveDeductionController::class, 'index'])->name('leavededuction');
+    Route::get('leavededuction/data', [LeaveDeductionController::class, 'data'])->name('leavededuction.data');
+    Route::post('leavededuction', [LeaveDeductionController::class, 'store'])->name('leavededuction.store');
+    Route::get('leavededuction/{leaveDeduction}/edit', [LeaveDeductionController::class, 'edit'])->name('leavededuction.edit');
+    Route::put('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'update'])->name('leavededuction.update');
+    Route::delete('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'destroy'])->name('leavededuction.destroy');
 });
 
 Route::get('/bank', function () {
     return view('organization.bank');
 })->name('bank');
-
-
-Route::get('/leavededuction', function () {
-    return view('organization.leavedeductions');
-})->name('leavededuction');

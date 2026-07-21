@@ -104,10 +104,8 @@
                         </div>
                         <br>
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-light me-3"
-                                data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="submitBtn">
-                                Add Leave Deduction
+                                Add 
                             </button>
                         </div>
                     </form>
@@ -134,9 +132,9 @@
             // Create action
             $('#create_record').on('click', function () {
                 $('#leaveDeductionForm')[0].reset();
-                $('#leaveDeductionForm').attr('action', "");
+                $('#leaveDeductionForm').attr('action', '{{ route("organization.leavededuction.store") }}');
                 $('#leaveDeductionForm input[name="_method"]').remove();
-                $('#submitBtn').text('Add Leave Deduction');
+                $('#submitBtn').text('Add');
                 $('#modalTitle').text('Add Leave Deduction');
                 $('#leaveDeductionModal').modal('show');
             });
@@ -147,11 +145,11 @@
                 serverSide: true,
                 ajax: { url: '/organization/leavededuction/data', type: 'GET' },
                 columns: [
-                    { data: 'id',               name: 'id',               width: '50px' },
+                    { data: 'id',               name: 'id' },
                     { data: 'job_category',      name: 'job_category' },
                     { data: 'remuneration_name', name: 'remuneration_name' },
-                    { data: 'day_count',         name: 'day_count',        width: '100px' },
-                    { data: 'amount',            name: 'amount',           width: '110px' },
+                    { data: 'day_count',         name: 'day_count' },
+                    { data: 'amount',            name: 'amount' },
                     {
                         data: null,
                         className: 'text-end',
@@ -213,25 +211,24 @@
                 }
             });
 
-            // Live search
+            // search
             $("input[data-kt-table-filter='search']").on('keyup change', function () {
                 table.search(this.value).draw();
             });
 
-            // CSRF setup
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
-            // Edit action handler
+            // Edit action 
             $(document).on('click', '.editLeaveDeduction', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
 
                 $.ajax({
-                    url: `/organization/leave-deductions/${id}/edit`,
+                    url: `/organization/leavedeductions/${id}/edit`,
                     type: 'GET',
                     success: function (data) {
                         $('#job_id').val(data.job_id);
@@ -239,7 +236,7 @@
                         $('#day_count').val(data.day_count);
                         $('#amount').val(data.amount);
 
-                        $('#leaveDeductionForm').attr('action', `/organization/leave-deductions/${id}`);
+                        $('#leaveDeductionForm').attr('action', `/organization/leavedeductions/${id}`);
                         if ($('#leaveDeductionForm input[name="_method"]').length === 0) {
                             $('#leaveDeductionForm').append('<input type="hidden" name="_method" value="PUT">');
                         } else {
@@ -256,7 +253,7 @@
                 });
             });
 
-            // Delete action handler
+            // Delete action 
             $(document).on('click', '.deleteLeaveDeduction', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
@@ -272,7 +269,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: `/organization/leave-deductions/${id}`,
+                            url: `/organization/leavedeductions/${id}`,
                             type: 'DELETE',
                             success: function (response) {
                                 Swal.fire({
