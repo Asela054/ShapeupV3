@@ -63,6 +63,38 @@ Route::get('/leave_deduction_approval', function () {
     return view('attendance_leave/attendanceinformation/leave_deduction_approval');
 })->name('leave_deduction_approval');
 
+Route::get('/leave_request', function () {
+    return view('attendance_leave/leaveInformation/leave_request');
+})->name('leave_request');
+
+Route::get('/leave_apply', function () {
+    return view('attendance_leave/leaveInformation/leave_apply');
+})->name('leave_apply');
+
+Route::get('/leave_type', function () {
+    return view('attendance_leave/leaveInformation/leave_type');
+})->name('leave_type');
+
+Route::get('/leave_approvel', function () {
+    return view('attendance_leave/leaveInformation/leave_approvel');
+})->name('leave_approvel');
+
+Route::get('/holidays', function () {
+    return view('attendance_leave/leaveInformation/holidays');
+})->name('holidays');
+
+Route::get('/ignore_days', function () {
+    return view('attendance_leave/leaveInformation/ignore_days');
+})->name('ignore_days');
+
+Route::get('/coverup_details', function () {
+    return view('attendance_leave/leaveInformation/coverup_details');
+})->name('coverup_details');
+
+Route::get('/holiday_deduction', function () {
+    return view('attendance_leave/leaveInformation/holiday_deduction');
+})->name('holiday_deduction');
+
 Route::get('/allocation', function () {
     return view('attendance_leave/locationwiseattendance/allocation');
 })->name('allocation');
