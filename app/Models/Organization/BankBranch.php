@@ -8,15 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class BankBranch extends Model
 {
     use HasFactory;
-    
-    protected $table = 'bank_branches';
 
-    protected $fillable = [
-        'bankcode', 'code', 'branch', 'status', 'create_by', 'update_by',
+     protected $fillable = [
+        'bank_code',
+        'branch_name',
+        'code',
+        'status',
+        'created_by',
+        'updated_by',
     ];
-
-    public function bank()
-    {
-        return $this->belongsTo(Bank::class, 'bankcode', 'code');
-    }
 }

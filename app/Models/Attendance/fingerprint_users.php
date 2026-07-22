@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Models\Organization;
+namespace App\Models\Attendance;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bank extends Model
+class fingerprint_users extends Model
 {
     use HasFactory;
 
-    protected $table = 'banks';
     protected $fillable = [
+        'userid',
         'name',
-        'code',
+        'cardno',
+        'role',
+        'password',
+        'devicesno',
+        'location',
         'status',
         'created_by',
         'updated_by',
