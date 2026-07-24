@@ -126,7 +126,7 @@
 				serverSide: true,
 				ajax: { url: '/employee_management/masterdata/company_hierarchy/data', type: 'GET' },
 				columns: [
-					{ data: 'order no', name: 'order no'},
+					{ data: 'order_number', name: 'order_number' },
 					{ data: 'position', name: 'position' },
 					{
 						data: null,
@@ -189,7 +189,7 @@
 			});
 
 			
-			// Edit action handler
+			// Edit action 
 			$(document).on('click', '.editcompany_hierarchy', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -197,7 +197,6 @@
 					url: `/employee_management/masterdata/company_hierarchy/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
-						// Populate form fields
 						$('#company_hierarchy').val(data.company_hierarchy);
 
 						// Form action and method
@@ -216,7 +215,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deletePosition', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

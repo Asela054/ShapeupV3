@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Organization\CompanyController;
+use App\Http\Controllers\Organization\BankController;
 use App\Http\Controllers\Organization\JobCategoryController;
 use App\Http\Controllers\Organization\SalaryAdjustmentController;
 use App\Http\Controllers\Organization\LeaveDeductionController;
@@ -15,6 +16,20 @@ Route::prefix('organization')->name('organization.')->group(function () {
     Route::get('company/{company}/edit', [CompanyController::class, 'edit'])->name('company.edit');
     Route::put('company/{company}', [CompanyController::class, 'update'])->name('company.update');
     Route::delete('company/{company}', [CompanyController::class, 'destroy'])->name('company.destroy');
+
+    //Bank
+    Route::get('bank', [BankController::class, 'index'])->name('bank');
+    Route::get('banks/data', [BankController::class, 'data'])->name('bank.data');
+    Route::post('bank', [BankController::class, 'store'])->name('bank.store');
+    Route::get('bank/{bank}/edit', [BankController::class, 'edit'])->name('bank.edit');
+    Route::put('bank/{bank}', [BankController::class, 'update'])->name('bank.update');
+    Route::delete('bank/{bank}', [BankController::class, 'destroy'])->name('bank.destroy');
+
+    Route::get('bank/{bank}/branches/data', [BankController::class, 'branchData'])->name('bank.branches.data');
+    Route::post('bank/{bank}/branches', [BankController::class, 'branchStore'])->name('bank-branch.store');
+    Route::get('bank-branch/{branch}/edit', [BankController::class, 'branchEdit'])->name('bank-branch.edit');
+    Route::put('bank-branch/{branch}', [BankController::class, 'branchUpdate'])->name('bank-branch.update');
+    Route::delete('bank-branch/{branch}', [BankController::class, 'branchDestroy'])->name('bank-branch.destroy');
 
     //Job Category
     Route::get('jobcategory', [JobCategoryController::class, 'index'])->name('jobcategory');
@@ -38,7 +53,3 @@ Route::prefix('organization')->name('organization.')->group(function () {
     Route::put('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'update'])->name('leavededuction.update');
     Route::delete('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'destroy'])->name('leavededuction.destroy');
 });
-
-Route::get('/bank', function () {
-    return view('organization.bank');
-})->name('bank');
