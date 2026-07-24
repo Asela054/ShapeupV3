@@ -1,19 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmpMaster\SkillController;
+use App\Http\Controllers\EmpMaster\CompanyHierarchyController;
+use App\Http\Controllers\EmpMaster\JobTitleController;
 
 
-Route::get('/skill', function () {
-    return view('employee_management.masterdata.skill');
-})->name('skill');
+Route::prefix('employee_management')->name('employee_management.')->group(function () {
+    Route::prefix('masterdata')->name('masterdata.')->group(function () {
+    //Skill
+    Route::get('skill', [SkillController::class, 'index'])->name('skill');
+    Route::get('skill/data', [SkillController::class, 'data'])->name('skill.data');
+    Route::post('skill', [SkillController::class, 'store'])->name('skill.store');
+    Route::get('skill/{skill}/edit', [SkillController::class, 'edit'])->name('skill.edit');
+    Route::put('skill/{skill}', [SkillController::class, 'update'])->name('skill.update');
+    Route::delete('skill/{skill}', [SkillController::class, 'destroy'])->name('skill.destroy');
 
-Route::get('/company_hierarchy', function () {
-    return view('employee_management.masterdata.company_hierarchy');
-})->name('company_hierarchy');
+    //Company Hierarchy
+    Route::get('company_hierarchy', [CompanyHierarchyController::class, 'index'])->name('company_hierarchy');
+    Route::get('company_hierarchy/data', [CompanyHierarchyController::class, 'data'])->name('company_hierarchy.data');
+    Route::post('company_hierarchy', [CompanyHierarchyController::class, 'store'])->name('company_hierarchy.store');
+    Route::get('company_hierarchy/{companyHierarchy}/edit', [CompanyHierarchyController::class, 'edit'])->name('company_hierarchy.edit');
+    Route::put('company_hierarchy/{companyHierarchy}', [CompanyHierarchyController::class, 'update'])->name('company_hierarchy.update');
+    Route::delete('company_hierarchy/{companyHierarchy}', [CompanyHierarchyController::class, 'destroy'])->name('company_hierarchy.destroy');
 
-Route::get('/job_title', function () {
-    return view('employee_management.masterdata.job_title');
-})->name('job_title');
+    //Job Title
+    Route::get('job_title', [JobTitleController::class, 'index'])->name('job_title');
+    Route::get('job_title/data', [JobTitleController::class, 'data'])->name('job_title.data');
+    Route::post('job_title', [JobTitleController::class, 'store'])->name('job_title.store');
+    Route::get('job_title/{jobTitle}/edit', [JobTitleController::class, 'edit'])->name('job_title.edit');
+    Route::put('job_title/{jobTitle}', [JobTitleController::class, 'update'])->name('job_title.update');
+    Route::delete('job_title/{jobTitle}', [JobTitleController::class, 'destroy'])->name('job_title.destroy');
+
+   }); 
+
+});
 
 Route::get('/pay_grade', function () {
     return view('employee_management.masterdata.pay_grade');

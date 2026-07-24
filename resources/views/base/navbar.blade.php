@@ -65,9 +65,9 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="{{ route('skill') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Skill</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="{{ route('company_hierarchy') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Company Hierarchy</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="{{ route('job_title') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Titles</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('employee_management.masterdata.skill') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Skill</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('employee_management.masterdata.company_hierarchy') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Company Hierarchy</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('employee_management.masterdata.job_title') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Titles</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('pay_grade') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Pay Grades</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('employment_status') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Employment Status</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('financial_category') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Financial Category</span></a></div>
