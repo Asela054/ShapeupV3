@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmpMaster\SkillController;
 use App\Http\Controllers\EmpMaster\CompanyHierarchyController;
 use App\Http\Controllers\EmpMaster\JobTitleController;
+use App\Http\Controllers\EmpMaster\PayGradeController;
 
 
 Route::prefix('employee_management')->name('employee_management.')->group(function () {
@@ -32,13 +33,17 @@ Route::prefix('employee_management')->name('employee_management.')->group(functi
     Route::put('job_title/{jobTitle}', [JobTitleController::class, 'update'])->name('job_title.update');
     Route::delete('job_title/{jobTitle}', [JobTitleController::class, 'destroy'])->name('job_title.destroy');
 
+    //Pay Grade
+    Route::get('pay_grade', [PayGradeController::class, 'index'])->name('pay_grade');
+    Route::get('pay_grade/data', [PayGradeController::class, 'data'])->name('pay_grade.data');
+    Route::post('pay_grade', [PayGradeController::class, 'store'])->name('pay_grade.store');
+    Route::get('pay_grade/{payGrade}/edit', [PayGradeController::class, 'edit'])->name('pay_grade.edit');
+    Route::put('pay_grade/{payGrade}', [PayGradeController::class, 'update'])->name('pay_grade.update');
+    Route::delete('pay_grade/{payGrade}', [PayGradeController::class, 'destroy'])->name('pay_grade.destroy');
+
    }); 
 
 });
-
-Route::get('/pay_grade', function () {
-    return view('employee_management.masterdata.pay_grade');
-})->name('pay_grade');
 
 Route::get('/employment_status', function () {
     return view('employee_management.masterdata.employment_status');

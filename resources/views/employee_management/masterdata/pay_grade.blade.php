@@ -75,8 +75,8 @@
 							<div class="col-md-12">
                                 <label class="form-label required">Pay Grade</label>
                                 <input type="text"
-                                    name="pay group"
-                                    id="pay group"
+                                    name="pay_grade"
+                                    id="pay_grade"
                                     class="form-control"
                                     required />
                             </div>
@@ -109,7 +109,7 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#pay_gradeForm')[0].reset();
-				$('#pay_gradeForm').attr('action', "");
+				$('#pay_gradeForm').attr('action', "{{ route('employee_management.masterdata.pay_grade.store') }}");
 				$('#pay_gradeForm input[name="_method"]').remove();
 				$('#pay_gradeForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Pay Grade');
@@ -123,7 +123,7 @@
 				ajax: { url: '/employee_management/masterdata/pay_grade/data', type: 'GET' },
 				columns: [
 					{ data: 'id', name: 'id'},
-					{ data: 'pay grade', name: 'pay grade' },
+					{ data: 'pay_grade', name: 'pay_grade' },
 					{
 						data: null,
 						className: 'text-end',
@@ -184,9 +184,41 @@
 				}
 			});
 
-			
+			// Form Submit via AJAX
+			$('#pay_gradeForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
 
-			// Edit action handler
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#pay_gradeModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#pay_gradeTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action 
 			$(document).on('click', '.editPayGrade', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -213,7 +245,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deletePayGrade', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
