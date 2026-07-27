@@ -5,6 +5,10 @@ use App\Http\Controllers\EmpMaster\SkillController;
 use App\Http\Controllers\EmpMaster\CompanyHierarchyController;
 use App\Http\Controllers\EmpMaster\JobTitleController;
 use App\Http\Controllers\EmpMaster\PayGradeController;
+use App\Http\Controllers\EmpMaster\EmploymentStatusController;
+use App\Http\Controllers\EmpMaster\FinancialCategoryController;
+use App\Http\Controllers\EmpMaster\ExamSubjectController;
+use App\Http\Controllers\EmpMaster\AssignedDeviceController;
 
 
 Route::prefix('employee_management')->name('employee_management.')->group(function () {
@@ -41,25 +45,41 @@ Route::prefix('employee_management')->name('employee_management.')->group(functi
     Route::put('pay_grade/{payGrade}', [PayGradeController::class, 'update'])->name('pay_grade.update');
     Route::delete('pay_grade/{payGrade}', [PayGradeController::class, 'destroy'])->name('pay_grade.destroy');
 
+    //Employment Status
+    Route::get('employment_status', [EmploymentStatusController::class, 'index'])->name('employment_status');
+    Route::get('employment_status/data', [EmploymentStatusController::class, 'data'])->name('employment_status.data');
+    Route::post('employment_status', [EmploymentStatusController::class, 'store'])->name('employment_status.store');
+    Route::get('employment_status/{employmentStatus}/edit', [EmploymentStatusController::class, 'edit'])->name('employment_status.edit');
+    Route::put('employment_status/{employmentStatus}', [EmploymentStatusController::class, 'update'])->name('employment_status.update');
+    Route::delete('employment_status/{employmentStatus}', [EmploymentStatusController::class, 'destroy'])->name('employment_status.destroy');
+
+    //Financial Category
+    Route::get('financial_category', [FinancialCategoryController::class, 'index'])->name('financial_category');
+    Route::get('financial_category/data', [FinancialCategoryController::class, 'data'])->name('financial_category.data');
+    Route::post('financial_category', [FinancialCategoryController::class, 'store'])->name('financial_category.store');
+    Route::get('financial_category/{financialCategory}/edit', [FinancialCategoryController::class, 'edit'])->name('financial_category.edit');
+    Route::put('financial_category/{financialCategory}', [FinancialCategoryController::class, 'update'])->name('financial_category.update');
+    Route::delete('financial_category/{financialCategory}', [FinancialCategoryController::class, 'destroy'])->name('financial_category.destroy');
+
+    //Exam Subject
+    Route::get('exam_subject', [ExamSubjectController::class, 'index'])->name('exam_subject');
+    Route::get('exam_subject/data', [ExamSubjectController::class, 'data'])->name('exam_subject.data');
+    Route::post('exam_subject', [ExamSubjectController::class, 'store'])->name('exam_subject.store');
+    Route::get('exam_subject/{examSubject}/edit', [ExamSubjectController::class, 'edit'])->name('exam_subject.edit');
+    Route::put('exam_subject/{examSubject}', [ExamSubjectController::class, 'update'])->name('exam_subject.update');
+    Route::delete('exam_subject/{examSubject}', [ExamSubjectController::class, 'destroy'])->name('exam_subject.destroy');
+
+    //Assigned Device
+    Route::get('assigned_device', [AssignedDeviceController::class, 'index'])->name('assigned_device');
+    Route::get('assigned_device/data', [AssignedDeviceController::class, 'data'])->name('assigned_device.data');
+    Route::post('assigned_device', [AssignedDeviceController::class, 'store'])->name('assigned_device.store');
+    Route::get('assigned_device/{assignedDevice}/edit', [AssignedDeviceController::class, 'edit'])->name('assigned_device.edit');
+    Route::put('assigned_device/{assignedDevice}', [AssignedDeviceController::class, 'update'])->name('assigned_device.update');
+    Route::delete('assigned_device/{assignedDevice}', [AssignedDeviceController::class, 'destroy'])->name('assigned_device.destroy');
+
    }); 
 
 });
-
-Route::get('/employment_status', function () {
-    return view('employee_management.masterdata.employment_status');
-})->name('employment_status');
-
-Route::get('/financial_category', function () {
-    return view('employee_management.masterdata.financial_category');
-})->name('financial_category');
-
-Route::get('/exam_subject', function () {
-    return view('employee_management.masterdata.exam_subject');
-})->name('exam_subject');
-
-Route::get('/assigned_device', function () {
-    return view('employee_management.masterdata.assigned_device');
-})->name('assigned_device');
 
 Route::get('/ds_division', function () {
     return view('employee_management.masterdata.ds_division');
