@@ -37,9 +37,9 @@
 					<div class="menu-sub menu-sub-accordion">
 						<div class="menu-item"><a class="menu-link" href="{{ route('organization.company') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Company</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('bank') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Bank</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('jobcategory') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Category</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('salaryadjustment') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Salary Adjustments</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('leavededuction') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Deductions</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('organization.jobcategory') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Job Category</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('organization.salaryadjustments') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Salary Adjustments</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('organization.leavededuction') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Deductions</span></a></div>
 					</div>
 				</div>
 
@@ -111,6 +111,89 @@
 								<div class="menu-item"><a class="menu-link" href="{{ route('training_points') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Points</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('training_summary') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Training Summary</span></a></div>
 							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div data-kt-menu-trigger="click"
+					class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-people fs-2">
+								<span class="path1"></span><span class="path2"></span>
+								<span class="path3"></span><span class="path4"></span>
+								<span class="path5"></span>
+							</i>
+						</span>
+						<span class="menu-title">Attendance & Leave</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<div class="menu-sub menu-sub-accordion">
+
+						<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+							<span class="menu-link">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Attendance Information</span>
+								<span class="menu-arrow"></span>
+							</span>
+							<div class="menu-sub menu-sub-accordion">
+								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_device') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint Device</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_user') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint User</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_sync') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Sync</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_add_edit') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Add & Edit</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('late_attendance_mark') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Late Attendance Mark</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('late_attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Late Attendance Approve</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('approved_late_attendance') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Late Attendances</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('incomplete_attendance') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Incomplete Attendances</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('absent_nopay_apply') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Absent Nopay Apply</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('ot_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">OT Approve</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('approved_ot') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Approved OT</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Approval</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('late_deduction_approval') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Late Deduction Approval</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('salary_adjustments_approval') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Salary Adjustments Approval</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_deduction_approval') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Deduction Approval</span></a></div>
+							</div>
+						</div>
+
+						<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+							<span class="menu-link">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Leave Information</span>
+								<span class="menu-arrow"></span>
+							</span>
+							<div class="menu-sub menu-sub-accordion">
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_request') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Request</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_apply') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Apply</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_type') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Type</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('leave_approvel') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Leave Approvals</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('holidays') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('ignore_days') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Ignore Days</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('coverup_details') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">CoverUp Details</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('holiday_deduction') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Holiday Deduction</span></a></div>
+							</div>
+						</div>
+
+						<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+							<span class="menu-link">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Location Wise Attendance</span>
+								<span class="menu-arrow"></span>
+							</span>
+							<div class="menu-sub menu-sub-accordion">
+								<div class="menu-item"><a class="menu-link" href="{{ route('allocation') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Allocation</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('location_attendance') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('location_attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Attendance Approve</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('unauthorized_location_attendance_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Unauthorized Location Attendance Approve</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('location_allowance_approval') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Location Allowance Approval</span></a></div>
+							</div>
+						</div>
+
+						<div class="menu-item">
+							<a class="menu-link" href="{{ route('daily_summary_approve') }}">
+								<span class="menu-bullet"><span class="bullet bullet-dot"></span></span>
+								<span class="menu-title">Daily Summary Approve</span>
+							</a>
 						</div>
 
 					</div>
