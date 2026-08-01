@@ -74,7 +74,7 @@
 						<div class="row g-4">
 							<div class="col-md-6">
                                 <label class="form-label required">Occupation Group ID</label>
-                                <input type="number" name="occupation group id" id="occupation group id" class="form-control" required />
+                                <input type="number" name="occupation_group_id" id="occupation_group_id" class="form-control" required />
                             </div>
                             <div class="col-md-6">
 								<label class="form-label required">Title</label>
@@ -109,7 +109,7 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#job_titleForm')[0].reset();
-				$('#job_titleForm').attr('action', "");
+				$('#job_titleForm').attr('action', "{{ route('employee_management.masterdata.job_title.store') }}");
 				$('#job_titleForm input[name="_method"]').remove();
 				$('#job_titleForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Job Title');
@@ -122,7 +122,7 @@
 				serverSide: true,
 				ajax: { url: '/employee_management/masterdata/job_title/data', type: 'GET' },
 				columns: [
-					{ data: 'occupation group id', name: 'occupation group id'},
+					{ data: 'occupation_group_id', name: 'occupation_group_id'},
 					{ data: 'title', name: 'title' },
 					{
 						data: null,
@@ -184,9 +184,42 @@
 				}
 			});
 
-			
-			// Edit action handler
-			$(document).on('click', '.editjob_title', function (e) {
+			// Form Submit via AJAX
+			$('#job_titleForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
+
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#job_titleModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#job_titleTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action 
+			$(document).on('click', '.editJobTitle', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
@@ -194,7 +227,8 @@
 					type: 'GET',
 					success: function (data) {
 						// Populate form fields
-						$('#job_title').val(data.job_title);
+						$('#occupation_group_id').val(data.occupation_group_id);
+						$('#title').val(data.title);
 
 						// Form action and method
 						$('#job_titleForm').attr('action', `/employee_management/masterdata/job_title/${id}`);
@@ -212,7 +246,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action
 			$(document).on('click', '.deleteJobTitle', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

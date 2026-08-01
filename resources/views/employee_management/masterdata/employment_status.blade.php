@@ -75,8 +75,8 @@
 							<div class="col-md-12">
                                 <label class="form-label required">Employment Status</label>
                                 <input type="text"
-                                    name="employment status"
-                                    id="employment status"
+                                    name="emp_status"
+                                    id="emp_status"
                                     class="form-control"
                                     required />
                             </div>
@@ -109,21 +109,20 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#employment_statusForm')[0].reset();
-				$('#employment_statusForm').attr('action', "");
+				$('#employment_statusForm').attr('action', "{{ route('employee_management.masterdata.employment_status.store') }}");
 				$('#employment_statusForm input[name="_method"]').remove();
 				$('#employment_statusForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Employment Job Status');
 				$('#employment_statusModal').modal('show');
 			});
 
-            
 			var table = $('#employment_statusTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: { url: '/employee_management/masterdata/employment_status', type: 'GET' },
+				ajax: { url: '/employee_management/masterdata/employment_status/data', type: 'GET' },
 				columns: [
 					{ data: 'id', name: 'id'},
-					{ data: 'employment status', name: 'employment status' },
+					{ data: 'emp_status', name: 'emp_status' },
 					{
 						data: null,
 						className: 'text-end',
@@ -184,9 +183,41 @@
 				}
 			});
 
-			
+			// Form Submit via AJAX
+			$('#employment_statusForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
 
-			// Edit action handler
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#employment_statusModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#employment_statusTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action
 			$(document).on('click', '.editEmploymentStatus', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -195,7 +226,7 @@
 					type: 'GET',
 					success: function (data) {
 						// Populate form fields
-						$('#employment_status').val(data.employment_status);
+						$('#emp_status').val(data.emp_status);
 
 						// Form action and method
 						$('#employment_statusForm').attr('action', `/employee_management/masterdata/employment_status/${id}`);
@@ -204,7 +235,7 @@
 						}
 
 						$('#employment_statusForm button[type="submit"]').text('Update Employment Status');
-						$('#modalTitle').text('Edit employment_status');
+						$('#modalTitle').text('Edit Employment Status');
 						$('#employment_statusModal').modal('show');
 					},
 					error: function () {
@@ -213,7 +244,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deleteEmploymentStatus', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

@@ -75,13 +75,13 @@
 							<div class="col-md-6">
                                 <label class="form-label required">Device Name</label>
                                 <input type="text"
-                                    name="device name"
-                                    id="device name"
+                                    name="device_name"
+                                    id="device_name"
                                     class="form-control"
                                     required />
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label ">Remarks</label>
+                                <label class="form-label">Remarks</label>
                                 <input type="text"
                                     name="remarks"
                                     id="remarks"
@@ -116,20 +116,19 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#assigned_devicesForm')[0].reset();
-				$('#assigned_devicesForm').attr('action', "");
+				$('#assigned_devicesForm').attr('action', "{{ route('employee_management.masterdata.assigned_device.store') }}");
 				$('#assigned_devicesForm input[name="_method"]').remove();
 				$('#assigned_devicesForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Device');
 				$('#assigned_devicesModal').modal('show');
 			});
 
-            
 			var table = $('#assigned_devicesTable').DataTable({
 				processing: true,
 				serverSide: true,
 				ajax: { url: '/employee_management/masterdata/assigned_device/data', type: 'GET' },
 				columns: [
-					{ data: 'device name', name: 'device name'},
+					{ data: 'device_name', name: 'device_name'},
 					{ data: 'remarks', name: 'remarks' },
 					{
 						data: null,
@@ -191,9 +190,41 @@
 				}
 			});
 
-			
+			// Form Submit via AJAX
+			$('#assigned_devicesForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
 
-			// Edit action handler
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#assigned_devicesModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#assigned_devicesTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action 
 			$(document).on('click', '.editDevice', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -202,7 +233,8 @@
 					type: 'GET',
 					success: function (data) {
 						// Populate form fields
-						$('#device').val(data.device);
+						$('#device_name').val(data.device_name);
+						$('#remarks').val(data.remarks);
 
 						// Form action and method
 						$('#assigned_devicesForm').attr('action', `/employee_management/masterdata/assigned_device/${id}`);
@@ -220,7 +252,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deleteDevice', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

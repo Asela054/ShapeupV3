@@ -92,17 +92,17 @@
 						<div class="row g-4">
 							<div class="col-md-6">
                                 <label class="form-label required">Exam Type</label>
-                                <select class="form-select" id="addExamType">
+                                <select class="form-select" id="addExamType" name="exam_type" required>
                                     <option value="">Select Exam Type</option>
                                     <option value="OL">O/L</option>
                                     <option value="AL">A/L</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
-                            <label class="form-label required">Subject</label>
-                            <input type="text" class="form-control" id="addSubjectName"
-                                placeholder="Enter subject name" />
-                        </div>
+								<label class="form-label required">Subject</label>
+								<input type="text" class="form-control" id="addSubjectName" name="subject"
+									placeholder="Enter subject name" required />
+							</div>
 						</div>
                         <br>
 						<div class="d-flex justify-content-end">
@@ -129,21 +129,29 @@
 		@endif
 
 		$(document).ready(function () {
+			let currentExamType = 'OL';
+
             // Create action
 			$('#create_record').on('click', function () {
 				$('#examSubjectsForm')[0].reset();
-				$('#examSubjectsForm').attr('action', "");
+				$('#addExamType').val(currentExamType);
+				$('#examSubjectsForm').attr('action', "{{ route('employee_management.masterdata.exam_subject.store') }}");
 				$('#examSubjectsForm input[name="_method"]').remove();
-				$('#examSubjectsForm button[type="submit"]').text('Add subject');
-				$('#modalTitle').text('Add New subject');
+				$('#examSubjectsForm button[type="submit"]').text('Add Subject');
+				$('#modalTitle').text('Add New Subject');
 				$('#examSubjectsModal').modal('show');
 			});
 
-            
 			var table = $('#examSubjectsTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: { url: '/employee_management/masterdata/exam_subject/data', type: 'GET' },
+				ajax: {
+					url: '/employee_management/masterdata/exam_subject/data',
+					type: 'GET',
+					data: function (d) {
+						d.exam_type = currentExamType;
+					}
+				},
 				columns: [
 					{ data: 'id', name: 'id'},
 					{ data: 'subject', name: 'subject' },
@@ -197,6 +205,12 @@
 				}
 			});
 
+			// Tab switch handler
+			$('#examTypeTabs button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+				currentExamType = $(e.target).data('exam-type');
+				table.ajax.reload();
+			});
+
 			$("input[data-kt-table-filter='search']").on('keyup change', function () {
 				table.search(this.value).draw();
 			});
@@ -207,21 +221,53 @@
 				}
 			});
 
-			
+			// Form Submit via AJAX
+			$('#examSubjectsForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
 
-			// Edit action handler
-			$(document).on('click', '.editSkill', function (e) {
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#examSubjectsModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						table.ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action 
+			$(document).on('click', '.editSubject', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
 					url: `/employee_management/masterdata/exam_subject/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
-						// Populate form fields
-						$('#subject').val(data.subject);
+						$('#addExamType').val(data.exam_type);
+						$('#addSubjectName').val(data.subject);
 
 						// Form action and method
-						$('#examSubjectsForm').attr('action', `/employee_management/masterdata/exam_subjects/${id}`);
+						$('#examSubjectsForm').attr('action', `/employee_management/masterdata/exam_subject/${id}`);
 						if ($('#examSubjectsForm input[name="_method"]').length === 0) {
 							$('#examSubjectsForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -236,7 +282,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deleteSubject', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -252,7 +298,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/employee_management/masterdata/exam_subjects/${id}`,
+							url: `/employee_management/masterdata/exam_subject/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -261,7 +307,7 @@
 									text: response.message,
 									timer: 2000
 								});
-								$('#examSubjectsTable').DataTable().ajax.reload(null, false);
+								table.ajax.reload(null, false);
 							},
 							error: function (xhr) {
 								Swal.fire({

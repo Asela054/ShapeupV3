@@ -128,8 +128,7 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-end mt-5">
-                            <button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-primary" id="bankSubmitBtn">Add Bank</button>
+                            <button type="submit" class="btn btn-primary" id="bankSubmitBtn">Add</button>
                         </div>
                     </form>
                 </div>
@@ -198,8 +197,8 @@
             serverSide: true,
             ajax: { url: '/organization/banks/data', type: 'GET' },
             columns: [
-                { data: 'id',   name: 'id',   width: '60px' },
-                { data: 'code', name: 'code', width: '120px' },
+                { data: 'id',   name: 'id' },
+                { data: 'code', name: 'code' },
                 { data: 'bank', name: 'bank' },
                 {
                     data: null,
@@ -242,10 +241,19 @@
                  "<'row'<'col-sm-12'tr>>" +
                  "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
             buttons: [
-                { extend: 'csv',   text: '<i class="fas fa-file-csv me-1"></i>CSV',   className: 'btn btn-light-primary me-2', exportOptions: { columns: [0,1,2] } },
-                { extend: 'pdf',   text: '<i class="fas fa-file-pdf me-1"></i>PDF',   className: 'btn btn-light-danger me-2',  exportOptions: { columns: [0,1,2] } },
-                { extend: 'print', text: '<i class="fas fa-print me-1"></i>Print',    className: 'btn btn-light-info',         exportOptions: { columns: [0,1,2] } }
-            ],
+					{
+						extend: 'print',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Print</span>`,
+						className: 'btn btn-light-primary me-3',
+						exportOptions: { columns: ':not(:last-child)' }
+					},
+					{
+						extend: 'csv',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>CSV</span>`,
+						className: 'btn btn-light-primary me-3',
+						exportOptions: { columns: ':not(:last-child):not(:nth-child(4))' }
+					}
+				],
             order: [[0, 'desc']],
             language: { emptyTable: 'No banks found' },
             drawCallback: function () { KTMenu.createInstances(); }
@@ -274,8 +282,8 @@
                 serverSide: true,
                 ajax: { url: '/organization/bank/' + activeBankId + '/branches/data', type: 'GET' },
                 columns: [
-                    { data: 'id',     name: 'id',     width: '60px' },
-                    { data: 'code',   name: 'code',   width: '120px' },
+                    { data: 'id',     name: 'id' },
+                    { data: 'code',   name: 'code'},
                     { data: 'branch', name: 'branch' },
                     {
                         data: null,
@@ -312,10 +320,19 @@
                      "<'row'<'col-sm-12'tr>>" +
                      "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
                 buttons: [
-                    { extend: 'csv',   text: '<i class="fas fa-file-csv me-1"></i>CSV',   className: 'btn btn-light-primary me-2', exportOptions: { columns: [0,1,2] } },
-                    { extend: 'pdf',   text: '<i class="fas fa-file-pdf me-1"></i>PDF',   className: 'btn btn-light-danger me-2',  exportOptions: { columns: [0,1,2] } },
-                    { extend: 'print', text: '<i class="fas fa-print me-1"></i>Print',    className: 'btn btn-light-info',         exportOptions: { columns: [0,1,2] } }
-                ],
+					{
+						extend: 'print',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Print</span>`,
+						className: 'btn btn-light-primary me-3',
+						exportOptions: { columns: ':not(:last-child)' }
+					},
+					{
+						extend: 'csv',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>CSV</span>`,
+						className: 'btn btn-light-primary me-3',
+						exportOptions: { columns: ':not(:last-child):not(:nth-child(4))' }
+					}
+				],
                 order: [[0, 'asc']],
                 language: { emptyTable: 'No branches found' },
                 drawCallback: function () { KTMenu.createInstances(); }
@@ -342,7 +359,7 @@
             $('#bankForm').attr('action', '');
             $('#bankForm input[name="_method"]').remove();
             $('#bankModalTitle').text('Add New Bank');
-            $('#bankSubmitBtn').text('Add Bank');
+            $('#bankSubmitBtn').text('Add');
             $('#bankModal').modal('show');
         });
 
@@ -406,7 +423,7 @@
         $('#create_branch').on('click', function () {
             $('#branchForm')[0].reset();
             $('#branchBankId').val(activeBankId);
-            $('#branchForm').attr('action', "");
+            $('#branchForm').attr('action',  `/organization/bank/${activeBankId}/branches`);
             $('#branchForm input[name="_method"]').remove();
             $('#branchModalTitle').text('Add New Branch');
             $('#branchSubmitBtn').text('Add Branch');
