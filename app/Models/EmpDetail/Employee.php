@@ -4,6 +4,7 @@ namespace App\Models\EmpDetail;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\EmpDetail\EmployeeBank;
 
 class Employee extends Model
 {
@@ -168,6 +169,14 @@ class Employee extends Model
     public function salaryDetails()
     {
         return $this->hasMany(EmployeeSalary::class, 'emp_id', 'id');
+    }
+    
+    /**
+     * employees.id → employee_banks.emp_id
+     */
+    public function bankDetail()
+    {
+        return $this->hasMany(EmployeeBank::class, 'emp_id', 'id');
     }
 }
 
