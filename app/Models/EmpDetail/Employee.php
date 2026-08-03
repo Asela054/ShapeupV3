@@ -161,5 +161,13 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeSkill::class, 'emp_id', 'id');
     }
+
+    /**
+     * employees.id → employee_salaries.emp_id
+     */
+    public function salaryDetails()
+    {
+        return $this->hasMany(EmployeeSalary::class, 'emp_id', 'id');
+    }
 }
 
