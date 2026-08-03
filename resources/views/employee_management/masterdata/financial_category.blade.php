@@ -109,14 +109,13 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#financial_categoryForm')[0].reset();
-				$('#financial_categoryForm').attr('action', "");
+				$('#financial_categoryForm').attr('action', "{{ route('employee_management.masterdata.financial_category.store') }}");
 				$('#financial_categoryForm input[name="_method"]').remove();
 				$('#financial_categoryForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Category');
 				$('#financial_categoryModal').modal('show');
 			});
 
-            
 			var table = $('#financial_categoryTable').DataTable({
 				processing: true,
 				serverSide: true,
@@ -184,9 +183,41 @@
 				}
 			});
 
-			
+			// Form Submit via AJAX
+			$('#financial_categoryForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action');
+				const formData = $(this).serialize();
 
-			// Edit action handler
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					success: function (response) {
+						$('#financial_categoryModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#financial_categoryTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'An error occurred';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							const errors = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+							errorMsg = errors;
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
+			// Edit action
 			$(document).on('click', '.editCategory', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -213,7 +244,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action
 			$(document).on('click', '.deleteCategory', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

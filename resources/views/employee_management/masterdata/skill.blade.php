@@ -109,7 +109,7 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#skillForm')[0].reset();
-				$('#skillForm').attr('action', "");
+				$('#skillForm').attr('action', "{{ route('employee_management.masterdata.skill.store') }}");
 				$('#skillForm input[name="_method"]').remove();
 				$('#skillForm button[type="submit"]').text('Add skill');
 				$('#modalTitle').text('Add New skill');
@@ -186,7 +186,7 @@
 
 			
 
-			// Edit action handler
+			// Edit action 
 			$(document).on('click', '.editSkill', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -194,7 +194,6 @@
 					url: `/employee_management/masterdata/skill/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
-						// Populate form fields
 						$('#skill').val(data.skill);
 
 						// Form action and method
@@ -213,7 +212,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deleteSkill', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
