@@ -38,12 +38,19 @@
                             <button type="button" class="btn btn-primary btn-sm px-4" id="create_record">
                                 <i class="fas fa-plus me-2"></i>Add Employee
                             </button>
-                            <button type="button" class="btn btn-light-primary btn-sm px-4" id="upload_record">
+                            <button type="button" class="btn btn-success btn-sm px-4" id="upload_record">
                                 <i class="fas fa-upload me-2"></i>Upload Employee
                             </button>
                         </div>
                     </div>
 
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button"
+                                class="btn btn-warning btn-sm px-4"
+                                id="filter_options_btn">
+                            <i class="fas fa-filter me-2"></i>Filter Options
+                        </button>
+                    </div>
                     <div class="table-responsive">
                         <table class="table align-middle table-row-dashed fs-6 gy-5" id="employeeTable">
                             <thead>
@@ -69,6 +76,63 @@
         </div>
     </div>
 </div>
+
+    <!-- Filter  -->
+	<div class="offcanvas offcanvas-end" tabindex="-1" id="filterOffcanvas">
+		<div class="offcanvas-header">
+			<h2 class="fw-bold">Records Filter Options</h2>
+			<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" id="closeFilterPanel">
+				<i class="ki-duotone ki-cross fs-1">
+					<span class="path1"></span>
+					<span class="path2"></span>
+				</i>
+			</button>
+		</div>
+		<div class="offcanvas-body">
+			<form id="filterForm">
+				<div class="mb-5">
+					<label class="form-label fw-bold">Company</label>
+					<select class="form-select" id="filter_company" name="company_id">
+						<option value="">Select...</option>
+					</select>
+				</div>
+				<div class="mb-5">
+					<label class="form-label fw-bold">Department</label>
+					<select class="form-select" id="filter_department" name="department_id">
+						<option value="">Select...</option>
+					</select>
+				</div>
+				<div class="mb-5">
+					<label class="form-label fw-bold">Location</label>
+					<select class="form-select" id="filter_location" name="location_id">
+						<option value="">Select...</option>
+					</select>
+				</div>
+				<div class="mb-5">
+					<label class="form-label fw-bold">Employee</label>
+					<select class="form-select" id="filter_employee" name="emp_id">
+						<option value="">Select...</option>
+					</select>
+				</div>
+				<div class="mb-5">
+					<label class="form-label fw-bold">From Date</label>
+					<input type="date" class="form-control" id="filter_from_date" name="from_date" />
+				</div>
+				<div class="mb-5">
+					<label class="form-label fw-bold">To Date</label>
+					<input type="date" class="form-control" id="filter_to_date" name="to_date" />
+				</div>
+				<div class="d-flex justify-content-between">
+					<button type="button" class="btn btn-danger" id="resetFilter">
+						<i class="fas fa-sync-alt me-2"></i>Reset
+					</button>
+					<button type="button" class="btn btn-primary" id="applyFilter">
+						<i class="fas fa-search me-2"></i>Search
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
 
 
 {{-- ══════════════════════════════════════════════════════════════
@@ -154,6 +218,9 @@
                             <label class="form-label required">Employee Status</label>
                             <select name="emp_status" id="emp_status" class="form-select" required>
                                 <option value="">Select Status</option>
+                                <option value="permanent">PERMANENT</option>
+                                <option value="temporary">TEMPORARY</option>
+                                <option value="training">TRAINING</option>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -574,7 +641,7 @@
         var table = $('#employeeTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '/employee-management/details/details/list',
+            ajax: '/employee_management/details/list',
             columns: [
                 { data: 'emp_id',       name: 'emp_id' },
                 { data: 'name',         name: 'name' },
@@ -647,13 +714,42 @@
             ]
         });
 
-        /* ── Search ── */
+        
         $("input[data-kt-table-filter='search']").on('keyup change', function () {
             table.search(this.value).draw();
         });
 
-        /* ── CSRF ── */
         $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+        $('#filter_options_btn').on('click', function () {
+                $('#filterOffcanvas').addClass('show');
+                $('body').append('<div class="offcanvas-backdrop fade show" id="filterBackdrop"></div>');
+            });
+
+			function closeFilterOffcanvas() {
+				$('#filterOffcanvas').removeClass('show');
+				$('#filterBackdrop').remove();
+			}
+
+			$('#closeFilterPanel, #filterBackdrop').on('click', function () {
+				closeFilterOffcanvas();
+			});
+			$(document).on('click', '#filterBackdrop', function () {
+				closeFilterOffcanvas();
+			});
+
+			// Reset filters
+			$('#resetFilter').on('click', function () {
+				$('#filterForm')[0].reset();
+				$('#filter_company, #filter_department, #filter_location, #filter_employee').val('').trigger('change');
+				table.draw();
+			});
+
+			// Apply filters
+			$('#applyFilter').on('click', function () {
+				table.draw();
+				closeFilterOffcanvas();
+			});
 
 
         /* ══════════════════════════════════════════════════════════
@@ -661,7 +757,7 @@
         ══════════════════════════════════════════════════════════ */
         $('#create_record').on('click', function () {
             $('#employeeForm')[0].reset();
-            $('#employeeForm').attr('action', '/employee-management/details/details');
+            $('#employeeForm').attr('action', '/employee_management/details');
             $('#employeeForm input[name="_method"]').remove();
             $('#submitBtn').text('Add Employee');
             $('#modalTitle').text('Add New Employee');
@@ -742,7 +838,7 @@
             $('#viewEmpModal').modal('show');
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/personal',
+                url: '/employee_management/details/' + id + '/personal',
                 type: 'GET',
                 success: function (res) {
 
@@ -776,7 +872,7 @@
                     }).join('');
 
                     $('#viewEmpNav').html(navHtml);
-                    $('#viewEmpFullPageBtn').attr('href', '/employee-management/details/details/' + id + '/personal');
+                    $('#viewEmpFullPageBtn').attr('href', '/employee_management/details/' + id + '/personal');
                     $('#viewEmpModalTitle').text('Employee: ' + (res.employee.emp_name_with_initial || ''));
 
                     // ── Photo ──
@@ -825,7 +921,7 @@
             `);
 
             $.ajax({
-                url: '/employee-management/details/' + id + '/' + key,
+                url: '/employee_management/details/' + id + '/' + key,
                 type: 'GET',
                 success: function (res) {
                     $('#viewEmpBody').html(res);  
@@ -847,7 +943,7 @@
             payload['_method'] = 'PUT';
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/personal',
+                url: '/employee_management/details/' + id + '/personal',
                 type: 'POST',
                 data: payload,
                 success: function (res) {
@@ -883,7 +979,7 @@
             $('#fpFormWrap').hide();
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/fingerprint',
+                url: '/employee_management/details/' + id + '/fingerprint',
                 type: 'GET',
                 success: function (res) {
                     if (!res.success) {
@@ -957,7 +1053,7 @@
             if (!payload.location) { Swal.fire({ icon: 'warning', title: 'Required', text: 'FP Location is required.' }); return; }
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/fingerprint',
+                url: '/employee_management/details/' + id + '/fingerprint',
                 type: 'POST',
                 data: payload,
                 success: function (res) {
@@ -1000,7 +1096,7 @@
             $('#ulFormWrap').hide();
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/user-login',
+                url: '/employee_management/details/' + id + '/user-login',
                 type: 'GET',
                 success: function (res) {
                     if (!res.success) {
@@ -1065,7 +1161,7 @@
             $('#ul_email_err, #ul_pw_err, #ul_cpw_err').text('');
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/user-login',
+                url: '/employee_management/details/' + id + '/user-login',
                 type: 'POST',
                 data: payload,
                 success: function (res) {
@@ -1112,7 +1208,7 @@
             $('#resignSubmitBtn').hide();
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/resign',
+                url: '/employee_management/details/' + id + '/resign',
                 type: 'GET',
                 success: function (res) {
                     if (!res.success) {
@@ -1162,7 +1258,7 @@
             }
 
             $.ajax({
-                url: '/employee-management/details/details/' + id + '/resign',
+                url: '/employee_management/details/' + id + '/resign',
                 type: 'POST',
                 data: payload,
                 success: function (res) {
@@ -1198,7 +1294,7 @@
             }).then(function (result) {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/employee-management/details/details/' + id + '/resign/undo',
+                        url: '/employee_management/details/' + id + '/resign/undo',
                         type: 'POST',
                         data: { _token: $('meta[name="csrf-token"]').attr('content') },
                         success: function (res) {
@@ -1243,7 +1339,7 @@
             }).then(function (result) {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: '/employee-management/details/details/' + id,
+                        url: '/employee_management/details/' + id,
                         type: 'DELETE',
                         success: function (res) {
                             Swal.fire({ icon: 'success', title: 'Deleted!', text: res.message, timer: 2000, showConfirmButton: false });
