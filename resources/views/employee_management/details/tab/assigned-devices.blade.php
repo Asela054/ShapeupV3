@@ -1,70 +1,150 @@
-{{-- Add Form --}}
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="row g-3">
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Device Type <span class="text-danger">*</span></label>
-                <select class="form-select form-select-sm" id="ad_device_type">
-                    <option value="">Please Select</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Model Number <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-sm" id="ad_model_number">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Serial Number <span class="text-danger">*</span></label>
-                <input type="text" class="form-control form-control-sm" id="ad_serial_number">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Other Ref. Number</label>
-                <input type="text" class="form-control form-control-sm" id="ad_other_ref_number">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Assigned Date <span class="text-danger">*</span></label>
-                <input type="date" class="form-control form-control-sm" id="ad_assigned_date">
-            </div>
-            <div class="col-md-4">
-                <label class="form-label text-muted small mb-1">Return Date</label>
-                <input type="date" class="form-control form-control-sm" id="ad_returned_date">
+@if(!request()->ajax())
+@extends('base.master')
+
+@section('content')
+<div class="d-flex flex-column flex-column-fluid">
+    <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+        <div id="kt_app_toolbar_container" class="app-container container-fluid d-flex flex-stack">
+            <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+                <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 align-items-center my-0">
+                    <i class="fas fa-laptop text-primary me-2"></i>Assigned Devices
+                </h1>
+                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
+                    <li class="breadcrumb-item text-muted">Employee Management</li>
+                    <li class="breadcrumb-separator"></li>
+                    <li class="breadcrumb-item text-muted">Details</li>
+                    <li class="breadcrumb-separator"></li>
+                    <li class="breadcrumb-item text-gray-700">Assigned Devices</li>
+                </ul>
             </div>
         </div>
+    </div>
 
-        <div class="d-flex justify-content-end gap-2 mt-3">
-            <button type="button" class="btn btn-primary btn-sm px-4" id="adAddBtn">
-                <i class="fas fa-plus me-1"></i> Add
-            </button>
-            <button type="button" class="btn btn-danger btn-sm px-4" id="adClearBtn">
-                <i class="fas fa-trash me-1"></i> Clear
-            </button>
+    <div id="kt_app_content" class="app-content flex-column-fluid">
+        <div id="kt_app_content_container" class="app-container container-fluid">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    <div class="row g-0">
+                        {{-- ── LEFT: Content Section ── --}}
+                        <div class="col-lg-9 p-4">
+@endif
+
+<div class="assigned-devices-container">
+    @if(request()->ajax())
+    <div class="d-flex align-items-center mb-4">
+        <i class="fas fa-laptop text-dark fs-3 me-2"></i>
+        <h4 class="fw-bold text-dark mb-0">Assigned Devices</h4>
+    </div>
+    @endif
+
+    {{-- ── Add / Edit Form ── --}}
+    <div class="card border-0 mb-4" style="background-color: #f1f5f9; border-radius: 8px;">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center mb-3">
+                <span class="fw-bold text-dark me-2" style="font-size: 0.95rem;">Device Details</span>
+                <div class="flex-grow-1 border-bottom"></div>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Device Type <span class="text-danger">*</span></label>
+                    <select class="form-select form-select-sm bg-white" id="ad_device_type">
+                        <option value="">Please Select</option>
+                        @if(isset($deviceTypes) && count($deviceTypes) > 0)
+                            @foreach($deviceTypes as $dt)
+                                <option value="{{ $dt->id }}">{{ $dt->device_name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Model Number <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm bg-white" id="ad_model_number">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Serial Number <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control form-control-sm bg-white" id="ad_serial_number">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Other Ref. Number</label>
+                    <input type="text" class="form-control form-control-sm bg-white" id="ad_other_ref_number">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Assigned Date <span class="text-danger">*</span></label>
+                    <input type="date" class="form-control form-control-sm bg-white" id="ad_assigned_date">
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label text-muted small mb-1">Return Date</label>
+                    <input type="date" class="form-control form-control-sm bg-white" id="ad_returned_date">
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-3">
+                <button type="button" class="btn btn-primary btn-sm px-4" id="adAddBtn" style="background-color: #0066ff; border-color: #0066ff;">
+                    <i class="fas fa-plus me-1"></i> Add
+                </button>
+                <button type="button" class="btn btn-danger btn-sm px-4" id="adClearBtn">
+                    <i class="fas fa-trash me-1"></i> Clear
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    {{-- ── DataTable ── --}}
+    <div class="table-responsive">
+        <table class="table align-middle table-row-dashed fs-6 gy-3" id="adTable">
+            <thead>
+                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                    <th>Device Type</th>
+                    <th>Model Number</th>
+                    <th>Serial Number</th>
+                    <th>Other Ref Number</th>
+                    <th>Assigned Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                    <th class="text-end">Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <input type="hidden" id="ad_emp_id" value="{{ $emp->id ?? ($employee->id ?? '') }}">
+    <input type="hidden" id="ad_edit_id" value="">
+</div>
+
+@if(!request()->ajax())
+                        </div>
+
+                        {{-- ── RIGHT: Sidebar Navigation ── --}}
+                        <div class="col-lg-3 border-start" style="background:#f8fafc;">
+                            {{-- Photo Header --}}
+                            <div class="text-center py-4 border-bottom">
+                                <div id="viewEmpPhotoWrap"
+                                     style="width:110px;height:110px;border-radius:50%;overflow:hidden;
+                                            margin:0 auto;background:#e2e8f0;display:flex;
+                                            align-items:center;justify-content:center;">
+                                    @if(isset($photo_url) && $photo_url)
+                                        <img src="{{ $photo_url }}" alt="Photo" style="width:100%;height:100%;object-fit:cover;">
+                                    @else
+                                        <i class="fas fa-user text-muted" style="font-size:3rem;"></i>
+                                    @endif
+                                </div>
+                            </div>
+                            @include('employee_management.details.tab.sidebar')
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+@endsection
+@endif
 
-<hr class="my-3">
-
-{{-- DataTable --}}
-<div class="table-responsive">
-    <table class="table align-middle table-row-dashed fs-6 gy-3" id="adTable">
-        <thead>
-            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                <th>Device Type</th>
-                <th>Model Number</th>
-                <th>Serial Number</th>
-                <th>Other Ref Number</th>
-                <th>Assigned Date</th>
-                <th>Return Date</th>
-                <th>Status</th>
-                <th class="text-end">Action</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-<input type="hidden" id="ad_emp_id" value="{{ $emp->id ?? '' }}">
-<input type="hidden" id="ad_edit_id" value="">
-
+@push('scripts')
 <script>
 $(document).ready(function () {
 
@@ -72,15 +152,21 @@ $(document).ready(function () {
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
     });
 
+    var empId = $('#ad_emp_id').val();
+
     var adTable = $('#adTable').DataTable({
         processing: true,
         serverSide: false,
         ajax: {
-            url: '/employee-management/details/' + $('#ad_emp_id').val() + '/tab/assigned-devices/list',
-            type: 'GET'
+            url: '/employee_management/details/' + empId + '/assigned-devices/list',
+            type: 'GET',
+            error: function () {
+                // Fallback to alias path if needed
+                adTable.ajax.url('/employee_management/details/' + empId + '/tab/assigned-devices/list').load();
+            }
         },
         columns: [
-            { data: 'device_type',      name: 'device_type' },
+            { data: 'device_type_name', name: 'device_type_name' },
             { data: 'model_number',     name: 'model_number' },
             { data: 'serial_number',    name: 'serial_number' },
             { data: 'other_ref_number', name: 'other_ref_number' },
@@ -103,31 +189,27 @@ $(document).ready(function () {
                 }
             }
         ],
-        dom: "<'row mb-3'<'col-sm-6'l><'col-sm-6 d-flex justify-content-end'B>>" +
+        dom: "<'row mb-3 align-items-center'<'col-sm-6'l><'col-sm-6 d-flex justify-content-end'B>>" +
              "<'row'<'col-sm-12'tr>>" +
              "<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
         buttons: [
             {
                 extend: 'csv',
                 text: '<i class="fas fa-file-csv me-1"></i> CSV',
-                className: 'btn btn-success btn-sm me-1',
-                exportOptions: { columns: ':not(:last-child)' }
-            },
-            {
-                extend: 'pdf',
-                text: '<i class="fas fa-file-pdf me-1"></i> PDF',
-                className: 'btn btn-danger btn-sm me-1',
+                className: 'btn btn-success btn-sm me-2',
                 exportOptions: { columns: ':not(:last-child)' }
             },
             {
                 extend: 'print',
                 text: '<i class="fas fa-print me-1"></i> Print',
-                className: 'btn btn-info btn-sm me-1',
+                className: 'btn btn-info btn-sm me-2',
                 exportOptions: { columns: ':not(:last-child)' }
             }
         ],
         drawCallback: function () {
-            KTMenu.createInstances();
+            if (typeof KTMenu !== 'undefined') {
+                KTMenu.createInstances();
+            }
         }
     });
 
@@ -159,9 +241,9 @@ $(document).ready(function () {
             return;
         }
 
-        var url = '/employee-management/details/' + empId + '/tab/assigned-devices';
+        var url = '/employee_management/details/' + empId + '/assigned-devices';
         if (editId) {
-            url = '/employee-management/details/' + empId + '/tab/assigned-devices/' + editId;
+            url = '/employee_management/details/' + empId + '/assigned-devices/' + editId;
         }
 
         $.ajax({
@@ -178,11 +260,11 @@ $(document).ready(function () {
             },
             success: function (res) {
                 if (res.success) {
-                    Swal.fire({ icon: 'success', title: 'Success', text: res.message, timer: 2000, showConfirmButton: false });
+                    Swal.fire({ icon: 'success', title: 'Success', text: res.message || 'Saved successfully', timer: 2000, showConfirmButton: false });
                     adTable.ajax.reload(null, false);
                     adClearForm();
                 } else {
-                    Swal.fire({ icon: 'error', title: 'Error', text: res.message });
+                    Swal.fire({ icon: 'error', title: 'Error', text: res.message || 'Operation failed.' });
                 }
             },
             error: function (xhr) {
@@ -219,7 +301,7 @@ $(document).ready(function () {
         var empId = $('#ad_emp_id').val();
 
         $.ajax({
-            url: '/employee-management/details/' + empId + '/tab/assigned-devices/' + id + '/edit',
+            url: '/employee_management/details/' + empId + '/assigned-devices/' + id + '/edit',
             type: 'GET',
             success: function (res) {
                 if (res.success) {
@@ -256,7 +338,7 @@ $(document).ready(function () {
         }).then(function (result) {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/employee-management/details/' + empId + '/tab/assigned-devices/' + id,
+                    url: '/employee_management/details/' + empId + '/assigned-devices/' + id,
                     type: 'POST',
                     data: { _method: 'DELETE' },
                     success: function (res) {
@@ -277,3 +359,4 @@ $(document).ready(function () {
 
 });
 </script>
+@endpush
