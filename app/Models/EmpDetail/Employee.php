@@ -5,6 +5,8 @@ namespace App\Models\EmpDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\EmpDetail\EmployeeBank;
+use App\Models\Organization\Branch;
+use App\Models\Organization\Department;
 
 class Employee extends Model
 {
@@ -177,6 +179,22 @@ class Employee extends Model
     public function bankDetail()
     {
         return $this->hasMany(EmployeeBank::class, 'emp_id', 'id');
+    }
+
+    /**
+     * employees.id → branches.branch_head_emp_id
+     */
+    public function headedBranches()
+    {
+        return $this->hasMany(Branch::class, 'branch_head_emp_id', 'id');
+    }
+
+    /**
+     * employees.id → departments.dep_head_emp_id
+     */
+    public function headedDepartments()
+    {
+        return $this->hasMany(Department::class, 'dep_head_emp_id', 'id');
     }
 }
 
