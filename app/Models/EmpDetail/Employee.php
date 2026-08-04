@@ -164,6 +164,14 @@ class Employee extends Model
     }
 
     /**
+     * employees.id → employee_salaries.emp_id
+     */
+    public function salaryDetails()
+    {
+        return $this->hasMany(EmployeeSalary::class, 'emp_id', 'id');
+    }
+    
+    /**
      * employees.id → employee_banks.emp_id
      */
     public function bankDetail()
