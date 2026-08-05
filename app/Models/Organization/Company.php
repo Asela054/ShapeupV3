@@ -4,6 +4,8 @@ namespace App\Models\Organization;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Organization\Branch;
+use App\Models\Organization\Department;
 
 class Company extends Model
 {
@@ -24,5 +26,21 @@ class Company extends Model
     public function bankDetails()
     {
         return $this->hasMany(CompanyBankDetail::class, 'company_id');
+    }
+
+    /**
+     * companies.id → branches.company_id
+     */
+    public function branches()
+    {
+        return $this->hasMany(Branch::class, 'company_id', 'id');
+    }
+
+    /**
+     * companies.id → departments.company_id
+     */
+    public function departments()
+    {
+        return $this->hasMany(Department::class, 'company_id', 'id');
     }
 }
