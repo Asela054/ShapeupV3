@@ -140,7 +140,7 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_device') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint Device</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_leave.attendanceinformation.fingerprint_device') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint Device</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_user') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint User</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_sync') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Sync</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_add_edit') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Add & Edit</span></a></div>
