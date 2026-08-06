@@ -190,7 +190,7 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#fingerprint_deviceForm')[0].reset();
-				$('#fingerprint_deviceForm').attr('action', "");
+				$('#fingerprint_deviceForm').attr('action', "{{ route('attendance_leave.attendanceinformation.fingerprint_device.store') }}");
 				$('#fingerprint_deviceForm input[name="_method"]').remove();
 				$('#fingerprint_deviceForm button[type="submit"]').text('Add ');
 				$('#modalTitle').text('Add Finger Print');
@@ -201,7 +201,7 @@
 			var table = $('#fingerprint_deviceTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: { url: '/attendance_leave/attendanceinformation/fingerprint_device/data', type: 'GET' },
+				ajax: { url: '{{ route('attendance_leave.attendanceinformation.fingerprint_device.data') }}', type: 'GET' },
 				columns: [
 					{ data: 'id', name: 'id'},
 					{ data: 'ip', name: 'ip' },

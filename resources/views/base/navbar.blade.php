@@ -47,7 +47,7 @@
 					class="menu-item menu-accordion">
 					<span class="menu-link">
 						<span class="menu-icon">
-							<i class="ki-duotone ki-people fs-2">
+							<i class="ki-duotone ki-profile-user fs-2">
 								<span class="path1"></span><span class="path2"></span>
 								<span class="path3"></span><span class="path4"></span>
 								<span class="path5"></span>
@@ -122,7 +122,7 @@
 					class="menu-item menu-accordion">
 					<span class="menu-link">
 						<span class="menu-icon">
-							<i class="ki-duotone ki-people fs-2">
+							<i class="ki-duotone ki-calendar-8 fs-2">
 								<span class="path1"></span><span class="path2"></span>
 								<span class="path3"></span><span class="path4"></span>
 								<span class="path5"></span>
@@ -140,8 +140,8 @@
 								<span class="menu-arrow"></span>
 							</span>
 							<div class="menu-sub menu-sub-accordion">
-								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_device') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint Device</span></a></div>
-								<div class="menu-item"><a class="menu-link" href="{{ route('fingerprint_user') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint User</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_leave.attendanceinformation.fingerprint_device') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint Device</span></a></div>
+								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_leave.attendanceinformation.fingerprint_user') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Fingerprint User</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_sync') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Sync</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('attendance_add_edit') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Attendance Add & Edit</span></a></div>
 								<div class="menu-item"><a class="menu-link" href="{{ route('late_attendance_mark') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Late Attendance Mark</span></a></div>
@@ -198,6 +198,27 @@
 							</a>
 						</div>
 
+					</div>
+				</div>
+
+				<div data-kt-menu-trigger="click"
+					class="menu-item menu-accordion">
+					<span class="menu-link">
+						<span class="menu-icon">
+							<i class="ki-duotone ki-time fs-2">
+								<span class="path1"></span><span class="path2"></span>
+							</i>
+						</span>
+						<span class="menu-title">Shift Management</span>
+						<span class="menu-arrow"></span>
+					</span>
+					<div class="menu-sub menu-sub-accordion">
+						<div class="menu-item"><a class="menu-link" href="{{ route('employee_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Shifts</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('work_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Work Shifts</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('additional_work_hours') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Additional Work Hours Assign</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts_view') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts View</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts Approve</span></a></div>
 					</div>
 				</div>
 
