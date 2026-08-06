@@ -69,6 +69,61 @@
 
                     </div>
                 </div>
+                <div class="modal fade" id="fingerprintUserModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="fw-bold" id="modalTitle">Edit Fingerprint User</h2>
+                                <button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+                                    <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="fingerprintUserForm" method="POST" action="">
+                                    @csrf
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label required">User ID</label>
+                                            <input type="number" name="userid" id="userid" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Name</label>
+                                            <input type="text" name="name" id="fp_name" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Card No</label>
+                                            <input type="text" name="cardno" id="cardno" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Role</label>
+                                            <input type="text" name="role" id="role" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Password</label>
+                                            <input type="text" name="password" id="fp_password" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Device No</label>
+                                            <input type="text" name="devicesno" id="devicesno" class="form-control" required />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label required">Location</label>
+                                            <select name="location" id="fp_location" class="form-select" required>
+                                                <option value="">Select</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary" id="submitBtn">Update User</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -92,13 +147,54 @@
             }
         });
 
+        // Populate location dropdowns
+        function loadLocations() {
+            $.ajax({
+                url: '{{ route("attendance_leave.attendanceinformation.fingerprint_user.data") }}',
+                type: 'GET',
+                success: function (data) {
+                    let options = '<option value="">Select</option>';
+                    data.forEach(function (loc) {
+                        options += `<option value="${loc.id}">${loc.location_name}</option>`;
+                    });
+                    $('#locationFilter').html(options);
+                    $('#fp_location').html(options);
+                }
+            });
+        }
+        loadLocations();
+
+        // Edit form submit
+        $('#fingerprintUserForm').on('submit', function (e) {
+            e.preventDefault();
+            const form = $(this);
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function (response) {
+                    $('#fingerprintUserModal').modal('hide');
+                    Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+                    table.ajax.reload(null, false);
+                },
+                error: function (xhr) {
+                    if (xhr.status === 422) {
+                        const msg = Object.values(xhr.responseJSON.errors).map(e => e[0]).join('<br>');
+                        Swal.fire({ icon: 'error', title: 'Validation Error', html: msg });
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong' });
+                    }
+                }
+            });
+        });
         var selectedLocation = '';
 
         var table = $('#fingerprintUserTable').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
-                url: '/attendance_leave/attendanceinformation/fingerprint_user/data',
+                url: '{{ route("attendance_leave.attendanceinformation.fingerprint_user.data") }}',
                 type: 'GET',
                 data: function (d) {
                     d.location_id = selectedLocation;
@@ -205,7 +301,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: `/attendance_leave/attendanceinformation/fingerprint_user/${id}`,
+                        url: `/attendance_leave/attendanceinformation/fingerprint_device/${id}`,
                         type: 'DELETE',
                         success: function (response) {
                             Swal.fire({ icon: 'success', title: 'Deleted!', text: response.message, timer: 2000 });
