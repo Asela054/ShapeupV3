@@ -69,16 +69,16 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="addShiftForm" method="POST" action="">
+					<form id="addShiftForm" method="POST" action="{{ route('shift_management.additional_work_hours.store') }}">
 						@csrf
 						<div class="row g-4">
 							<div class="col-md-6">
 								<label class="form-label required">Shift Type</label>
 								<select name="shift_type_id" id="shift_type_id" class="form-select" required>
 									<option value="">Select Shift</option>
-									{{-- @foreach($shiftTypes as $type)
+									@foreach($shiftTypes ?? [] as $type)
 										<option value="{{ $type->id }}">{{ $type->shift_name }} - {{ $type->shift_code }}</option>
-									@endforeach --}}
+									@endforeach
 								</select>
 							</div>
 							<div class="col-md-6">
@@ -113,9 +113,9 @@
 								<label class="form-label required">Employee</label>
 								<select id="add_employee_id" class="form-select" style="width:100%">
 									<option value="">Select...</option>
-									{{-- @foreach($employees as $emp)
-										<option value="{{ $emp->id }}">{{ $emp->emp_fullname }}</option>
-									@endforeach --}}
+									@foreach($employees ?? [] as $emp)
+										<option value="{{ $emp->emp_id ?? $emp->id }}">{{ $emp->calling_name ?: $emp->emp_name_with_initial }}</option>
+									@endforeach
 								</select>
 							</div>
 							<div class="col-md-2">
@@ -171,9 +171,9 @@
 								<label class="form-label required">Shift Type</label>
 								<select name="shift_type_id" id="edit_shift_type_id" class="form-select" required>
 									<option value="">Select Shift</option>
-									{{-- @foreach($shiftTypes as $type)
+									@foreach($shiftTypes ?? [] as $type)
 										<option value="{{ $type->id }}">{{ $type->shift_name }} - {{ $type->shift_code }}</option>
-									@endforeach --}}
+									@endforeach
 								</select>
 							</div>
 							<div class="col-md-6">
@@ -208,9 +208,9 @@
 								<label class="form-label required">Employee</label>
 								<select id="edit_employee_id" class="form-select" style="width:100%">
 									<option value="">Select...</option>
-									{{-- @foreach($employees as $emp)
-										<option value="{{ $emp->id }}">{{ $emp->emp_fullname }}</option>
-									@endforeach --}}
+									@foreach($employees ?? [] as $emp)
+										<option value="{{ $emp->emp_id ?? $emp->id }}">{{ $emp->calling_name ?: $emp->emp_name_with_initial }}</option>
+									@endforeach
 								</select>
 							</div>
 							<div class="col-md-2">
@@ -263,6 +263,9 @@
 							<label class="form-label">Shift Type</label>
 							<select id="view_shift_type_id" class="form-select" disabled>
 								<option value="">Select Shift</option>
+								@foreach($shiftTypes ?? [] as $type)
+									<option value="{{ $type->id }}">{{ $type->shift_name }} - {{ $type->shift_code }}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="col-md-6">
@@ -313,19 +316,16 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="text-end mb-3">
-						<a href="" id="csvSampleDownload" class="fw-semibold">CSV Format - Download Sample File</a>
-					</div>
-					<form id="csvUploadForm" enctype="multipart/form-data" method="POST" action="">
+					<form id="csvUploadForm" enctype="multipart/form-data" method="POST" action="{{ route('shift_management.additional_work_hours.csv') }}">
 						@csrf
 						<div class="row g-4">
 							<div class="col-md-6">
 								<label class="form-label required">Shift Type</label>
 								<select name="shift_type_id" id="csv_shift_type_id" class="form-select" required>
 									<option value="">Select Shift</option>
-									{{-- @foreach($shiftTypes as $type)
+									@foreach($shiftTypes ?? [] as $type)
 										<option value="{{ $type->id }}">{{ $type->shift_name }} - {{ $type->shift_code }}</option>
-									@endforeach --}}
+									@endforeach
 								</select>
 							</div>
 							<div class="col-md-6">
@@ -373,7 +373,10 @@
 			var table = $('#additionalWorkHoursTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: "{ url: '/shift_management/additional_work_hours/data', type: 'GET' },",
+				ajax: {
+					url: "{{ route('shift_management.additional_work_hours.data') }}",
+					type: 'GET'
+				},
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'date', name: 'date' },
@@ -417,7 +420,9 @@
 				],
 
 				drawCallback: function () {
-					KTMenu.createInstances();
+					if (typeof KTMenu !== 'undefined') {
+						KTMenu.createInstances();
+					}
 				}
 			});
 
@@ -425,7 +430,6 @@
 				table.search(this.value).draw();
 			});
 
-			
 			// Add Shift 
 			var addShiftList = [];
 
@@ -493,17 +497,17 @@
 				};
 
 				$.ajax({
-				    url: "/shift_management/additional_work_hours",
-				    type: 'POST',
-				 	data: payload,
-				 	success: function (response) {
-				 		Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
-				 		$('#addShiftModal').modal('hide');
-				 		$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
-				 	},
-				 	error: function (xhr) {
-				 		Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to create shift' });
-				 	}
+					url: "{{ route('shift_management.additional_work_hours.store') }}",
+					type: 'POST',
+					data: payload,
+					success: function (response) {
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						$('#addShiftModal').modal('hide');
+						$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to create shift' });
+					}
 				});
 			});
 
@@ -542,7 +546,7 @@
 
 			$('#printShiftBtn').on('click', function () {
 				const id = $('#view_id').val();
-				window.open(`` /* print route with id */, '_blank');
+				window.open(`/shift_management/additional_work_hours/${id}/view`, '_blank');
 			});
 
 			$('#approveShiftBtn').on('click', function () {
@@ -573,7 +577,6 @@
 				});
 			});
 
-			
 			// Edit Shift
 			var editShiftList = [];
 
@@ -593,7 +596,7 @@
 						editShiftList = data.employees || [];
 						renderEditShiftList();
 
-						$('#editShiftForm').attr('action', `` /* update route with id */);
+						$('#editShiftForm').attr('action', `/shift_management/additional_work_hours/${id}`);
 
 						$('#editShiftModal').modal('show');
 					},
@@ -673,21 +676,20 @@
 				};
 
 				$.ajax({
-				 	url: $('#editShiftForm').attr('action'),
-				 	type: 'PUT',
-				 	data: payload,
-				 	success: function (response) {
-				 		Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
-				 		$('#editShiftModal').modal('hide');
-				 		$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
-				 	},
-				 	error: function () {
-				 		Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to update shift' });
-				 	}
+					url: $('#editShiftForm').attr('action'),
+					type: 'PUT',
+					data: payload,
+					success: function (response) {
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						$('#editShiftModal').modal('hide');
+						$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
+					},
+					error: function () {
+						Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to update shift' });
+					}
 				});
 			});
 
-			
 			// Delete Shift
 			$(document).on('click', '.deleteShift', function (e) {
 				e.preventDefault();
@@ -705,7 +707,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/shift_management/additional_work_hours/${id}/delete`,
+							url: `/shift_management/additional_work_hours/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -739,20 +741,20 @@
 
 				const formData = new FormData(this);
 
-				 $.ajax({
-				 	url: `/shift_management/additional_work_hours/${id}/csv`,
-				 	type: 'POST',
-				 	data: formData,
-				 	processData: false,
-				 	contentType: false,
-				 	success: function (response) {
-				 		Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
-				 		$('#csvUploadModal').modal('hide');
-				 		$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
-				 	},
-				 	error: function () {
-				 		Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to upload CSV' });
-				 	}
+				$.ajax({
+					url: "{{ route('shift_management.additional_work_hours.csv') }}",
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						$('#csvUploadModal').modal('hide');
+						$('#additionalWorkHoursTable').DataTable().ajax.reload(null, false);
+					},
+					error: function () {
+						Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to upload CSV' });
+					}
 				});
 			});
 		});

@@ -213,9 +213,9 @@
 						<span class="menu-arrow"></span>
 					</span>
 					<div class="menu-sub menu-sub-accordion">
-						<div class="menu-item"><a class="menu-link" href="{{ route('employee_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Shifts</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('work_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Work Shifts</span></a></div>
-						<div class="menu-item"><a class="menu-link" href="{{ route('additional_work_hours') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Additional Work Hours Assign</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('shift_management.employee_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Employee Shifts</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('shift_management.work_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Work Shifts</span></a></div>
+						<div class="menu-item"><a class="menu-link" href="{{ route('shift_management.additional_work_hours') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Additional Work Hours Assign</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts_view') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts View</span></a></div>
 						<div class="menu-item"><a class="menu-link" href="{{ route('month_shifts_approve') }}"><span class="menu-bullet"><span class="bullet bullet-dot"></span></span><span class="menu-title">Month Shifts Approve</span></a></div>

@@ -74,7 +74,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="workShiftForm" method="POST" action="">
+					<form id="workShiftForm" method="POST" action="{{ route('shift_management.work_shifts.store') }}">
 						@csrf
 						<div class="row g-4">
 							<div class="col-md-6">
@@ -218,6 +218,11 @@
 		@endif
 
 		$(document).ready(function () {
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
 
 			// Init time pickers (12hr, matches --:-- -- placeholder style)
 			function initFlatpickrTime() {
@@ -240,7 +245,7 @@
 			// Create action
 			$('#create_record').on('click', function () {
 				resetWorkShiftForm();
-				$('#workShiftForm').attr('action', "");
+				$('#workShiftForm').attr('action', "{{ route('shift_management.work_shifts.store') }}");
 				$('#workShiftForm input[name="_method"]').remove();
 				$('#workShiftSubmitBtn').text('Add');
 				$('#modalTitle').text('Add Work Shift');
@@ -250,7 +255,10 @@
 			var table = $('#workShiftTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: "{ url: '/shift_management/work_shifts/data', type: 'GET' },", 
+				ajax: {
+					url: "{{ route('shift_management.work_shifts.data') }}",
+					type: 'GET'
+				},
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'shift_name', name: 'shift_name' },
@@ -307,18 +315,14 @@
 					}
 				],
 				drawCallback: function () {
-					KTMenu.createInstances();
+					if (typeof KTMenu !== 'undefined') {
+						KTMenu.createInstances();
+					}
 				}
 			});
 
 			$("input[data-kt-table-filter='search']").on('keyup change', function () {
 				table.search(this.value).draw();
-			});
-
-			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
 			});
 
 			// Edit action 
@@ -354,7 +358,6 @@
 						$(`input[name="off_next_day"][value="${data.off_next_day}"]`).prop('checked', true);
 						$(`input[name="on_next_day"][value="${data.on_next_day}"]`).prop('checked', true);
 
-						// Re-init so flatpickr picks up the values just set
 						initFlatpickrTime();
 
 						// Form action and method
@@ -363,7 +366,7 @@
 							$('#workShiftForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
 
-						$('#workShiftSubmitBtn').text('Edit');
+						$('#workShiftSubmitBtn').text('Update');
 						$('#modalTitle').text('Edit Work Shift');
 						$('#workShiftModal').modal('show');
 					},
@@ -389,7 +392,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-					        url: `/shift_management/work_shifts/${id}/delete`, 
+							url: `/shift_management/work_shifts/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({

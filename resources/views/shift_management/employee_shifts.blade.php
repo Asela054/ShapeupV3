@@ -80,24 +80,36 @@
 					<label class="form-label">Company</label>
 					<select class="form-select filter-select2" id="filter_company" name="company_id">
 						<option value="">Select...</option>
+						@foreach($companies ?? [] as $company)
+							<option value="{{ $company->id }}">{{ $company->name }}</option>
+						@endforeach
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label">Department</label>
 					<select class="form-select filter-select2" id="filter_department" name="department_id">
 						<option value="">Select...</option>
+						@foreach($departments ?? [] as $department)
+							<option value="{{ $department->id }}">{{ $department->name }}</option>
+						@endforeach
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label">Location</label>
 					<select class="form-select filter-select2" id="filter_location" name="location_id">
 						<option value="">Select...</option>
+						@foreach($branches ?? [] as $branch)
+							<option value="{{ $branch->id }}">{{ $branch->branch_name ?? $branch->name }}</option>
+						@endforeach
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label">Employee</label>
 					<select class="form-select filter-select2" id="filter_employee" name="emp_id">
 						<option value="">Select...</option>
+						@foreach($employees ?? [] as $employee)
+							<option value="{{ $employee->emp_id ?? $employee->id }}">{{ $employee->calling_name ?: $employee->emp_name_with_initial }}</option>
+						@endforeach
 					</select>
 				</div>
 				<div class="d-flex justify-content-between">
@@ -116,7 +128,7 @@
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="fw-bold" id="modalTitle">Add Shift</h2>
+					<h2 class="fw-bold" id="modalTitle">Edit Shift</h2>
 					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
 						<i class="ki-duotone ki-cross fs-1">
 							<span class="path1"></span>
@@ -140,14 +152,17 @@
 							<div class="col-md-12">
 								<label class="form-label required">Shift</label>
 								<select name="shift_id" id="shift_id" class="form-select" data-placeholder="Please Select" required>
-									<option></option>
+									<option value="">Select...</option>
+									@foreach($shifts ?? [] as $s)
+										<option value="{{ $s->id }}">{{ $s->shift_name }} ({{ $s->onduty_time }} - {{ $s->offduty_time }})</option>
+									@endforeach
 								</select>
 							</div>
 						</div>
 						<br>
 						<div class="d-flex justify-content-end">
 							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
-							<button type="submit" class="btn btn-primary">Edit</button>
+							<button type="submit" class="btn btn-primary">Update</button>
 						</div>
 					</form>
 				</div>
@@ -204,7 +219,16 @@
 			var table = $('#employeeShiftsTable').DataTable({
 				processing: true,
 				serverSide: true,
-				ajax: "{ url: '/shift_management/employee_shifts/data', type: 'GET' },", 
+				ajax: {
+					url: "{{ route('shift_management.employee_shifts.data') }}",
+					type: 'GET',
+					data: function (d) {
+						d.company_id = $('#filter_company').val();
+						d.department_id = $('#filter_department').val();
+						d.location_id = $('#filter_location').val();
+						d.emp_id = $('#filter_employee').val();
+					}
+				},
 				columns: [
 					{ data: 'employee_name', name: 'employee_name' },
 					{ data: 'department', name: 'department' },
@@ -257,7 +281,9 @@
 					}
 				],
 				drawCallback: function () {
-					KTMenu.createInstances();
+					if (typeof KTMenu !== 'undefined') {
+						KTMenu.createInstances();
+					}
 				}
 			});
 
@@ -265,7 +291,7 @@
 				table.search(this.value).draw();
 			});
 
-            $('#searchFilter').on('click', function () {
+			$('#searchFilter').on('click', function () {
 				table.draw();
 				closeFilterPanel();
 			});
@@ -282,11 +308,11 @@
 						$('#shift_employee_name').val(data.employee_name);
 						$('#shift_id').val(data.shift_id).trigger('change');
 
-						$('#shiftForm').attr('action', ''); 
+						$('#shiftForm').attr('action', `/shift_management/employee_shifts/${id}`); 
 						$('#form_method').val('PUT');
 
-						$('#modalTitle').text('Add Shift');
-						$('#shiftForm button[type="submit"]').text('Edit');
+						$('#modalTitle').text('Edit Shift');
+						$('#shiftForm button[type="submit"]').text('Update');
 						$('#shiftModal').modal('show');
 					},
 					error: function () {
@@ -311,7 +337,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-					        url: `/shift_management/employee_shifts/${id}/delete`, 
+							url: `/shift_management/employee_shifts/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
