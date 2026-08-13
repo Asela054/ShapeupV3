@@ -21,7 +21,7 @@
                 </a>
             </li>
 
-            <!-- 2. Organization with Flyout Mega Menu -->
+            <!-- 2. Organization  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('organization.*') ? 'active' : '' }}">
                     <i data-lucide="building-2" class="nav-item-icon"></i>
@@ -51,7 +51,7 @@
                 </div>
             </li>
 
-            <!-- 3. Employee Management with Flyout Mega Menu -->
+            <!-- 3. Employee Management  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('employee_management.*') || request()->routeIs('details') || request()->routeIs('letter_*') || request()->routeIs('issue_letter') || request()->routeIs('training_*') ? 'active' : '' }}">
                     <i data-lucide="users" class="nav-item-icon"></i>
@@ -132,7 +132,7 @@
                 </div>
             </li>
 
-            <!-- 4. Attendance & Leave with Flyout Mega Menu -->
+            <!-- 4. Attendance & Leave  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('attendance_leave.*') || request()->routeIs('attendance_*') || request()->routeIs('leave_*') ? 'active' : '' }}" id="flyoutToggle">
                     <i data-lucide="user-check" class="nav-item-icon"></i>
@@ -181,12 +181,12 @@
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('leave_request') }}">Leave Request</a></li>
                                     <li><a href="{{ route('leave_apply') }}">Leave Apply</a></li>
-                                    <li><a href="{{ route('leave_type') }}">Leave Type</a></li>
                                     <li><a href="{{ route('leave_approvel') }}">Leave Approvals</a></li>
-                                    <li><a href="{{ route('holidays') }}">Holiday</a></li>
-                                    <li><a href="{{ route('ignore_days') }}">Ignore Days</a></li>
-                                    <li><a href="{{ route('coverup_details') }}">CoverUp Details</a></li>
-                                    <li><a href="{{ route('holiday_deduction') }}">Holiday Deduction</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.leave_type') }}">Leave Type</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.holidays') }}">Holiday</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.ignore_days') }}">Ignore Days</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.coverup_details') }}">CoverUp Details</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.holiday_deduction') }}">Holiday Deduction</a></li>
                                 </ul>
                             </div>
 

@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintDeviceController;
 use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintUserController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayDeductionController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\CoverupDetailController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\IgnoreDayController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveTypeController;
 
 Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.attendanceinformation.')->group(function () {
     //fingerprint_device
@@ -83,29 +88,52 @@ Route::get('/leave_apply', function () {
     return view('attendance_leave/leaveInformation/leave_apply');
 })->name('leave_apply');
 
-Route::get('/leave_type', function () {
-    return view('attendance_leave/leaveInformation/leave_type');
-})->name('leave_type');
-
 Route::get('/leave_approvel', function () {
     return view('attendance_leave/leaveInformation/leave_approvel');
 })->name('leave_approvel');
 
-Route::get('/holidays', function () {
-    return view('attendance_leave/leaveInformation/holidays');
-})->name('holidays');
 
-Route::get('/ignore_days', function () {
-    return view('attendance_leave/leaveInformation/ignore_days');
-})->name('ignore_days');
+Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leaveinformation.')->group(function () {
+    //leave_type
+    Route::get('leave_type', [LeaveTypeController::class, 'index'])->name('leave_type');
+    Route::get('leave_type/data', [LeaveTypeController::class, 'data'])->name('leave_type.data');
+    Route::post('leave_type', [LeaveTypeController::class, 'store'])->name('leave_type.store');
+    Route::get('leave_type/{leaveType}/edit', [LeaveTypeController::class, 'edit'])->name('leave_type.edit');
+    Route::put('leave_type/{leaveType}', [LeaveTypeController::class, 'update'])->name('leave_type.update');
+    Route::delete('leave_type/{leaveType}', [LeaveTypeController::class, 'destroy'])->name('leave_type.destroy');
 
-Route::get('/coverup_details', function () {
-    return view('attendance_leave/leaveInformation/coverup_details');
-})->name('coverup_details');
+    //holidays
+    Route::get('holidays', [HolidayController::class, 'index'])->name('holidays');
+    Route::get('holidays/data', [HolidayController::class, 'data'])->name('holidays.data');
+    Route::post('holidays', [HolidayController::class, 'store'])->name('holidays.store');
+    Route::get('holidays/{holiday}/edit', [HolidayController::class, 'edit'])->name('holidays.edit');
+    Route::put('holidays/{holiday}', [HolidayController::class, 'update'])->name('holidays.update');
+    Route::delete('holidays/{holiday}', [HolidayController::class, 'destroy'])->name('holidays.destroy');
 
-Route::get('/holiday_deduction', function () {
-    return view('attendance_leave/leaveInformation/holiday_deduction');
-})->name('holiday_deduction');
+    //holiday_deduction
+    Route::get('holiday_deduction', [HolidayDeductionController::class, 'index'])->name('holiday_deduction');
+    Route::get('holiday_deduction/data', [HolidayDeductionController::class, 'data'])->name('holiday_deduction.data');
+    Route::post('holiday_deduction', [HolidayDeductionController::class, 'store'])->name('holiday_deduction.store');
+    Route::get('holiday_deduction/{holidayDeduction}/edit', [HolidayDeductionController::class, 'edit'])->name('holiday_deduction.edit');
+    Route::put('holiday_deduction/{holidayDeduction}', [HolidayDeductionController::class, 'update'])->name('holiday_deduction.update');
+    Route::delete('holiday_deduction/{holidayDeduction}', [HolidayDeductionController::class, 'destroy'])->name('holiday_deduction.destroy');
+
+    //coverup_details
+    Route::get('coverup_details', [CoverupDetailController::class, 'index'])->name('coverup_details');
+    Route::get('coverup_details/data', [CoverupDetailController::class, 'data'])->name('coverup_details.data');
+    Route::post('coverup_details', [CoverupDetailController::class, 'store'])->name('coverup_details.store');
+    Route::get('coverup_details/{coverupDetail}/edit', [CoverupDetailController::class, 'edit'])->name('coverup_details.edit');
+    Route::put('coverup_details/{coverupDetail}', [CoverupDetailController::class, 'update'])->name('coverup_details.update');
+    Route::delete('coverup_details/{coverupDetail}', [CoverupDetailController::class, 'destroy'])->name('coverup_details.destroy');
+
+    //ignore_days
+    Route::get('ignore_days', [IgnoreDayController::class, 'index'])->name('ignore_days');
+    Route::get('ignore_days/data', [IgnoreDayController::class, 'data'])->name('ignore_days.data');
+    Route::post('ignore_days', [IgnoreDayController::class, 'store'])->name('ignore_days.store');
+    Route::get('ignore_days/{ignoreDay}/edit', [IgnoreDayController::class, 'edit'])->name('ignore_days.edit');
+    Route::put('ignore_days/{ignoreDay}', [IgnoreDayController::class, 'update'])->name('ignore_days.update');
+    Route::delete('ignore_days/{ignoreDay}', [IgnoreDayController::class, 'destroy'])->name('ignore_days.destroy');
+});
 
 Route::get('/allocation', function () {
     return view('attendance_leave/locationwiseattendance/allocation');
