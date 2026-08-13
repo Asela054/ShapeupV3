@@ -87,24 +87,44 @@
 					<label class="form-label fw-bold">Company</label>
 					<select class="form-select" id="filter_company" name="company_id">
 						<option value="">Select...</option>
+						@if(isset($companies))
+							@foreach($companies as $company)
+								<option value="{{ $company->id }}">{{ $company->com_name ?? $company->company_name ?? $company->name }}</option>
+							@endforeach
+						@endif
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label fw-bold">Department</label>
 					<select class="form-select" id="filter_department" name="department_id">
 						<option value="">Select...</option>
+						@if(isset($departments))
+							@foreach($departments as $department)
+								<option value="{{ $department->id }}">{{ $department->dep_name ?? $department->department_name ?? $department->name }}</option>
+							@endforeach
+						@endif
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label fw-bold">Location</label>
 					<select class="form-select" id="filter_location" name="location_id">
 						<option value="">Select...</option>
+						@if(isset($locations))
+							@foreach($locations as $location)
+								<option value="{{ $location->id }}">{{ $location->branch_name ?? $location->name }}</option>
+							@endforeach
+						@endif
 					</select>
 				</div>
 				<div class="mb-5">
 					<label class="form-label fw-bold">Employee</label>
 					<select class="form-select" id="filter_employee" name="emp_id">
 						<option value="">Select...</option>
+						@if(isset($employees))
+							@foreach($employees as $emp)
+								<option value="{{ $emp->id }}">{{ $emp->emp_name_with_initial ?? $emp->calling_name }}</option>
+							@endforeach
+						@endif
 					</select>
 				</div>
 				<div class="mb-5">
@@ -149,6 +169,11 @@
                                 <label class="form-label required">Covering Employee</label>
                                 <select name="covering_emp_id" id="covering_emp_id" class="form-select" required>
                                     <option value="">Select...</option>
+                                    @if(isset($employees))
+                                        @foreach($employees as $emp)
+                                            <option value="{{ $emp->id }}">{{ $emp->emp_name_with_initial ?? $emp->calling_name }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-12">
@@ -199,7 +224,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('coverup_details') }}",
+					url: "{{ route('attendance_leave.leaveinformation.coverup_details') }}",
 					data: function (d) {
 						d.company_id = $('#filter_company').val();
 						d.department_id = $('#filter_department').val();
@@ -347,7 +372,7 @@
 				$('#coveringForm')[0].reset();
 				$('#covering_emp_id').val(null).trigger('change');
 				$('#coveringForm input[name="_method"]').remove();
-				$('#coveringForm').attr('action', "");
+				$('#coveringForm').attr('action', "/attendance_leave/leaveinformation/coverup_details");
 				$('#coveringSubmitBtn').text('Add');
 				$('#coveringModalTitle').text('Covering Details');
 				$('#coveringModal').modal('show');
@@ -358,7 +383,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `/attendance_leave/leaveInformation/coverup-details/${id}/edit`,
+					url: `/attendance_leave/leaveinformation/coverup-details/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						$('#covering_emp_id').val(data.emp_id).trigger('change');
@@ -366,7 +391,7 @@
 						$('#covering_start_time').val(data.start_time);
 						$('#covering_end_time').val(data.end_time);
 
-						$('#coveringForm').attr('action', `/attendance_leave/leaveInformation/coverup-details/${id}`);
+						$('#coveringForm').attr('action', `/attendance_leave/leaveinformation/coverup_details/${id}`);
 						if ($('#coveringForm input[name="_method"]').length === 0) {
 							$('#coveringForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -398,7 +423,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/coverup-details/${id}`,
+							url: `/attendance_leave/leaveinformation/coverup_details/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({

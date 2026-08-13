@@ -70,7 +70,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('leave_type') }}",
+					url: "{{ route('attendance_leave.leaveinformation.leave_type.data') }}",
                 },
 				columns: [
 					{ data: 'id', name: 'id' },

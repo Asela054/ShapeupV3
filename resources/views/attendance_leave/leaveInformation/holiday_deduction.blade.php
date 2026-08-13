@@ -79,12 +79,22 @@
                                 <label class="form-label required">Job Category</label>
                                 <select name="jobCategory_id" id="jobCategory_id" class="form-select" required>
                                     <option value="">Select Job Category</option>
+                                    @if(isset($jobCategories))
+                                        @foreach($jobCategories as $jobCategory)
+                                            <option value="{{ $jobCategory->id }}">{{ $jobCategory->category }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label required">Addition/Deduction Type</label>
                                 <select name="remuneration_id" id="remuneration_id" class="form-select" required>
                                     <option value="">Select Remuneration</option>
+                                    @if(isset($remunerations))
+                                        @foreach($remunerations as $remuneration)
+                                            <option value="{{ $remuneration->id }}">{{ $remuneration->remuneration_name }}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </div>
 							<div class="col-md-6">
@@ -123,11 +133,46 @@
             // Create action
 			$('#create_record').on('click', function () {
 				$('#holidayDeductionForm')[0].reset();
-				$('#holidayDeductionForm').attr('action', "");
+				$('#holidayDeductionForm').attr('action', "/attendance_leave/leaveinformation/holiday_deduction");
 				$('#holidayDeductionForm input[name="_method"]').remove();
 				$('#holidayDeductionForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Holiday Deduction');
 				$('#holidayDeductionModal').modal('show');
+			});
+
+			// Form submit handler
+			$('#holidayDeductionForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action') || "/attendance_leave/leaveinformation/holiday_deduction";
+				const formData = new FormData(this);
+
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$('#holidayDeductionModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#holidayDeductionTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'Failed to save data';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							errorMsg = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
 			});
 
             
@@ -135,7 +180,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('holiday_deduction') }}",
+					url: "{{ route('attendance_leave.leaveinformation.holiday_deduction') }}",
                 },
 				columns: [
 					{ data: 'id', name: 'id' },
@@ -210,7 +255,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `/attendance_leave/leaveInformation/holiday_deduction/${id}/edit`,
+					url: `/attendance_leave/leaveinformation/holiday_deduction/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						// Populate form fields
@@ -220,7 +265,7 @@
 						$('#amount').val(data.amount);
 
 						// Form action and method
-						$('#holidayDeductionForm').attr('action', `/attendance_leave/leaveInformation/holiday_deduction/${id}`);
+						$('#holidayDeductionForm').attr('action', `/attendance_leave/leaveinformation/holiday_deduction/${id}`);
 						if ($('#holidayDeductionForm input[name="_method"]').length === 0) {
 							$('#holidayDeductionForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -251,7 +296,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/holiday_deduction/${id}`,
+							url: `/attendance_leave/leaveinformation/holiday_deduction/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({

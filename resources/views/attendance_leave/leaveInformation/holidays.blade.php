@@ -83,14 +83,15 @@
                                 <label class="form-label required">Holiday Type</label>
                                 <select name="holiday_type" id="holiday_type" class="form-select" required>
                                     <option value="">Select Holiday Type</option>
-                                    {{-- @foreach($holidayTypes as $type)
-                                        <option value="{{ $type->name }}">{{ $type->name }}</option>
-                                    @endforeach --}}
+									<option value="1">Poya Holiday</option>
+									<option value="2">Public & Bank Holiday</option>
+									<option value="3">Public,Bank & Mercantile Holiday</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label required">Half Day/ Short</label>
                                 <select name="half_short" id="half_short" class="form-select" required>
+									<option value="">Select Half Day/ Short</option>
                                     <option value="1">Full Day</option>
                                     <option value="0.5">Half Day</option>
                                     <option value="0.25">Short</option>
@@ -104,9 +105,8 @@
                                 <label class="form-label required">Work Level</label>
                                 <select name="work_level" id="work_level" class="form-select" required>
                                     <option value="">Select Work Level</option>
-                                    {{-- @foreach($workLevels as $level)
-                                        <option value="{{ $level->level }}">{{ $level->level }}</option>
-                                    @endforeach --}}
+									<option value="1">Normal O.T.</option>
+									<option value="2">Double O.T.</option>
                                 </select>
                             </div>
                         </div>
@@ -145,18 +145,53 @@
 			// Create action
 			$('#create_record').on('click', function () {
 				$('#holidayForm')[0].reset();
-				$('#holidayForm').attr('action', "");
+				$('#holidayForm').attr('action', "{{ route('attendance_leave.leaveinformation.holidays.store') }}");
 				$('#holidayForm input[name="_method"]').remove();
 				$('#holidayForm button[type="submit"]').text('Add');
 				$('#modalTitle').text('Add Holiday');
 				$('#holidayModal').modal('show');
 			});
 
+			// Form submit handler
+			$('#holidayForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action') || "{{ route('attendance_leave.leaveinformation.holidays.store') }}";
+				const formData = new FormData(this);
+
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$('#holidayModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#holidaysTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'Failed to save holiday data';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							errorMsg = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
+			});
+
 			var table = $('#holidaysTable').DataTable({
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('holidays') }}"
+					url: "{{ route('attendance_leave.leaveinformation.holidays.data') }}"
 				},
 				columns: [
 					{ data: 'holiday_name', name: 'holiday_name' },
@@ -232,7 +267,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `attendance_leave/leaveInformation/holidays/${id}/edit`,
+					url: `/attendance_leave/leaveinformation/holidays/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						$('#holiday_name').val(data.holiday_name);
@@ -241,7 +276,7 @@
 						$('#date').val(data.date);
 						$('#work_level').val(data.work_level);
 
-						$('#holidayForm').attr('action', `/holidays/${id}`);
+						$('#holidayForm').attr('action', `/attendance_leave/leaveinformation/holidays/${id}`);
 						if ($('#holidayForm input[name="_method"]').length === 0) {
 							$('#holidayForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -272,7 +307,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/holidays/${id}`,
+							url: `/attendance_leave/leaveinformation/holidays/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({

@@ -150,16 +150,51 @@
 				$('#month').val('');
 				datesPicker.clear();
 				$('#dates').prop('disabled', true);
-				$('#ignoreDaysForm').attr('action', "");
+				$('#ignoreDaysForm').attr('action', "{{ route('attendance_leave.leaveinformation.ignore_days.store') }}");
 				$('#modalTitle').text('Add Ignore Days');
 				$('#ignoreDaysModal').modal('show');
+			});
+
+			// Form submit handler
+			$('#ignoreDaysForm').on('submit', function (e) {
+				e.preventDefault();
+				const actionUrl = $(this).attr('action') || "{{ route('attendance_leave.leaveinformation.ignore_days.store') }}";
+				const formData = new FormData(this);
+
+				$.ajax({
+					url: actionUrl,
+					type: 'POST',
+					data: formData,
+					processData: false,
+					contentType: false,
+					success: function (response) {
+						$('#ignoreDaysModal').modal('hide');
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: response.message,
+							timer: 2000
+						});
+						$('#ignoreDaysTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						let errorMsg = 'Failed to save ignore days';
+						if (xhr.responseJSON && xhr.responseJSON.message) {
+							errorMsg = xhr.responseJSON.message;
+						}
+						if (xhr.responseJSON && xhr.responseJSON.errors) {
+							errorMsg = Object.values(xhr.responseJSON.errors).flat().join('<br>');
+						}
+						Swal.fire({ icon: 'error', title: 'Validation Error', html: errorMsg });
+					}
+				});
 			});
 
 			var table = $('#ignoreDaysTable').DataTable({
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('ignore_days') }}"
+					url: "{{ route('attendance_leave.leaveinformation.ignore_days.data') }}"
 				},
 				columns: [
 					{ data: 'month', name: 'month' },
@@ -228,7 +263,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/ignore_days/${id}`,
+							url: `/attendance_leave/leaveinformation/ignore_days/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
