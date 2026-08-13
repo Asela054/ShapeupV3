@@ -19,7 +19,8 @@ class CompanyController extends Controller
 
     public function index()
     {
-        return view('organization.company');
+        $employees = \App\Models\EmpDetail\Employee::select('id', 'calling_name')->get();
+        return view('organization.company', compact('employees'));
     }
 
     public function data(Request $request)

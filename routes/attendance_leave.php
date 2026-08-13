@@ -1,14 +1,26 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintDeviceController;
+use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintUserController;
 
-Route::get('/fingerprint_device', function () {
-    return view('attendance_leave/attendanceinformation/fingerprint_device');
-})->name('fingerprint_device');
+Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.attendanceinformation.')->group(function () {
+    //fingerprint_device
+    Route::get('fingerprint_device', [FingerprintDeviceController::class, 'index'])->name('fingerprint_device');
+    Route::get('fingerprint_device/data', [FingerprintDeviceController::class, 'data'])->name('fingerprint_device.data');
+    Route::post('fingerprint_device', [FingerprintDeviceController::class, 'store'])->name('fingerprint_device.store');
+    Route::get('fingerprint_device/{fingerprintDevice}/edit', [FingerprintDeviceController::class, 'edit'])->name('fingerprint_device.edit');
+    Route::put('fingerprint_device/{fingerprintDevice}', [FingerprintDeviceController::class, 'update'])->name('fingerprint_device.update');
+    Route::delete('fingerprint_device/{fingerprintDevice}', [FingerprintDeviceController::class, 'destroy'])->name('fingerprint_device.destroy');
 
-Route::get('/fingerprint_user', function () {
-    return view('attendance_leave/attendanceinformation/fingerprint_user');
-})->name('fingerprint_user');
+    //fingerprint_user
+    Route::get('fingerprint_user', [FingerprintUserController::class, 'index'])->name('fingerprint_user');
+    Route::get('fingerprint_user/data', [FingerprintUserController::class, 'data'])->name('fingerprint_user.data');
+    Route::get('fingerprint_user/locations', [FingerprintUserController::class, 'locations'])->name('fingerprint_user.locations');
+    Route::get('fingerprint_user/{fingerprintUser}/edit', [FingerprintUserController::class, 'edit'])->name('fingerprint_user.edit');
+    Route::put('fingerprint_user/{fingerprintUser}', [FingerprintUserController::class, 'update'])->name('fingerprint_user.update');
+    Route::delete('fingerprint_user/{fingerprintUser}', [FingerprintUserController::class, 'destroy'])->name('fingerprint_user.destroy');
+});
 
 Route::get('/attendance_sync', function () {
     return view('attendance_leave/attendanceinformation/attendance_sync');

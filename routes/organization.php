@@ -6,6 +6,8 @@ use App\Http\Controllers\Organization\BankController;
 use App\Http\Controllers\Organization\JobCategoryController;
 use App\Http\Controllers\Organization\SalaryAdjustmentController;
 use App\Http\Controllers\Organization\LeaveDeductionController;
+use App\Http\Controllers\Organization\DepartmentController;
+use App\Http\Controllers\Organization\BranchController;
 
 
 Route::prefix('organization')->name('organization.')->group(function () {
@@ -52,4 +54,20 @@ Route::prefix('organization')->name('organization.')->group(function () {
     Route::get('leavededuction/{leaveDeduction}/edit', [LeaveDeductionController::class, 'edit'])->name('leavededuction.edit');
     Route::put('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'update'])->name('leavededuction.update');
     Route::delete('leavededuction/{leaveDeduction}', [LeaveDeductionController::class, 'destroy'])->name('leavededuction.destroy');
+
+    //Department
+    Route::get('department', [DepartmentController::class, 'index'])->name('department');
+    Route::get('department/data', [DepartmentController::class, 'data'])->name('department.data');
+    Route::post('department', [DepartmentController::class, 'store'])->name('department.store');
+    Route::get('department/{department}/edit', [DepartmentController::class, 'edit'])->name('department.edit');
+    Route::put('department/{department}', [DepartmentController::class, 'update'])->name('department.update');
+    Route::delete('department/{department}', [DepartmentController::class, 'destroy'])->name('department.destroy');
+
+    //Branch
+    Route::get('branch', [BranchController::class, 'index'])->name('branch');
+    Route::get('branch/data', [BranchController::class, 'data'])->name('branch.data');
+    Route::post('branch', [BranchController::class, 'store'])->name('branch.store');
+    Route::get('branch/{branch}/edit', [BranchController::class, 'edit'])->name('branch.edit');
+    Route::put('branch/{branch}', [BranchController::class, 'update'])->name('branch.update');
+    Route::delete('branch/{branch}', [BranchController::class, 'destroy'])->name('branch.destroy');
 });
