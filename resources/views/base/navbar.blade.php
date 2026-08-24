@@ -219,7 +219,7 @@
                 </div>
             </li>
 
-            <!-- 5. Shift Management with Flyout Mega Menu -->
+            <!-- 5. Shift Management  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('shift_management.*') || request()->routeIs('month_shifts*') ? 'active' : '' }}">
                     <i data-lucide="calendar" class="nav-item-icon"></i>
@@ -250,7 +250,101 @@
                 </div>
             </li>
 
-            <!-- 6. User Account with Flyout Mega Menu -->
+            <!-- Payroll -->
+            <li class="designer-nav-item">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn
+                    {{ request()->routeIs('payroll.*') ? 'active' : '' }}">
+
+                    <i data-lucide="wallet-cards" class="nav-item-icon"></i>
+                    <span style="flex: 1;">Payroll</span>
+                    <i data-lucide="chevron-right" class="nav-chevron"></i>
+                </a>
+
+                <!-- Payroll Flyout Panel -->
+                <div class="designer-flyout-panel">
+                    <div class="designer-flyout-box">
+
+                        <div class="flyout-header">
+                            <h3>Payroll Menu</h3>
+                            <p>Select an option below</p>
+                        </div>
+
+                        <div class="flyout-grid">
+
+                            <!-- Category 1: Policy Management -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="settings" class="icon-blue"></i>
+                                    <h4>Policy Management</h4>
+                                </div>
+
+                                <ul class="flyout-links-list">
+                                    <li><a href="{{ route('facilities') }}">Facilities</a></li>
+                                    <li><a href="{{ route('payroll_profile') }}">Payroll Profile</a></li>
+                                    <li><a href="#">Loans</a></li>
+                                    <li><a href="#">Loan Approval</a></li>
+                                    <li><a href="#">Loan Settlement</a></li>
+                                    <li><a href="#">Salary Advances</a></li>
+                                    <li><a href="#">Salary Advance Approval</a></li>
+                                    <li><a href="#">Salary Additions / Deduction</a></li>
+                                    <li><a href="#">Advance Payments</a></li>
+                                    <li><a href="#">Other Facilities</a></li>
+                                    <li><a href="#">Salary Increments</a></li>
+                                    <li><a href="#">Salary Schedule</a></li>
+                                    <li><a href="#">Work Summary</a></li>
+                                    <li><a href="#">Salary Preparation</a></li>
+                                    <li><a href="#">Payslip List</a></li>
+                                </ul>
+                            </div>
+
+
+                            <!-- Category 2: Reports -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="file-bar-chart" class="icon-blue"></i>
+                                    <h4>Reports</h4>
+                                </div>
+
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Pay Register</a></li>
+                                    <li><a href="#">OT Report</a></li>
+                                    <li><a href="#">EPF & ETF Report</a></li>
+                                    <li><a href="#">Advance Payment Register</a></li>
+                                    <li><a href="#">Advance/Bonus Sheet</a></li>
+                                    <li><a href="#">Salary Sheet</a></li>
+                                    <li><a href="#">Salary Sheet - Bank Slip</a></li>
+                                    <li><a href="#">Salary Sheet - Held Payments</a></li>
+                                    <li><a href="#">Six Month Report</a></li>
+                                    <li><a href="#">Additions Report</a></li>
+                                    <li><a href="#">Salary Reconciliation</a></li>
+                                </ul>
+                            </div>
+
+
+                            <!-- Category 3: Statements -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="receipt-text" class="icon-blue"></i>
+                                    <h4>Statements</h4>
+                                </div>
+
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Employee Salary (Payment Voucher)</a></li>
+                                    <li><a href="#">Employee Incentive (Payment Voucher)</a></li>
+                                    <li><a href="#">Bank Advice</a></li>
+                                    <li><a href="#">Pay Summary</a></li>
+                                    <li><a href="#">Employee Salary (Journal Voucher)</a></li>
+                                    <li><a href="#">EPF and ETF (Journal Voucher)</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <!--  User Account  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? 'active' : '' }}">
                     <i data-lucide="user-cog" class="nav-item-icon"></i>
