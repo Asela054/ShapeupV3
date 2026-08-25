@@ -282,19 +282,19 @@
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('facilities') }}">Facilities</a></li>
                                     <li><a href="{{ route('payroll_profile') }}">Payroll Profile</a></li>
-                                    <li><a href="#">Loans</a></li>
-                                    <li><a href="#">Loan Approval</a></li>
-                                    <li><a href="#">Loan Settlement</a></li>
-                                    <li><a href="#">Salary Advances</a></li>
-                                    <li><a href="#">Salary Advance Approval</a></li>
-                                    <li><a href="#">Salary Additions / Deduction</a></li>
-                                    <li><a href="#">Advance Payments</a></li>
-                                    <li><a href="#">Other Facilities</a></li>
-                                    <li><a href="#">Salary Increments</a></li>
-                                    <li><a href="#">Salary Schedule</a></li>
-                                    <li><a href="#">Work Summary</a></li>
-                                    <li><a href="#">Salary Preparation</a></li>
-                                    <li><a href="#">Payslip List</a></li>
+                                    <li><a href="{{ route('loans') }}">Loans</a></li>
+                                    <li><a href="{{ route('loan_approval') }}">Loan Approval</a></li>
+                                    <li><a href="{{ route('loan_settlement') }}">Loan Settlement</a></li>
+                                    <li><a href="{{ route('salary_advances') }}">Salary Advances</a></li>
+                                    <li><a href="{{ route('salary_advance_approval') }}">Salary Advance Approval</a></li>
+                                    <li><a href="{{ route('salary_additions_deductions') }}">Salary Additions / Deduction</a></li>
+                                    <li><a href="{{ route('advance_payments') }}">Advance Payments</a></li>
+                                    <li><a href="{{ route('other_facilities') }}">Other Facilities</a></li>
+                                    <li><a href="{{ route('salary_increments') }}">Salary Increments</a></li>
+                                    <li><a href="{{ route('salary_schedule') }}">Salary Schedule</a></li>
+                                    <li><a href="{{ route('work_summary') }}">Work Summary</a></li>
+                                    <li><a href="{{ route('salary_preparation') }}">Salary Preparation</a></li>
+                                    <li><a href="{{ route('payslip_list') }}">Payslip List</a></li>
                                 </ul>
                             </div>
 
