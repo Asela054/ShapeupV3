@@ -12,7 +12,7 @@
     <nav class="designer-sidebar-nav">
         <ul class="designer-nav-list">
 
-            <!-- 1. Dashboard -->
+            <!--Dashboard -->
             <li class="designer-nav-item">
                 <a href="{{ route('dashboard') }}"
                    class="designer-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
@@ -21,7 +21,7 @@
                 </a>
             </li>
 
-            <!-- 2. Organization  -->
+            <!-- Organization  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('organization.*') ? 'active' : '' }}">
                     <i data-lucide="building-2" class="nav-item-icon"></i>
@@ -51,7 +51,7 @@
                 </div>
             </li>
 
-            <!-- 3. Employee Management  -->
+            <!-- Employee Management  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('employee_management.*') || request()->routeIs('details') || request()->routeIs('letter_*') || request()->routeIs('issue_letter') || request()->routeIs('training_*') ? 'active' : '' }}">
                     <i data-lucide="users" class="nav-item-icon"></i>
@@ -132,7 +132,7 @@
                 </div>
             </li>
 
-            <!-- 4. Attendance & Leave  -->
+            <!-- Attendance & Leave  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('attendance_leave.*') || request()->routeIs('attendance_*') || request()->routeIs('leave_*') ? 'active' : '' }}" id="flyoutToggle">
                     <i data-lucide="user-check" class="nav-item-icon"></i>
@@ -219,7 +219,7 @@
                 </div>
             </li>
 
-            <!-- 5. Shift Management  -->
+            <!--Shift Management  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('shift_management.*') || request()->routeIs('month_shifts*') ? 'active' : '' }}">
                     <i data-lucide="calendar" class="nav-item-icon"></i>
@@ -340,6 +340,39 @@
                             </div>
 
                         </div>
+                    </div>
+                </div>
+            </li>
+
+            <!-- KPI  -->
+            <li class="designer-nav-item">
+                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->is('kpi*') || request()->routeIs('kpi.*') ? 'active' : '' }}">
+                    <i data-lucide="gauge" class="nav-item-icon"></i>
+                    <span style="flex: 1;">KPI</span>
+                    <i data-lucide="chevron-right" class="nav-chevron"></i>
+                </a>
+
+                <!-- KPI Flyout Panel -->
+                <div class="designer-flyout-panel flyout-sm">
+                    <div class="designer-flyout-box">
+                        <div class="flyout-header">
+                            <h3>KPI Menu</h3>
+                            <p>Select an option below</p>
+                        </div>
+                        <div class="flyout-category-title">
+                            <i data-lucide="chart-no-axes-combined" class="icon-blue"></i>
+                            <h4>KPI Module</h4>
+                        </div>
+                        <ul class="flyout-links-list">
+                            <li><a href="{{ route('kpi.dashboard') }}">KPI Dashboard</a></li>
+                            <li><a href="#">KPI Summaries</a></li>
+                            <li><a href="#">KPI Transactions</a></li>
+                            <li><a href="#">KPI Attributes</a></li>
+                            <li><a href="#">KPI Categories</a></li>
+                            <li><a href="#">Evaluation Years</a></li>
+                            <li><a href="#">Department KPI</a></li>
+                            <li><a href="#">Employee Performance</a></li>
+                        </ul>
                     </div>
                 </div>
             </li>
