@@ -23,7 +23,7 @@
 						View Transactions
 					</a>
 
-					<a href="#" class="btn btn-light-primary btn-sm px-4">
+					<a href="{{ route('kpi.summaries') }}" class="btn btn-light-primary btn-sm px-4">
 						<i class="ki-duotone ki-medal-star fs-4 me-1">
 							<span class="path1"></span>
 							<span class="path2"></span>
@@ -173,7 +173,7 @@
 									<span class="fw-bold fs-4">Quick Actions</span>
 								</div>
 								<div class="d-flex flex-column gap-3 px-2 pb-2">
-									<a href="#" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
+									<a href="{{ route('kpi.summaries') }}" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
 										<i class="ki-duotone ki-medal-star fs-3 me-3">
 											<span class="path1"></span>
 											<span class="path2"></span>
