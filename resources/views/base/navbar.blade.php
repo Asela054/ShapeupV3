@@ -367,7 +367,7 @@
                             <li><a href="{{ route('kpi.dashboard') }}">KPI Dashboard</a></li>
                             <li><a href="{{ route('kpi.employee_performance') }}">Employee Performance</a></li>
                             <li><a href="{{ route('kpi.summaries') }}">KPI Summaries</a></li>
-                            <li><a href="#">KPI Transactions</a></li>
+                            <li><a href="{{ route('kpi.transactions') }}">KPI Transactions</a></li>
                             <li><a href="#">KPI Attributes</a></li>
                             <li><a href="#">KPI Categories</a></li>
                             <li><a href="#">Evaluation Years</a></li>

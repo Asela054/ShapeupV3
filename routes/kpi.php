@@ -14,3 +14,7 @@ Route::get('/kpi/summaries', function () {
     return view('kpi.summaries');
 })->name('kpi.summaries');
 
+Route::get('/kpi/transactions', function () {
+    return view('kpi.transactions');
+})->name('kpi.transactions');
+
