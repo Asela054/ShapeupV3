@@ -4,7 +4,10 @@
     <!-- Logo (desktop only) -->
     <div class="designer-sidebar-logo">
         <a href="{{ route('dashboard') }}" class="logo-brand-text">
-            <span class="text-blue">Erav</span> ERAV
+            <img src="{{ asset('media/company_logo.webp') }}"
+                alt="Company Logo"
+                class="company-logo">
+            <span class="text-blue">Erav</span> 
         </a>
     </div>
 
@@ -368,7 +371,7 @@
                             <li><a href="{{ route('kpi.employee_performance') }}">Employee Performance</a></li>
                             <li><a href="{{ route('kpi.summaries') }}">KPI Summaries</a></li>
                             <li><a href="{{ route('kpi.transactions') }}">KPI Transactions</a></li>
-                            <li><a href="#">KPI Attributes</a></li>
+                            <li><a href="{{ route('kpi.attributes') }}">KPI Attributes</a></li>
                             <li><a href="#">KPI Categories</a></li>
                             <li><a href="#">Evaluation Years</a></li>
                             <li><a href="#">Department KPI</a></li>
