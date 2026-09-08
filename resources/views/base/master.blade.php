@@ -56,7 +56,12 @@
             <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
         <div class="logo-brand-text">
-            <span class="text-blue">Erav</span> ERAV
+            <a href="{{ route('dashboard') }}" class="mobile-logo-brand">
+                <img src="{{ asset('media/company_logo.webp') }}"
+                    alt="Company Logo"
+                    class="mobile-company-logo">
+            </a>
+            <span class="text-blue">Erav</span>
         </div>
     </div>
 

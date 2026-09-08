@@ -140,12 +140,29 @@ body.app-designer-layout {
     color: var(--blue-accent);
 }
 
+
 /* Nav Menu Items */
 .designer-sidebar-nav {
     flex: 1;
     padding-top: 1rem;
     padding-bottom: 1rem;
     overflow-y: auto;
+}
+.company-logo {
+    width: 30px;
+    height: auto;
+    object-fit: contain;
+}
+
+.mobile-logo-brand {
+    display: flex;
+    align-items: center;
+}
+
+.mobile-company-logo {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
 }
 
 .designer-nav-list {
@@ -229,7 +246,7 @@ body.app-designer-layout {
 
     .designer-flyout-panel {
         position: fixed;
-        left: 17rem; 
+        left: 16rem; 
         top: 4rem;
         bottom: 0;
         width: 620px;
