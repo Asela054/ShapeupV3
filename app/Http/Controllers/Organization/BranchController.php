@@ -20,10 +20,7 @@ class BranchController extends Controller
 
     public function index(Request $request)
     {
-        $companies = Company::orderBy('name')->get();
-        $selectedCompanyId = $request->get('company_id');
-
-        return view('organization.branch', compact('companies', 'selectedCompanyId'));
+        return redirect()->route('organization.company', array_merge($request->all(), ['_view' => 'branch']));
     }
 
     public function data(Request $request)
