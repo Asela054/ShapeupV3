@@ -22,3 +22,7 @@ Route::get('/kpi/attributes', function () {
     return view('kpi.attributes');
 })->name('kpi.attributes');
 
+Route::get('/kpi/categories', function () {
+    return view('kpi.categories');
+})->name('kpi.categories');
+
