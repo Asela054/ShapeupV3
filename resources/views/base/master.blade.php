@@ -144,6 +144,7 @@
     </script>
 
     @yield('scripts')
+    @stack('scripts')
 </body>
 <!--end::Body-->
 </html>
