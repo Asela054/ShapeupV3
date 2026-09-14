@@ -21,11 +21,7 @@ class DepartmentController extends Controller
 
     public function index(Request $request)
     {
-        $companies = Company::orderBy('name')->get();
-        $employees = Employee::select('id', 'calling_name', 'full_name')->get();
-        $selectedCompanyId = $request->get('company_id');
-
-        return view('organization.department', compact('companies', 'employees', 'selectedCompanyId'));
+        return redirect()->route('organization.company', array_merge($request->all(), ['_view' => 'department']));
     }
 
     public function data(Request $request)

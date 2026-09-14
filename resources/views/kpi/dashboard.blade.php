@@ -246,7 +246,7 @@
 											<span class="path4"></span>
 										</i>Manage KPI Base Summaries
 									</a>
-									<a href="#" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
+									<a href="{{ route('kpi.categories') }}" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
 										<i class="ki-duotone ki-category fs-3 me-3">
 											<span class="path1"></span>
 											<span class="path2"></span>
