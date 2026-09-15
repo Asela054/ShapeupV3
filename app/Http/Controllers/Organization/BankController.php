@@ -70,7 +70,7 @@ class BankController extends Controller
 
     public function branchData(Request $request, Bank $bank)
     {
-        $branches = BankBranch::where('bankcode', $bank->code);
+        $branches = BankBranch::where('bank_code', $bank->code);
 
         return DataTables::of($branches)->make(true);
     }
