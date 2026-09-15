@@ -347,7 +347,7 @@
                 </div>
             </li>
 
-            <!-- KPI  -->
+            <!-- KPI -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->is('kpi*') || request()->routeIs('kpi.*') ? 'active' : '' }}">
                     <i data-lucide="gauge" class="nav-item-icon"></i>
@@ -362,21 +362,48 @@
                             <h3>KPI Menu</h3>
                             <p>Select an option below</p>
                         </div>
-                        <div class="flyout-category-title">
-                            <i data-lucide="chart-no-axes-combined" class="icon-blue"></i>
-                            <h4>KPI Module</h4>
+
+                        <!-- KPI Overview -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="chart-no-axes-combined" class="icon-blue"></i>
+                                <h4>KPI Overview</h4>
+                            </div>
+
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('kpi.dashboard') }}">KPI Dashboard</a></li>
+                                <li><a href="{{ route('kpi.employee_performance') }}">Employee Performance</a></li>
+                                <li><a href="{{ route('kpi.summaries') }}">KPI Summaries</a></li>
+                            </ul>
                         </div>
-                        <ul class="flyout-links-list">
-                            <li><a href="{{ route('kpi.dashboard') }}">KPI Dashboard</a></li>
-                            <li><a href="{{ route('kpi.employee_performance') }}">Employee Performance</a></li>
-                            <li><a href="{{ route('kpi.summaries') }}">KPI Summaries</a></li>
-                            <li><a href="{{ route('kpi.transactions') }}">KPI Transactions</a></li>
-                            <li><a href="{{ route('kpi.attributes') }}">KPI Attributes</a></li>
-                            <li><a href="{{ route('kpi.categories') }}">KPI Categories</a></li>
-                            <li><a href="#">Evaluation Years</a></li>
-                            <li><a href="#">Department KPI</a></li>
-                            <li><a href="#">Employee Performance</a></li>
-                        </ul>
+                        <!-- KPI Setup -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="settings-2" class="icon-blue"></i>
+                                <h4>KPI Setup</h4>
+                            </div>
+
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('kpi.transactions') }}">KPI Transactions</a></li>
+                                <li><a href="{{ route('kpi.attributes') }}">KPI Attributes</a></li>
+                                <li><a href="{{ route('kpi.categories') }}">KPI Categories</a></li>
+                                <li><a href="{{ route('kpi.evaluation_year') }}">Evaluation Years</a></li>
+                            </ul>
+                        </div>
+
+                        <!-- Reports -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="file-bar-chart" class="icon-blue"></i>
+                                <h4>Reports</h4>
+                            </div>
+
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('kpi.department_report') }}">Department Wise KPI Report</a></li>
+                                <li><a href="{{ route('kpi.employee_report') }}">Employee Performance Report</a></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </li>
