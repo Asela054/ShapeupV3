@@ -26,3 +26,14 @@ Route::get('/kpi/categories', function () {
     return view('kpi.categories');
 })->name('kpi.categories');
 
+Route::get('/kpi/evaluation_year', function () {
+    return view('kpi.evaluation_year');
+})->name('kpi.evaluation_year');
+
+Route::get('/kpi/department_report', function () {
+    return view('kpi.department_report');
+})->name('kpi.department_report');
+
+Route::get('/kpi/employee_report', function () {
+    return view('kpi.employee_report');
+})->name('kpi.employee_report');
