@@ -199,7 +199,7 @@
             columns: [
                 { data: 'id',   name: 'id' },
                 { data: 'code', name: 'code' },
-                { data: 'bank', name: 'bank' },
+                { data: 'name', name: 'name' },
                 {
                     data: null,
                     className: 'text-end',
@@ -215,7 +215,7 @@
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600
                                         menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item">
-                                    <a class="menu-link viewBranches" href="#" data-id="${row.id}" data-name="${row.bank}">
+                                    <a class="menu-link viewBranches" href="#" data-id="${row.id}" data-name="${row.name}">
                                         <span class="menu-icon"><i class="fa-solid fa-eye"></i></span>
                                         <span class="menu-title">View Branches</span>
                                     </a>
@@ -284,7 +284,7 @@
                 columns: [
                     { data: 'id',     name: 'id' },
                     { data: 'code',   name: 'code'},
-                    { data: 'branch', name: 'branch' },
+                    { data: 'branch_name', name: 'branch_name' },
                     {
                         data: null,
                         className: 'text-end',
@@ -370,7 +370,7 @@
                 url: `/organization/bank/${id}/edit`,
                 type: 'GET',
                 success: function (data) {
-                    $('#bankName').val(data.bank);
+                    $('#bankName').val(data.name);
                     $('#bankCode').val(data.code);
                     $('#bankForm').attr('action', `/organization/bank/${id}`);
                     if ($('#bankForm input[name="_method"]').length === 0) {
@@ -437,7 +437,7 @@
                 url: `/organization/bank-branch/${id}/edit`,
                 type: 'GET',
                 success: function (data) {
-                    $('#branchName').val(data.branch);
+                    $('#branchName').val(data.branch_name);
                     $('#branchCode').val(data.code);
                     $('#branchBankId').val(activeBankId);
                     $('#branchForm').attr('action', `/organization/bank-branch/${id}`);
