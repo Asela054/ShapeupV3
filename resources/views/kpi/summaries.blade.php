@@ -25,7 +25,7 @@
 				<div class="card mb-5" id="kpiFormPanel" style="display:none;">
 					<div class="card-body p-0 p-2">
 						<h2 class="fw-bold mb-6" id="panelTitle">Allocate Base KPI Points</h2>
-						<form id="kpiForm" method="POST" action="">
+						<form id="kpiForm" method="POST" action="{{ route('kpi.summaries.store') }}">
 							@csrf
 							<div class="row g-4">
 								<div class="col-md-6">
@@ -43,6 +43,11 @@
 								<div class="col-md-12" id="createEmployeeGroup">
 									<label class="form-label required">Select Employee(s)</label>
 									<select name="employee_ids[]" id="employees_create" class="form-select" multiple style="height:150px;">
+										@if(isset($employees))
+											@foreach($employees as $emp)
+												<option value="{{ $emp->emp_id }}">[{{ $emp->emp_id }}] {{ $emp->calling_name ?: $emp->emp_name_with_initial }}</option>
+											@endforeach
+										@endif
 									</select>
 									<div class="form-text">Hold Ctrl / Cmd to select multiple employees.</div>
 								</div>
@@ -51,6 +56,11 @@
 								<div class="col-md-12 d-none" id="editEmployeeGroup">
 									<label class="form-label required">Employee</label>
 									<select name="employee_id" id="employee_edit" class="form-select">
+										@if(isset($employees))
+											@foreach($employees as $emp)
+												<option value="{{ $emp->emp_id }}">[{{ $emp->emp_id }}] {{ $emp->calling_name ?: $emp->emp_name_with_initial }}</option>
+											@endforeach
+										@endif
 									</select>
 								</div>
 							</div>
@@ -125,7 +135,7 @@
 
 			$('#create_record').on('click', function () {
 				$('#kpiForm')[0].reset();
-				$('#kpiForm').attr('action', ""); 
+				$('#kpiForm').attr('action', "{{ route('kpi.summaries.store') }}"); 
 				$('#kpiForm input[name="_method"]').remove();
 				$('#panelTitle').text('Allocate Base KPI Points');
 				$('#save_record').html('<i class="ki-duotone ki-file fs-3"></i>Save Allocation');
@@ -148,14 +158,14 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: ``, 
+					url: `/kpi/summaries/${id}/edit`, 
 					type: 'GET',
 					success: function (data) {
 						$('#evaluation_year').val(data.evaluation_year);
 						$('#base_points').val(data.base_points);
 						$('#employee_edit').val(data.employee_id);
 
-						$('#kpiForm').attr('action', ""); 
+						$('#kpiForm').attr('action', `/kpi/summaries/${id}`); 
 						if ($('#kpiForm input[name="_method"]').length === 0) {
 							$('#kpiForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -192,7 +202,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: ``, 
+							url: `/kpi/summaries/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -245,7 +255,8 @@
 
 			var table = $('#kpiSummaryTable').DataTable({
 				processing: true,
-				data: [], serverSide: false, // switch to serverSide: true, ajax: route('kpi.summaries.data')
+				serverSide: true,
+				ajax: "{{ route('kpi.summaries.data') }}",
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'employee', name: 'employee' },

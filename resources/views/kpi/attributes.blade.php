@@ -26,7 +26,7 @@
 				<div class="card mb-5 d-none" id="attributePanel">
 					<div class="card-body p-0 p-2">
 						<h2 class="fw-bold mb-6" id="panelTitle">Add New KPI Attribute</h2>
-						<form id="attributeForm" method="POST" action="">
+						<form id="attributeForm" method="POST" action="{{ route('kpi.attributes.store') }}">
 							@csrf
 							<div class="row g-4">
 								<div class="col-md-12">
@@ -37,9 +37,11 @@
 									<label class="form-label required">Category</label>
 									<select name="kpi_category_id" id="kpi_category_id" class="form-select" data-control="select2" data-dropdown-parent="#attributePanel" required>
 										<option value="">-- Select Category --</option>
-										<option value="1">Quality &amp; Productivity</option>
-										<option value="2">Punctuality &amp; Discipline</option>
-										<option value="3">Innovation &amp; Initiative</option>
+										@if(isset($categories))
+											@foreach($categories as $cat)
+												<option value="{{ $cat->id }}">{{ $cat->name }}</option>
+											@endforeach
+										@endif
 									</select>
 								</div>
 								<div class="col-md-4">
@@ -125,7 +127,7 @@
 
 			$('#create_record').on('click', function () {
 				$('#attributeForm')[0].reset();
-				$('#attributeForm').attr('action', ''); 
+				$('#attributeForm').attr('action', "{{ route('kpi.attributes.store') }}"); 
 				$('#attributeForm input[name="_method"]').remove();
 				$('#kpi_category_id').val('').trigger('change');
 				$('#category').val('functional').trigger('change');
@@ -145,7 +147,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `` + id, 
+					url: `/kpi/attributes/${id}/edit`, 
 					type: 'GET',
 					success: function (data) {
 						$('#description').val(data.description);
@@ -153,7 +155,7 @@
 						$('#category').val(data.category).trigger('change');
 						$('#fixed_points').val(data.fixed_points);
 
-						$('#attributeForm').attr('action', `` + id); 
+						$('#attributeForm').attr('action', `/kpi/attributes/${id}`); 
 						if ($('#attributeForm input[name="_method"]').length === 0) {
 							$('#attributeForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -185,7 +187,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `` + id, 
+							url: `/kpi/attributes/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -236,9 +238,8 @@
 
 			var table = $('#kpiAttributesTable').DataTable({
 				processing: true,
-				serverSide: false,
-				data: [],
-				// ajax: "",
+				serverSide: true,
+				ajax: "{{ route('kpi.attributes.data') }}",
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'description', name: 'description' },
