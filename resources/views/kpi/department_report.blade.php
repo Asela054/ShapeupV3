@@ -82,9 +82,8 @@
 			try {
 				table = $('#departmentKpiTable').DataTable({
 					processing: true,
-					serverSide: false,
-					data: [],
-					// ajax: "",
+					serverSide: true,
+					ajax: "{{ route('kpi.department_report.data') }}",
 					columns: [
 						{ data: 'id', name: 'id' },
 						{ data: 'department_name', name: 'department_name' },
