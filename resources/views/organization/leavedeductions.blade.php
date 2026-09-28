@@ -129,7 +129,6 @@
 
         $(document).ready(function () {
 
-            // Create action
             $('#create_record').on('click', function () {
                 $('#leaveDeductionForm')[0].reset();
                 $('#leaveDeductionForm').attr('action', '{{ route("organization.leavededuction.store") }}');
@@ -139,7 +138,6 @@
                 $('#leaveDeductionModal').modal('show');
             });
 
-            // DataTable initialisation
             var table = $('#leaveDeductionTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -211,7 +209,6 @@
                 }
             });
 
-            // search
             $("input[data-kt-table-filter='search']").on('keyup change', function () {
                 table.search(this.value).draw();
             });
@@ -222,7 +219,6 @@
                 }
             });
 
-            // Edit action 
             $(document).on('click', '.editLeaveDeduction', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
@@ -253,7 +249,7 @@
                 });
             });
 
-            // Delete action 
+            // Delete
             $(document).on('click', '.deleteLeaveDeduction', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
