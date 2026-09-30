@@ -245,7 +245,7 @@
 				}
 			});
 
-			// Delete action handler
+			// Delete 
 			$(document).on('click', '.deleteSalaryAdjustment', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

@@ -20,7 +20,7 @@
 				<div class="card mb-5 d-none" id="categoryPanel">
 					<div class="card-body p-0 p-2">
 						<h2 class="fw-bold mb-6" id="panelTitle">Create Category</h2>
-						<form id="categoryForm" method="POST" action="">
+						<form id="categoryForm" method="POST" action="{{ route('kpi.categories.store') }}">
 							@csrf
 							<div class="row g-4">
 								<div class="col-md-6">
@@ -31,9 +31,11 @@
 									<label class="form-label">Parent Category</label>
 									<select name="parent_id" id="parent_id" class="form-select" data-control="select2" data-dropdown-parent="#categoryPanel" data-placeholder="-- Root Category (No Parent) --">
 										<option value="">-- Root Category (No Parent) --</option>
-										{{-- @foreach($categories as $category)
-											<option value="{{ $category->id }}">{{ $category->name }}</option>
-										@endforeach --}}
+										@if(isset($categories))
+											@foreach($categories as $category)
+												<option value="{{ $category->id }}">{{ $category->name }}</option>
+											@endforeach
+										@endif
 									</select>
 								</div>
 								<div class="col-md-12">
@@ -120,7 +122,7 @@
 
 			$('#create_record').on('click', function () {
 				$('#categoryForm')[0].reset();
-				$('#categoryForm').attr('action', ''); 
+				$('#categoryForm').attr('action', "{{ route('kpi.categories.store') }}"); 
 				$('#categoryForm input[name="_method"]').remove();
 				$('#parent_id').val('').trigger('change');
 				$('#save_category').html('<i class="ki-duotone ki-tablet-book fs-3 me-1"><span class="path1"></span><span class="path2"></span></i>Save Category');
@@ -140,14 +142,14 @@
 				const id = $(this).data('id');
 
 				$.ajax({
-					url: '',
+					url: `/kpi/categories/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						$('#name').val(data.name);
 						$('#parent_id').val(data.parent_id).trigger('change');
 						$('#description').val(data.description);
 
-						$('#categoryForm').attr('action', ''); 
+						$('#categoryForm').attr('action', `/kpi/categories/${id}`); 
 						if ($('#categoryForm input[name="_method"]').length === 0) {
 							$('#categoryForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -178,7 +180,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: '', 
+							url: `/kpi/categories/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -207,7 +209,6 @@
 				e.preventDefault();
 
 				const url = $(this).attr('action');
-				const method = $('#categoryForm input[name="_method"]').val() || 'POST';
 
 				$.ajax({
 					url: url, 
@@ -237,8 +238,8 @@
 
 			var table = $('#categoriesTable').DataTable({
 				processing: true,
-				data: [], 
-				serverSide: false,
+				serverSide: true,
+				ajax: "{{ route('kpi.categories.data') }}",
 				columns: [
 					{ data: 'id', name: 'id', width: '50px' },
 					{ data: 'name', name: 'name' },

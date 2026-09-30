@@ -123,15 +123,14 @@
 
 			var table = $('#employeeKpiTable').DataTable({
 				processing: true,
-				serverSide: false,
-				data: [],
-				// ajax: {
-				// 	url: "",
-				// 	data: function (d) {
-				// 		d.department_id = $('#filter_department').val();
-				// 		d.evaluation_year = $('#filter_year').val();
-				// 	}
-				// },
+				serverSide: true,
+				ajax: {
+					url: "{{ route('kpi.employee_report.data') }}",
+					data: function (d) {
+						d.department_id = $('#filter_department').val();
+						d.evaluation_year = $('#filter_year').val();
+					}
+				},
 				columns: [
 					{
 						data: 'employee_code',

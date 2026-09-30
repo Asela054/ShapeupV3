@@ -27,7 +27,7 @@ class CoverupDetailController extends Controller
             return $this->data($request);
         }
 
-        $companies = Company::all();
+        $companies = Company::where('status', 1)->get();
         $departments = Department::all();
         $locations = Branch::all();
         $employees = Employee::all();

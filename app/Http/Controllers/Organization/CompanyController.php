@@ -25,7 +25,7 @@ class CompanyController extends Controller
 
     public function data(Request $request)
     {
-        $companies = Company::query();
+        $companies = Company::query()->where('status', 1)->get();
 
         return DataTables::of($companies)
             ->addColumn('logo', function ($row) {
