@@ -189,7 +189,7 @@
                                     <li><a href="{{ route('attendance_leave.leaveinformation.holidays') }}">Holiday</a></li>
                                     <li><a href="{{ route('attendance_leave.leaveinformation.ignore_days') }}">Ignore Days</a></li>
                                     <li><a href="{{ route('attendance_leave.leaveinformation.coverup_details') }}">CoverUp Details</a></li>
-                                    <li><a href="{{ route('attendance_leave.leaveinformation.holiday_deduction') }}">Holiday Deduction</a></li>
+                                    <!-- <li><a href="{{ route('attendance_leave.leaveinformation.holiday_deduction') }}">Holiday Deduction</a></li> -->
                                 </ul>
                             </div>
 
@@ -391,7 +391,7 @@
                             </ul>
                         </div>
 
-                        <!-- Reports -->
+                        <!-- KPI Reports -->
                         <div>
                             <div class="flyout-category-title">
                                 <i data-lucide="file-bar-chart" class="icon-blue"></i>
@@ -404,6 +404,104 @@
                             </ul>
                         </div>
 
+                    </div>
+                </div>
+            </li>
+
+            <!-- Reports -->
+            <li class="designer-nav-item">
+                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('reports.*') || request()->is('reports*') ? 'active' : '' }}">
+                    <i data-lucide="file-bar-chart" class="nav-item-icon"></i>
+                    <span style="flex: 1;">Reports</span>
+                    <i data-lucide="chevron-right" class="nav-chevron"></i>
+                </a>
+
+                <!-- Reports Flyout Panel -->
+                <div class="designer-flyout-panel">
+                    <div class="designer-flyout-box">
+                        <div class="flyout-header">
+                            <h3>Reports Menu</h3>
+                            <p>Select an option below</p>
+                        </div>
+                        <div class="flyout-grid">
+                            <!-- Attendance & Leave Report -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="calendar-range" class="icon-blue"></i>
+                                    <h4>Atte. &amp; Leave Report</h4>
+                                </div>
+                                <ul class="flyout-links-list">
+                                    <li><a href="{{ route('attendance_report') }}">Attendance Report</a></li>
+                                    <li><a href="{{ route('late_attendance_report') }}">Late Attendance Report</a></li>
+                                    <li><a href="{{ route('leave_report') }}">Leave Report</a></li>
+                                    <li><a href="{{ route('leave_balance_report') }}">Leave Balance</a></li>
+                                    <li><a href="#">O.T. Report</a></li>
+                                    <li><a href="#">No Pay Report</a></li>
+                                    <li><a href="#">Employee Absent Report</a></li>
+                                </ul>
+                            </div>
+
+                            <!--  Employee Details Report -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="user" class="icon-blue"></i>
+                                    <h4>Employee Details Report</h4>
+                                </div>
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Employees Report</a></li>
+                                    <li><a href="#">Employee Banks</a></li>
+                                    <li><a href="#">Employee Resign Report</a></li>
+                                    <li><a href="#">Employee Recruitment Report</a></li>
+                                    <li><a href="#">Employee Time In-Out Report</a></li>
+                                    <li><a href="#">Employee Ot Report</a></li>
+                                    <li><a href="#">Employee Attendance Time Sheet</a></li>
+                                    <li><a href="#">Employee Clearance Report</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Department Reports -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="building-2" class="icon-blue"></i>
+                                    <h4>Department Reports</h4>
+                                </div>
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Department-Wise Attendance Report</a></li>
+                                    <li><a href="#">Department-Wise O.T. Report</a></li>
+                                    <li><a href="#">Department-Wise Leave Report</a></li>
+                                    <li><a href="#">Department-Wise Employee Leave Report</a></li>
+                                    <li><a href="#">Department-Wise Employee O.T. Report</a></li>
+                                    <li><a href="#">Department-Wise Employee Late Report</a></li>
+                                    <li><a href="#">Job Allocation Report</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Audit Reports -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="file-check-2" class="icon-blue"></i>
+                                    <h4>Audit Reports</h4>
+                                </div>
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Attendance Time In-Out Report</a></li>
+                                    <li><a href="#">Audit Pay Report</a></li>
+                                    <li><a href="#">Audit Salary Sheet</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Production Reports -->
+                            <div>
+                                <div class="flyout-category-title">
+                                    <i data-lucide="factory" class="icon-blue"></i>
+                                    <h4>Production Reports</h4>
+                                </div>
+                                <ul class="flyout-links-list">
+                                    <li><a href="#">Employee Production Report</a></li>
+                                    <li><a href="#">Employee Production Report(opma)</a></li>
+                                    <li><a href="#">Employee Daily Production summary Report(opma)</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>

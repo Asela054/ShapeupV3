@@ -95,7 +95,7 @@
                     <form id="jobCategoryForm" method="POST" action="">
                         @csrf
 
-                        {{-- ── 1. BASIC INFORMATION ── --}}
+                        {{-- 1. BASIC INFORMATION --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-basic" style="cursor:pointer; background:#f9f9f9;">
@@ -147,7 +147,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 2. PAYROLL & SHIFT ── --}}
+                        {{-- 2. PAYROLL & SHIFT --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-payroll" style="cursor:pointer; background:#f9f9f9;">
@@ -200,7 +200,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 3. OT SETTINGS ── --}}
+                        {{-- 3. OT SETTINGS --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-ot" style="cursor:pointer; background:#f9f9f9;">
@@ -266,7 +266,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 4. HOLIDAY SETTINGS ── --}}
+                        {{-- 4. HOLIDAY SETTINGS --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-holiday" style="cursor:pointer; background:#f9f9f9;">
@@ -315,7 +315,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 5. WEEKEND OT ── --}}
+                        {{-- 5. WEEKEND OT --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-weekend" style="cursor:pointer; background:#f9f9f9;">
@@ -372,7 +372,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 6. SPECIAL DAY OT ── --}}
+                        {{-- 6. SPECIAL DAY OT --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-special" style="cursor:pointer; background:#f9f9f9;">
@@ -423,7 +423,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 7. LATE & DEDUCTIONS ── --}}
+                        {{-- 7. LATE & DEDUCTIONS --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-late" style="cursor:pointer; background:#f9f9f9;">
@@ -472,7 +472,7 @@
                             </div>
                         </div>
 
-                        {{-- ── 8. SALARY ADVANCE ── --}}
+                        {{-- 8. SALARY ADVANCE --}}
                         <div class="accordion-jc border rounded mb-2">
                             <div class="accordion-jc-header d-flex justify-content-between align-items-center px-4 py-3"
                                 data-target="section-salary-adv" style="cursor:pointer; background:#f9f9f9;">
@@ -532,7 +532,6 @@
 
         $(document).ready(function () {
 
-            // ── Accordion toggle ──
             $(document).on('click', '.accordion-jc-header', function () {
                 const target  = $(this).data('target');
                 const $body   = $('#' + target);
@@ -543,7 +542,7 @@
                 $chev.toggleClass('fa-chevron-down fa-chevron-up');
             });
 
-            // ── Saturday / Sunday custom rate toggle ──
+            //  Saturday / Sunday custom rate 
             $('input[name="saturday_ot_type"]').on('change', function () {
                 $('#customSaturdayRate').toggle($(this).val() === 'Custom');
             });
@@ -551,7 +550,6 @@
                 $('#customSundayRate').toggle($(this).val() === 'Custom');
             });
 
-            // ── Create button ──
             $('#create_record').on('click', function () {
                 $('#jobCategoryForm')[0].reset();
                 $('#jobCategoryForm').attr('action', "");
@@ -562,7 +560,6 @@
                 $('#jobCategoryModal').modal('show');
             });
 
-            // ── DataTable ──
             var table = $('#jcTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -661,7 +658,6 @@
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
             });
 
-            // ── Edit ──
             $(document).on('click', '.editJobCategory', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');
@@ -724,7 +720,6 @@
                 });
             });
 
-            // ── Delete ──
             $(document).on('click', '.deleteJobCategory', function (e) {
                 e.preventDefault();
                 const id = $(this).data('id');

@@ -28,7 +28,7 @@
 					<div class="card-body p-0 p-2">
 						<h2 class="fw-bold mb-6" id="panelTitle">Record New KPI Performance Transaction</h2>
 
-						<form id="kpiTransactionForm" method="POST" action="">
+						<form id="kpiTransactionForm" method="POST" action="{{ route('kpi.transactions.store') }}">
 							@csrf
 							<input type="hidden" name="id" id="transaction_id" value="" />
 							<div class="row g-4">
@@ -160,7 +160,7 @@
 				const id = $(this).data('id');
 
 				$.ajax({
-					url: '', 
+					url: `/kpi/transactions/${id}/edit`, 
 					type: 'GET',
 					success: function (data) {
 						$('#transaction_id').val(data.id);
@@ -195,7 +195,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: '', 
+							url: `/kpi/transactions/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({
@@ -219,8 +219,8 @@
 				e.preventDefault();
 				const id = $('#transaction_id').val();
 				const url = id
-					? '' //route('kpi.transactions.update', $id)
-					: ''; //route('kpi.transactions.store')
+					? `/kpi/transactions/${id}`
+					: "{{ route('kpi.transactions.store') }}";
 				const method = id ? 'PUT' : 'POST';
 
 				$.ajax({
@@ -255,8 +255,8 @@
 
 			var table = $('#kpiTransactionTable').DataTable({
 				processing: true,
-				serverSide: false,
-				data: [],
+				serverSide: true,
+				ajax: "{{ route('kpi.transactions.data') }}",
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'employee_name', name: 'employee_name' },

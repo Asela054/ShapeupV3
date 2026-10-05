@@ -20,7 +20,7 @@
 				<div class="card mb-5 d-none" id="yearPanel">
 					<div class="card-body p-0 p-2">
 						<h3 class="mb-5 mt-5" id="panelTitle">Create Evaluation Year</h3>
-						<form id="yearForm" method="POST" action="">
+						<form id="yearForm" method="POST" action="{{ route('kpi.evaluation_year.store') }}">
 							@csrf
 							<div class="row g-4">
 								<div class="col-md-3">
@@ -119,7 +119,7 @@
 
             $('#create_record').on('click', function () {
                 $('#yearForm')[0].reset();
-                $('#yearForm').attr('action', ''); // TODO: route('kpi.years.store')
+                $('#yearForm').attr('action', "{{ route('kpi.evaluation_year.store') }}");
                 $('#yearForm input[name="_method"]').remove();
                 $('#yearForm button[type="submit"]').html('<i class="ki-duotone ki-file fs-3"></i>Save Year');
                 $('#panelTitle').text('Create Evaluation Year');
@@ -133,7 +133,31 @@
 
 			$('#yearForm').on('submit', function (e) {
 				e.preventDefault();
-				Swal.fire({ icon: 'info', title: 'Not wired yet', text: 'Backend route not connected.' });
+				const form = $(this);
+				const url = form.attr('action');
+
+				$.ajax({
+					url: url,
+					type: 'POST',
+					data: form.serialize(),
+					success: function (response) {
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						$('#yearPanel').addClass('d-none');
+						$('#kpiYearsTable').DataTable().ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						if (xhr.status === 422) {
+							const errors = xhr.responseJSON.errors;
+							let html = '';
+							$.each(errors, function (key, value) {
+								html += value[0] + '<br>';
+							});
+							Swal.fire({ icon: 'error', title: 'Validation Error', html: html });
+						} else {
+							Swal.fire({ icon: 'error', title: 'Error', text: 'Failed to save evaluation year' });
+						}
+					}
+				});
 			});
 
 			// Edit action 
@@ -141,7 +165,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: '', 
+					url: `/kpi/evaluation_year/${id}/edit`, 
 					type: 'GET',
 					success: function (data) {
 						$('#year_name').val(data.year_name);
@@ -149,7 +173,7 @@
 						$('#end_date').val(data.end_date);
 						$('#status').val(data.status);
 
-						$('#yearForm').attr('action', ''); 
+						$('#yearForm').attr('action', `/kpi/evaluation_year/${id}`); 
 						if ($('#yearForm input[name="_method"]').length === 0) {
 							$('#yearForm').append('<input type="hidden" name="_method" value="PUT">');
 						}
@@ -183,7 +207,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: '', 
+							url: `/kpi/evaluation_year/${id}/status`, 
 							type: 'PATCH',
 							data: { status: next },
 							success: function (response) {
@@ -214,7 +238,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: '', 
+							url: `/kpi/evaluation_year/${id}`, 
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({ icon: 'success', title: 'Deleted!', text: response.message, timer: 2000 });
@@ -235,8 +259,8 @@
 
 			var table = $('#kpiYearsTable').DataTable({
 				processing: true,
-				serverSide: false, 
-				data: [], 
+				serverSide: true,
+				ajax: "{{ route('kpi.evaluation_year.data') }}", 
 				columns: [
 					{ data: 'id', name: 'id' },
 					{ data: 'year_name', name: 'year_name' },

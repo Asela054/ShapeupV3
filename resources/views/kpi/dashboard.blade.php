@@ -254,7 +254,7 @@
 											<span class="path4"></span>
 										</i>Category Attribute Points
 									</a>
-									<a href="#" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
+									<a href="{{ route('kpi.evaluation_year') }}" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
 										<i class="ki-duotone ki-calendar fs-3 me-3">
 											<span class="path1"></span>
 											<span class="path2"></span>
@@ -262,7 +262,7 @@
 											<span class="path4"></span>
 										</i>Evaluation Target Years
 									</a>
-									<a href="#" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
+									<a href="{{ route('kpi.department_report') }}" class="btn btn-outline btn-outline-dashed btn-outline-default d-flex align-items-center justify-content-start">
 										<i class="ki-duotone ki-chart-pie-simple fs-3 me-3">
 											<span class="path1"></span>
 											<span class="path2"></span>
@@ -334,7 +334,7 @@
 
 			function loadDashboardData() {
 				$.ajax({
-					url: '', 
+					url: "{{ route('kpi.dashboard.data') }}", 
 					type: 'GET',
 					success: function (res) {
 						renderStats(res.stats);
