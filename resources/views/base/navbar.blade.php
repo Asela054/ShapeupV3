@@ -433,8 +433,8 @@
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('attendance_report') }}">Attendance Report</a></li>
                                     <li><a href="{{ route('late_attendance_report') }}">Late Attendance Report</a></li>
-                                    <li><a href="#">Leave Report</a></li>
-                                    <li><a href="#">Leave Balance</a></li>
+                                    <li><a href="{{ route('leave_report') }}">Leave Report</a></li>
+                                    <li><a href="{{ route('leave_balance_report') }}">Leave Balance</a></li>
                                     <li><a href="#">O.T. Report</a></li>
                                     <li><a href="#">No Pay Report</a></li>
                                     <li><a href="#">Employee Absent Report</a></li>

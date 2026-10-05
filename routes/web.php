@@ -63,5 +63,5 @@ require __DIR__.'/attendance_leave.php';
 require __DIR__.'/shift_management.php';
 require __DIR__.'/payroll.php';
 require __DIR__.'/kpi.php';
-require __DIR__.'/attendance_leave_reports.php';
+require __DIR__.'/reports.php';
 
