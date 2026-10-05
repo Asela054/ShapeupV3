@@ -18,6 +18,11 @@ class LeaveDeduction extends Model
         'amount',
     ];
 
+    protected $casts = [
+        'day_count' => 'double',
+        'amount'    => 'double',
+    ];
+
     public function jobCategory()
     {
         return $this->belongsTo(JobCategory::class, 'job_id');
