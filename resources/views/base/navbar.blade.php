@@ -431,13 +431,13 @@
                                     <h4>Atte. &amp; Leave Report</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('attendance_report') }}">Attendance Report</a></li>
-                                    <li><a href="{{ route('late_attendance_report') }}">Late Attendance Report</a></li>
-                                    <li><a href="{{ route('leave_report') }}">Leave Report</a></li>
-                                    <li><a href="{{ route('leave_balance_report') }}">Leave Balance</a></li>
-                                    <li><a href="#">O.T. Report</a></li>
-                                    <li><a href="#">No Pay Report</a></li>
-                                    <li><a href="#">Employee Absent Report</a></li>
+                                    <li><a href="{{ route('reports.attendance_report') }}">Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.late_attendance_report') }}">Late Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.leave_report') }}">Leave Report</a></li>
+                                    <li><a href="{{ route('reports.leave_balance_report') }}">Leave Balance</a></li>
+                                    <li><a href="{{ route('reports.ot_report') }}">O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.no_pay_report') }}">No Pay Report</a></li>
+                                    <li><a href="{{ route('reports.employee_absent_report') }}">Employee Absent Report</a></li>
                                 </ul>
                             </div>
 
