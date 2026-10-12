@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('reports')->name('reports.')->group(function () {
 
+    // Attendance & Leave Report
     Route::get('/attendance_report', function () {
         return view('Reports/attendance_leave_report/attendance_report');
     })->name('attendance_report');
@@ -31,5 +32,14 @@ Route::prefix('reports')->name('reports.')->group(function () {
     Route::get('/employee_absent_report', function () {
         return view('Reports/attendance_leave_report/employee_absent_report');
     })->name('employee_absent_report');
+
+    // Employee Details Report
+    Route::get('/employee_report', function () {
+        return view('Reports/employee_details_report/employee_report');
+    })->name('employee_report');
+
+    Route::get('/employee_bank_report', function () {
+        return view('Reports/employee_details_report/employee_bank_report');
+    })->name('employee_bank_report');
 
 });

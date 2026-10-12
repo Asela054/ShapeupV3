@@ -448,8 +448,8 @@
                                     <h4>Employee Details Report</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Employees Report</a></li>
-                                    <li><a href="#">Employee Banks</a></li>
+                                    <li><a href="{{ route('reports.employee_report') }}">Employees Report</a></li>
+                                    <li><a href="{{ route('reports.employee_bank_report') }}">Employee Banks</a></li>
                                     <li><a href="#">Employee Resign Report</a></li>
                                     <li><a href="#">Employee Recruitment Report</a></li>
                                     <li><a href="#">Employee Time In-Out Report</a></li>
