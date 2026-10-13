@@ -50,4 +50,20 @@ Route::prefix('reports')->name('reports.')->group(function () {
         return view('Reports/employee_details_report/employee_recruitment_report');
     })->name('employee_recruitment_report');
 
+    Route::get('/employee_time_in_out_report', function () {
+        return view('Reports/employee_details_report/employee_time_in_out_report');
+    })->name('employee_time_in_out_report');
+
+    Route::get('/employee_ot_report', function () {
+        return view('Reports/employee_details_report/employee_ot_report');
+    })->name('employee_ot_report');
+
+    Route::get('/employee_attendance_time_sheet', function () {
+        return view('Reports/employee_details_report/employee_attendance_time_sheet');
+    })->name('employee_attendance_time_sheet');
+
+    Route::get('/employee_clearance_report', function () {
+        return view('Reports/employee_details_report/clearance_report');
+    })->name('employee_clearance_report');
+
 });

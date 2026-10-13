@@ -452,10 +452,10 @@
                                     <li><a href="{{ route('reports.employee_bank_report') }}">Employee Banks</a></li>
                                     <li><a href="{{ route('reports.employee_resign_report') }}">Employee Resign Report</a></li>
                                     <li><a href="{{ route('reports.employee_recruitment_report') }}">Employee Recruitment Report</a></li>
-                                    <li><a href="#">Employee Time In-Out Report</a></li>
-                                    <li><a href="#">Employee Ot Report</a></li>
-                                    <li><a href="#">Employee Attendance Time Sheet</a></li>
-                                    <li><a href="#">Employee Clearance Report</a></li>
+                                    <li><a href="{{ route('reports.employee_time_in_out_report') }}">Employee Time In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.employee_ot_report') }}">Employee Ot Report</a></li>
+                                    <li><a href="{{ route('reports.employee_attendance_time_sheet') }}">Employee Attendance Time Sheet</a></li>
+                                    <li><a href="{{ route('reports.employee_clearance_report') }}">Employee Clearance Report</a></li>
                                 </ul>
                             </div>
 
