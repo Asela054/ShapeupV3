@@ -42,4 +42,12 @@ Route::prefix('reports')->name('reports.')->group(function () {
         return view('Reports/employee_details_report/employee_bank_report');
     })->name('employee_bank_report');
 
+    Route::get('/employee_resign_report', function () {
+        return view('Reports/employee_details_report/employee_resign_report');
+    })->name('employee_resign_report');
+
+    Route::get('/employee_recruitment_report', function () {
+        return view('Reports/employee_details_report/employee_recruitment_report');
+    })->name('employee_recruitment_report');
+
 });

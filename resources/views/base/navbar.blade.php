@@ -450,8 +450,8 @@
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('reports.employee_report') }}">Employees Report</a></li>
                                     <li><a href="{{ route('reports.employee_bank_report') }}">Employee Banks</a></li>
-                                    <li><a href="#">Employee Resign Report</a></li>
-                                    <li><a href="#">Employee Recruitment Report</a></li>
+                                    <li><a href="{{ route('reports.employee_resign_report') }}">Employee Resign Report</a></li>
+                                    <li><a href="{{ route('reports.employee_recruitment_report') }}">Employee Recruitment Report</a></li>
                                     <li><a href="#">Employee Time In-Out Report</a></li>
                                     <li><a href="#">Employee Ot Report</a></li>
                                     <li><a href="#">Employee Attendance Time Sheet</a></li>
