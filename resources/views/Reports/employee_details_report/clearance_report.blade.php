@@ -193,7 +193,7 @@
 						{ data: 'quantity_balance', name: 'quantity_balance' },
 						{ data: 'amount', name: 'amount' }
 					],
-					dom: "<'row mb-3'<'col-sm-6'l><'col-sm-6 d-flex justify-content-end w-80'B>>" +
+					dom: "<'row mb-3'<'col-sm-6 d-flex justify-content-end w-80'B>>" +
 						"<'row'<'col-sm-12'tr>>" +
 						"<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
 					buttons: [],
