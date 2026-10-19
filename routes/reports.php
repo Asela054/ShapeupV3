@@ -95,4 +95,17 @@ Route::prefix('reports')->name('reports.')->group(function () {
         return view('Reports/department_report/job_allocation_report');
     })->name('job_allocation_report');
 
+    // Audit Reports
+    Route::get('/attendance_time_in_out_report', function () {
+        return view('Reports/audit_report/attendance_time_in_out_report');
+    })->name('attendance_time_in_out_report');
+
+    Route::get('/audit_pay_report', function () {
+        return view('Reports/audit_report/audit_pay_report');
+    })->name('audit_pay_report');
+
+    Route::get('/audit_salary_sheet', function () {
+        return view('Reports/audit_report/audit_salary_sheet');
+    })->name('audit_salary_sheet');
+
 });
