@@ -66,4 +66,33 @@ Route::prefix('reports')->name('reports.')->group(function () {
         return view('Reports/employee_details_report/clearance_report');
     })->name('employee_clearance_report');
 
+    // Department Reports
+    Route::get('/department_wise_attendance_report', function () {
+        return view('Reports/department_report/department_wise_attendance_report');
+    })->name('department_wise_attendance_report');
+
+    Route::get('/department_wise_ot_report', function () {
+        return view('Reports/department_report/ot_report');
+    })->name('department_wise_ot_report');
+
+    Route::get('/department_wise_leave_report', function () {
+        return view('Reports/department_report/leave_report');
+    })->name('department_wise_leave_report');
+
+    Route::get('/department_wise_employee_leave_report', function () {
+        return view('Reports/department_report/employee_leave_report');
+    })->name('department_wise_employee_leave_report');
+
+    Route::get('/department_wise_employee_ot_report', function () {
+        return view('Reports/department_report/employee_ot_report');
+    })->name('department_wise_employee_ot_report');
+
+    Route::get('/department_wise_employee_late_report', function () {
+        return view('Reports/department_report/employee_late_report');
+    })->name('department_wise_employee_late_report');
+
+    Route::get('/job_allocation_report', function () {
+        return view('Reports/department_report/job_allocation_report');
+    })->name('job_allocation_report');
+
 });
