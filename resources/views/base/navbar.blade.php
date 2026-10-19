@@ -466,13 +466,13 @@
                                     <h4>Department Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Department-Wise Attendance Report</a></li>
-                                    <li><a href="#">Department-Wise O.T. Report</a></li>
-                                    <li><a href="#">Department-Wise Leave Report</a></li>
-                                    <li><a href="#">Department-Wise Employee Leave Report</a></li>
-                                    <li><a href="#">Department-Wise Employee O.T. Report</a></li>
-                                    <li><a href="#">Department-Wise Employee Late Report</a></li>
-                                    <li><a href="#">Job Allocation Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_attendance_report') }}">Department-Wise Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_ot_report') }}">Department-Wise O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_leave_report') }}">Department-Wise Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_leave_report') }}">Department-Wise Employee Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_ot_report') }}">Department-Wise Employee O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_late_report') }}">Department-Wise Employee Late Report</a></li>
+                                    <li><a href="{{ route('reports.job_allocation_report') }}">Job Allocation Report</a></li>
                                 </ul>
                             </div>
 
@@ -490,7 +490,7 @@
                             </div>
 
                             <!-- Production Reports -->
-                            <div>
+                            <!-- <div>
                                 <div class="flyout-category-title">
                                     <i data-lucide="factory" class="icon-blue"></i>
                                     <h4>Production Reports</h4>
@@ -500,7 +500,7 @@
                                     <li><a href="#">Employee Production Report(opma)</a></li>
                                     <li><a href="#">Employee Daily Production summary Report(opma)</a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
