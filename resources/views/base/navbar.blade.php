@@ -483,9 +483,9 @@
                                     <h4>Audit Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Attendance Time In-Out Report</a></li>
-                                    <li><a href="#">Audit Pay Report</a></li>
-                                    <li><a href="#">Audit Salary Sheet</a></li>
+                                    <li><a href="{{ route('reports.attendance_time_in_out_report') }}">Attendance Time In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.audit_pay_report') }}">Audit Pay Report</a></li>
+                                    <li><a href="{{ route('reports.audit_salary_sheet') }}">Audit Salary Sheet</a></li>
                                 </ul>
                             </div>
 
