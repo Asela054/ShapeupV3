@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Reports\EmployeeReportController;
+use App\Http\Controllers\Reports\EmployeeBankReportController;
 
 Route::prefix('reports')->name('reports.')->group(function () {
 
@@ -39,9 +40,9 @@ Route::prefix('reports')->name('reports.')->group(function () {
     Route::get('/employee_report/data', [EmployeeReportController::class, 'data'])->name('employee_report.data');
     Route::get('/employee_report/departments', [EmployeeReportController::class, 'getDepartments'])->name('employee_report.departments');
 
-    Route::get('/employee_bank_report', function () {
-        return view('Reports/employee_details_report/employee_bank_report');
-    })->name('employee_bank_report');
+    Route::get('/employee_bank_report', [EmployeeBankReportController::class, 'index'])->name('employee_bank_report');
+    Route::get('/employee_bank_report/data', [EmployeeBankReportController::class, 'data'])->name('employee_bank_report.data');
+    Route::get('/employee_bank_report/departments', [EmployeeBankReportController::class, 'getDepartments'])->name('employee_bank_report.departments');
 
     Route::get('/employee_resign_report', function () {
         return view('Reports/employee_details_report/employee_resign_report');
