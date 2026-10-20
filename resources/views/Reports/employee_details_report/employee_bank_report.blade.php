@@ -9,8 +9,8 @@
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">Reports</li>
 						<li class="breadcrumb-separator"></li>
-                        <li class="breadcrumb-item text-muted">Employee Details Report</li>
-                        <li class="breadcrumb-separator"></li>
+						<li class="breadcrumb-item text-muted">Employee Details Report</li>
+						<li class="breadcrumb-separator"></li>
 						<li class="breadcrumb-item text-gray-700">Employee Bank Report</li>
 					</ul>
 				</div>
@@ -70,25 +70,33 @@
 			</button>
 		</div>
 		<div class="offcanvas-body">
-			<form id="filterForm" method="POST" action="">
-				@csrf
+			<form id="filterForm">
 				<div class="row g-4">
 					<div class="col-md-12">
 						<label class="form-label required">Company</label>
 						<select name="company_id" id="company_id" class="form-select" data-placeholder="Select...">
-							<option></option>
+							<option value=""></option>
+							@foreach($companies ?? [] as $company)
+								<option value="{{ $company->id }}">{{ $company->name }}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="col-md-12">
 						<label class="form-label required">Department</label>
 						<select name="department_id" id="department_id" class="form-select" data-placeholder="Select...">
-							<option></option>
+							<option value=""></option>
+							@foreach($departments ?? [] as $department)
+								<option value="{{ $department->id }}">{{ $department->name }}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="col-md-12">
 						<label class="form-label">Bank</label>
 						<select name="bank_id" id="bank_id" class="form-select" data-placeholder="Please Select">
 							<option value="">Please Select</option>
+							@foreach($banks ?? [] as $bank)
+								<option value="{{ $bank->id }}">{{ $bank->name }} ({{ $bank->code }})</option>
+							@endforeach
 						</select>
 					</div>
 				</div>
@@ -134,8 +142,10 @@
 
 			$('#reset_filter').on('click', function () {
 				$('#filterForm')[0].reset();
-				$('#company_id, #department_id, #bank_id').val('').trigger('change');
-				table.draw();
+				$('#company_id').val(null).trigger('change');
+				$('#department_id').val(null).trigger('change');
+				$('#bank_id').val(null).trigger('change');
+				table.ajax.reload();
 			});
 
 			$('#search_filter').on('click', function () {
@@ -143,7 +153,7 @@
 					Swal.fire({ icon: 'error', title: 'Validation Error', text: 'Please select Company and Department' });
 					return;
 				}
-				table.draw();
+				table.ajax.reload();
 				$('#filterOffcanvas').removeClass('show');
 				$('#filterBackdrop').removeClass('show').hide();
 			});
@@ -153,45 +163,119 @@
 			});
 
 			try {
-				$('#company_id, #department_id, #bank_id').select2({
+				$('#company_id').select2({
 					dropdownParent: $('#filterOffcanvas'),
+					placeholder: 'Select...',
+					allowClear: true,
+					width: '100%'
+				});
+				$('#department_id').select2({
+					dropdownParent: $('#filterOffcanvas'),
+					placeholder: 'Select...',
+					allowClear: true,
+					width: '100%'
+				});
+				$('#bank_id').select2({
+					dropdownParent: $('#filterOffcanvas'),
+					placeholder: 'Please Select',
+					allowClear: true,
 					width: '100%'
 				});
 			} catch (e) {
 				console.error(e);
 			}
 
+			// Load departments dynamically when company changes
+			$('#company_id').on('change', function () {
+				var companyId = $(this).val();
+				$('#department_id').empty().append('<option value=""></option>');
+				if (!companyId) {
+					@foreach($departments ?? [] as $department)
+						$('#department_id').append(new Option('{{ addslashes($department->name) }}', '{{ $department->id }}'));
+					@endforeach
+					$('#department_id').trigger('change');
+					return;
+				}
+				$.ajax({
+					url: "{{ route('reports.employee_bank_report.departments') }}",
+					type: 'GET',
+					data: { company_id: companyId },
+					success: function (data) {
+						$.each(data, function (i, item) {
+							$('#department_id').append(new Option(item.name, item.id));
+						});
+						$('#department_id').trigger('change');
+					},
+					error: function () {
+						console.error('Failed to load departments');
+					}
+				});
+			});
+
 			var table = $('#employeeBankReportTable').DataTable({
 				processing: true,
-				serverSide: false,
-				data: [],
+				serverSide: true,
+				ajax: {
+					url: "{{ route('reports.employee_bank_report.data') }}",
+					data: function (d) {
+						d.company_id = $('#company_id').val();
+						d.department_id = $('#department_id').val();
+						d.bank_id = $('#bank_id').val();
+					}
+				},
 				columns: [
-					{ data: 'employee_id', name: 'employee_id'},
-					{ data: 'employee', name: 'employee' },
+					{
+						data: 'employee_id',
+						name: 'employee_id',
+						render: function (data, type, row) {
+							var empPk = row.employee_pk || (row.employee && row.employee.id);
+							if (empPk) {
+								var url = "{{ url('employee_management/details') }}/" + empPk + "/bank";
+								return `<a href="${url}" class="text-primary fw-bold text-hover-underline" target="_blank">${data || '-'}</a>`;
+							}
+							return data || '-';
+						}
+					},
+					{
+						data: 'employee',
+						name: 'employee',
+						render: function (data, type, row) {
+							var empPk = row.employee_pk || (row.employee && row.employee.id);
+							if (empPk) {
+								var url = "{{ url('employee_management/details') }}/" + empPk + "/bank";
+								return `<a href="${url}" class="text-gray-800 text-hover-primary fw-semibold" target="_blank">${data || '-'}</a>`;
+							}
+							return data || '-';
+						}
+					},
 					{ data: 'office', name: 'office' },
 					{ data: 'department', name: 'department' },
 					{ data: 'bank', name: 'bank' },
 					{ data: 'branch', name: 'branch' },
 					{ data: 'account_no', name: 'account_no' }
 				],
+				language: {
+					emptyTable: 'No Records Found<br><small class="text-muted">Use the filter options to get records</small>'
+				},
 				dom: "<'row mb-3'<'col-sm-6'l><'col-sm-6 d-flex justify-content-end w-80'B>>" +
 					"<'row'<'col-sm-12'tr>>" +
 					"<'row mt-3'<'col-sm-5'i><'col-sm-7'p>>",
 				buttons: [
-						{
-							extend: 'csv',
-							text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>CSV</span>`,
-							className: 'btn btn-light-primary me-3'
-						},
-						{
-							extend: 'print',
-							text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Print</span>`,
-							className: 'btn btn-light-primary me-3'
-						}
-					],
-					
+					{
+						extend: 'csv',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>CSV</span>`,
+						className: 'btn btn-light-primary me-3'
+					},
+					{
+						extend: 'print',
+						text: `<span class="d-inline-flex align-items-center"><i class="ki-duotone ki-exit-up fs-2 me-2"><span class="path1"></span><span class="path2"></span></i>Print</span>`,
+						className: 'btn btn-light-primary me-3'
+					}
+				],
 				drawCallback: function () {
-					KTMenu.createInstances();
+					if (typeof KTMenu !== 'undefined') {
+						KTMenu.createInstances();
+					}
 				}
 			});
 		});
