@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Reports\EmployeeReportController;
 
 Route::prefix('reports')->name('reports.')->group(function () {
 
@@ -34,9 +35,9 @@ Route::prefix('reports')->name('reports.')->group(function () {
     })->name('employee_absent_report');
 
     // Employee Details Report
-    Route::get('/employee_report', function () {
-        return view('Reports/employee_details_report/employee_report');
-    })->name('employee_report');
+    Route::get('/employee_report', [EmployeeReportController::class, 'index'])->name('employee_report');
+    Route::get('/employee_report/data', [EmployeeReportController::class, 'data'])->name('employee_report.data');
+    Route::get('/employee_report/departments', [EmployeeReportController::class, 'getDepartments'])->name('employee_report.departments');
 
     Route::get('/employee_bank_report', function () {
         return view('Reports/employee_details_report/employee_bank_report');
