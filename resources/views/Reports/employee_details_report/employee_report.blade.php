@@ -9,8 +9,8 @@
 					<ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 my-0 pt-1">
 						<li class="breadcrumb-item text-muted">Reports</li>
 						<li class="breadcrumb-separator"></li>
-                        <li class="breadcrumb-item text-muted">Employee Details Report</li>
-                        <li class="breadcrumb-separator"></li>
+						<li class="breadcrumb-item text-muted">Employee Details Report</li>
+						<li class="breadcrumb-separator"></li>
 						<li class="breadcrumb-item text-gray-700">Employee Report</li>
 					</ul>
 				</div>
@@ -84,12 +84,18 @@
 						<label class="form-label">Company</label>
 						<select name="company_id" id="company_id" class="form-select" data-placeholder="Select...">
 							<option value=""></option>
+							@foreach($companies ?? [] as $company)
+								<option value="{{ $company->id }}">{{ $company->name }}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="col-md-12">
 						<label class="form-label">Department</label>
 						<select name="department_id" id="department_id" class="form-select" data-placeholder="Select...">
 							<option value=""></option>
+							@foreach($departments ?? [] as $department)
+								<option value="{{ $department->id }}">{{ $department->name }}</option>
+							@endforeach
 						</select>
 					</div>
 				</div>
@@ -105,10 +111,6 @@
 @endsection
 
 @section('scripts')
-	{{-- FixedColumns --}}
-	<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.3.0/css/fixedColumns.bootstrap5.min.css">
-	<script src="https://cdn.datatables.net/fixedcolumns/4.3.0/js/dataTables.fixedColumns.min.js"></script>
-
 	<script>
 		@if(session('success'))
 			Swal.fire({ icon: 'success', title: 'Success', text: '{{ session('success') }}' });
@@ -140,7 +142,7 @@
 			});
 
 			$('#search_filter').on('click', function () {
-				table.draw();
+				table.ajax.reload();
 				$('#close_filter').trigger('click');
 			});
 
@@ -148,7 +150,7 @@
 				$('#filterForm')[0].reset();
 				$('#company_id').val(null).trigger('change');
 				$('#department_id').val(null).trigger('change');
-				table.draw();
+				table.ajax.reload();
 			});
 
 			$("input[data-kt-table-filter='search']").on('keyup change', function () {
@@ -172,18 +174,69 @@
 				console.error('Select2 init failed', e);
 			}
 
+			//Department dropdown
+			$('#company_id').on('change', function () {
+				var companyId = $(this).val();
+				$('#department_id').empty().append('<option value=""></option>');
+				if (!companyId) {
+					@foreach($departments ?? [] as $department)
+						$('#department_id').append(new Option('{{ addslashes($department->name) }}', '{{ $department->id }}'));
+					@endforeach
+					$('#department_id').trigger('change');
+					return;
+				}
+				$.ajax({
+					url: "{{ route('reports.employee_report.departments') }}",
+					type: 'GET',
+					data: { company_id: companyId },
+					success: function (data) {
+						$.each(data, function (i, item) {
+							$('#department_id').append(new Option(item.name, item.id));
+						});
+						$('#department_id').trigger('change');
+					},
+					error: function () {
+						console.error('Failed to load departments');
+					}
+				});
+			});
+
 			try {
 				table = $('#employeeReportTable').DataTable({
 					processing: true,
-					serverSide: false,
-					data: [],
-					// ajax:
+					serverSide: true,
+					ajax: {
+						url: "{{ route('reports.employee_report.data') }}",
+						data: function (d) {
+							d.company_id = $('#company_id').val();
+							d.department_id = $('#department_id').val();
+						}
+					},
 					scrollX: true,
 					scrollCollapse: true,
-					fixedColumns: { leftColumns: 2 },
 					columns: [
-						{ data: 'emp_id', name: 'emp_id' },
-						{ data: 'employee', name: 'employee'},
+						{
+							data: 'emp_id',
+							name: 'emp_id',
+							render: function (data, type, row) {
+								if (row.id) {
+									var url = "{{ url('employee_management/details') }}/" + row.id + "/personal";
+									return `<a href="${url}" class="text-primary fw-bold text-hover-underline" target="_blank">${data || '-'}</a>`;
+								}
+								return data || '-';
+							}
+						},
+						{
+							data: 'employee',
+							name: 'employee',
+							render: function (data, type, row) {
+								if (row.id) {
+									var url = "{{ url('employee_management/details') }}/" + row.id + "/personal";
+									return `<a href="${url}" class="text-gray-800 text-hover-primary fw-semibold" target="_blank">${data || '-'}</a>`;
+								}
+								return data || '-';
+							}
+						},
 						{ data: 'location', name: 'location' },
 						{ data: 'department', name: 'department' },
 						{ data: 'dob', name: 'dob' },
@@ -195,7 +248,21 @@
 						{ data: 'permanent_address', name: 'permanent_address' },
 						{ data: 'temporary_address', name: 'temporary_address' },
 						{ data: 'job_category', name: 'job_category' },
-						{ data: 'job_status', name: 'job_status' },
+						{
+							data: 'job_status',
+							name: 'job_status',
+							render: function (data, type, row) {
+								if (!data || data === '-') return '-';
+								var statusStr = String(data).toLowerCase();
+								var badgeClass = 'badge-light-primary';
+								if (statusStr === 'active') {
+									badgeClass = 'badge-light-success';
+								} else if (statusStr === 'resigned') {
+									badgeClass = 'badge-light-danger';
+								}
+								return `<span class="badge ${badgeClass}">${data}</span>`;
+							}
+						},
 						{ data: 'permanent_date', name: 'permanent_date' }
 					],
 					language: {
@@ -217,7 +284,9 @@
 						}
 					],
 					drawCallback: function () {
-						KTMenu.createInstances();
+						if (typeof KTMenu !== 'undefined') {
+							KTMenu.createInstances();
+						}
 					}
 				});
 			} catch (e) {
