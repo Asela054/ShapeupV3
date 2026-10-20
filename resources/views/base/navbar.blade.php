@@ -431,13 +431,13 @@
                                     <h4>Atte. &amp; Leave Report</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('attendance_report') }}">Attendance Report</a></li>
-                                    <li><a href="{{ route('late_attendance_report') }}">Late Attendance Report</a></li>
-                                    <li><a href="{{ route('leave_report') }}">Leave Report</a></li>
-                                    <li><a href="{{ route('leave_balance_report') }}">Leave Balance</a></li>
-                                    <li><a href="#">O.T. Report</a></li>
-                                    <li><a href="#">No Pay Report</a></li>
-                                    <li><a href="#">Employee Absent Report</a></li>
+                                    <li><a href="{{ route('reports.attendance_report') }}">Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.late_attendance_report') }}">Late Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.leave_report') }}">Leave Report</a></li>
+                                    <li><a href="{{ route('reports.leave_balance_report') }}">Leave Balance</a></li>
+                                    <li><a href="{{ route('reports.ot_report') }}">O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.no_pay_report') }}">No Pay Report</a></li>
+                                    <li><a href="{{ route('reports.employee_absent_report') }}">Employee Absent Report</a></li>
                                 </ul>
                             </div>
 
@@ -448,14 +448,14 @@
                                     <h4>Employee Details Report</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Employees Report</a></li>
-                                    <li><a href="#">Employee Banks</a></li>
-                                    <li><a href="#">Employee Resign Report</a></li>
-                                    <li><a href="#">Employee Recruitment Report</a></li>
-                                    <li><a href="#">Employee Time In-Out Report</a></li>
-                                    <li><a href="#">Employee Ot Report</a></li>
-                                    <li><a href="#">Employee Attendance Time Sheet</a></li>
-                                    <li><a href="#">Employee Clearance Report</a></li>
+                                    <li><a href="{{ route('reports.employee_report') }}">Employees Report</a></li>
+                                    <li><a href="{{ route('reports.employee_bank_report') }}">Employee Banks</a></li>
+                                    <li><a href="{{ route('reports.employee_resign_report') }}">Employee Resign Report</a></li>
+                                    <li><a href="{{ route('reports.employee_recruitment_report') }}">Employee Recruitment Report</a></li>
+                                    <li><a href="{{ route('reports.employee_time_in_out_report') }}">Employee Time In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.employee_ot_report') }}">Employee Ot Report</a></li>
+                                    <li><a href="{{ route('reports.employee_attendance_time_sheet') }}">Employee Attendance Time Sheet</a></li>
+                                    <li><a href="{{ route('reports.employee_clearance_report') }}">Employee Clearance Report</a></li>
                                 </ul>
                             </div>
 
@@ -466,13 +466,13 @@
                                     <h4>Department Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Department-Wise Attendance Report</a></li>
-                                    <li><a href="#">Department-Wise O.T. Report</a></li>
-                                    <li><a href="#">Department-Wise Leave Report</a></li>
-                                    <li><a href="#">Department-Wise Employee Leave Report</a></li>
-                                    <li><a href="#">Department-Wise Employee O.T. Report</a></li>
-                                    <li><a href="#">Department-Wise Employee Late Report</a></li>
-                                    <li><a href="#">Job Allocation Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_attendance_report') }}">Department-Wise Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_ot_report') }}">Department-Wise O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_leave_report') }}">Department-Wise Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_leave_report') }}">Department-Wise Employee Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_ot_report') }}">Department-Wise Employee O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_late_report') }}">Department-Wise Employee Late Report</a></li>
+                                    <li><a href="{{ route('reports.job_allocation_report') }}">Job Allocation Report</a></li>
                                 </ul>
                             </div>
 
@@ -483,14 +483,14 @@
                                     <h4>Audit Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="#">Attendance Time In-Out Report</a></li>
-                                    <li><a href="#">Audit Pay Report</a></li>
-                                    <li><a href="#">Audit Salary Sheet</a></li>
+                                    <li><a href="{{ route('reports.attendance_time_in_out_report') }}">Attendance Time In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.audit_pay_report') }}">Audit Pay Report</a></li>
+                                    <li><a href="{{ route('reports.audit_salary_sheet') }}">Audit Salary Sheet</a></li>
                                 </ul>
                             </div>
 
                             <!-- Production Reports -->
-                            <div>
+                            <!-- <div>
                                 <div class="flyout-category-title">
                                     <i data-lucide="factory" class="icon-blue"></i>
                                     <h4>Production Reports</h4>
@@ -500,7 +500,7 @@
                                     <li><a href="#">Employee Production Report(opma)</a></li>
                                     <li><a href="#">Employee Daily Production summary Report(opma)</a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

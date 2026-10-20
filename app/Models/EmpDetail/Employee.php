@@ -196,5 +196,13 @@ class Employee extends Model
     {
         return $this->hasMany(Department::class, 'dep_head_emp_id', 'id');
     }
+
+    /**
+     * employees.emp_status → employment_statuses.id
+     */
+    public function employmentStatus()
+    {
+        return $this->belongsTo(\App\Models\EmpMaster\EmploymentStatus::class, 'emp_status', 'id');
+    }
 }
 

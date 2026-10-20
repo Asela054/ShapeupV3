@@ -36,4 +36,44 @@ class EmployeeEmploymentDetail extends Model
     {
         return $this->belongsTo(Employee::class, 'emp_id', 'id');
     }
+
+    /**
+     * employee_employment_details.emp_department → departments.id
+     */
+    public function department()
+    {
+        return $this->belongsTo(\App\Models\Organization\Department::class, 'emp_department', 'id');
+    }
+
+    /**
+     * employee_employment_details.emp_location → branches.id
+     */
+    public function location()
+    {
+        return $this->belongsTo(\App\Models\Organization\Branch::class, 'emp_location', 'id');
+    }
+
+    /**
+     * employee_employment_details.emp_company → companies.id
+     */
+    public function company()
+    {
+        return $this->belongsTo(\App\Models\Organization\Company::class, 'emp_company', 'id');
+    }
+
+    /**
+     * employee_employment_details.job_category_id → job_categories.id
+     */
+    public function jobCategory()
+    {
+        return $this->belongsTo(\App\Models\Organization\JobCategory::class, 'job_category_id', 'id');
+    }
+
+    /**
+     * employee_employment_details.emp_job_title → job_titles.id
+     */
+    public function jobTitle()
+    {
+        return $this->belongsTo(\App\Models\EmpMaster\JobTitle::class, 'emp_job_title', 'id');
+    }
 }
