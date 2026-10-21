@@ -506,6 +506,14 @@
                 </div>
             </li>
 
+            <!-- Activity Management -->
+            <li class="designer-nav-item">
+                <a href="{{ route('activity-management.index') }}" class="designer-nav-link {{ request()->routeIs('activity-management.*') ? 'active' : '' }}">               
+                    <i data-lucide="activity" class="nav-item-icon"></i>
+                    <span>Activity Management</span>
+                </a>
+            </li>
+             
             <!--  User Account  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? 'active' : '' }}">
