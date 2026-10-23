@@ -529,7 +529,8 @@
                                 <h4>IOU</h4>
                             </div>
                             <ul class="flyout-links-list">
-                                <li><a href="{{ route('activity_management.iou.iou_reason') }}" class="{{ request()->routeIs('activity_management.iou.iou_reason*') ? 'text-white fw-bold' : '' }}">IOU Reasons</a></li>
+                                <li><a href="{{ route('activity_management.iou.iou_reason') }}" class="{{ request()->routeIs('activity_management.iou.iou_reason') ? 'text-white fw-bold' : '' }}">IOU Reasons</a></li>
+                                <li><a href="{{ route('activity_management.iou.iou_request') }}" class="{{ request()->routeIs('activity_management.iou.iou_request') ? 'text-white fw-bold' : '' }}">IOU Requests</a></li>
                             </ul>
                         </div>
                     </div>
