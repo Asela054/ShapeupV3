@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Reports\EmployeeReportController;
 use App\Http\Controllers\Reports\EmployeeBankReportController;
+use App\Http\Controllers\Reports\EmployeeResignReportController;
 
 Route::prefix('reports')->name('reports.')->group(function () {
 
@@ -44,9 +45,9 @@ Route::prefix('reports')->name('reports.')->group(function () {
     Route::get('/employee_bank_report/data', [EmployeeBankReportController::class, 'data'])->name('employee_bank_report.data');
     Route::get('/employee_bank_report/departments', [EmployeeBankReportController::class, 'getDepartments'])->name('employee_bank_report.departments');
 
-    Route::get('/employee_resign_report', function () {
-        return view('Reports/employee_details_report/employee_resign_report');
-    })->name('employee_resign_report');
+    Route::get('/employee_resign_report', [EmployeeResignReportController::class, 'index'])->name('employee_resign_report');
+    Route::post('/employee_resign_report/data', [EmployeeResignReportController::class, 'data'])->name('employee_resign_report.data');
+    Route::get('/employee_resign_report/departments', [EmployeeResignReportController::class, 'getDepartments'])->name('employee_resign_report.departments');
 
     Route::get('/employee_recruitment_report', function () {
         return view('Reports/employee_details_report/employee_recruitment_report');

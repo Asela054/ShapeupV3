@@ -76,7 +76,7 @@
 			</button>
 		</div>
 		<div class="offcanvas-body">
-			<form id="filterForm" method="POST" action="">
+			<form id="filterForm" method="POST" action="{{ route('reports.employee_resign_report.data') }}">
 				@csrf
 				<div class="row g-4">
 					<div class="col-md-12">
@@ -124,6 +124,13 @@
 				}
 			});
 
+			//departments dropdown
+			$.get('{{ route("reports.employee_resign_report.departments") }}', function (data) {
+				$.each(data, function (i, dept) {
+					$('#department_id').append(new Option(dept.name, dept.id));
+				});
+			});
+
 			$('#filter_record').on('click', function () {
 				$('#filterBackdrop').show().addClass('show');
 				$('#filterOffcanvas').addClass('show');
@@ -151,7 +158,7 @@
 				}
 
 				$.ajax({
-					url: '', 
+					url: '{{ route("reports.employee_resign_report.data") }}', 
 					type: 'POST',
 					data: $('#filterForm').serialize(),
 					success: function (response) {
