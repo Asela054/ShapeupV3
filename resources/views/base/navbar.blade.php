@@ -506,6 +506,37 @@
                 </div>
             </li>
 
+            <!-- Activity Management -->
+            <li class="designer-nav-item">
+                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('activity_management.*') ? 'active' : '' }}">
+                    <i data-lucide="activity" class="nav-item-icon"></i>
+                    <span style="flex: 1;">Activity Management</span>
+                    <i data-lucide="chevron-right" class="nav-chevron"></i>
+                </a>
+
+                <!-- Activity Management Flyout Panel -->
+                <div class="designer-flyout-panel flyout-sm">
+                    <div class="designer-flyout-box">
+                        <div class="flyout-header">
+                            <h3>Activity Management Menu</h3>
+                            <p>Select an option below</p>
+                        </div>
+
+                        <!-- Category: IOU -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="wallet" class="icon-blue"></i>
+                                <h4>IOU</h4>
+                            </div>
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('activity_management.iou.iou_reason') }}" class="{{ request()->routeIs('activity_management.iou.iou_reason') ? 'text-white fw-bold' : '' }}">IOU Reasons</a></li>
+                                <li><a href="{{ route('activity_management.iou.iou_request') }}" class="{{ request()->routeIs('activity_management.iou.iou_request') ? 'text-white fw-bold' : '' }}">IOU Requests</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+             
             <!--  User Account  -->
             <li class="designer-nav-item">
                 <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? 'active' : '' }}">

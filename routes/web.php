@@ -56,6 +56,7 @@ Route::post('/users/privilege/{id}/status', [UserPrivilegeController::class, 'up
 Route::get('/activitylog', [ActivitylogController::class, 'index'])->name('activitylog.index');
 Route::get('/activitylog/{id}', [ActivitylogController::class, 'show'])->name('activitylog.show');
 
+
 require __DIR__ . '/auth.php';
 require __DIR__ . '/organization.php';
 require __DIR__.'/employee_management.php';
@@ -64,4 +65,5 @@ require __DIR__.'/shift_management.php';
 require __DIR__.'/payroll.php';
 require __DIR__.'/kpi.php';
 require __DIR__.'/reports.php';
+require __DIR__.'/activity_management.php';
 
