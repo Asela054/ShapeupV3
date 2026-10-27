@@ -2,6 +2,7 @@
 
 namespace App\Models\AttendanceLeave;
 
+use App\Models\EmpDetail\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,4 +22,12 @@ class CoverupDetail extends Model
         'created_by',
         'updated_by'
     ];
+
+    /**
+     * coverup_details.emp_id → employees.id
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'emp_id', 'id');
+    }
 }

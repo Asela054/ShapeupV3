@@ -296,7 +296,7 @@
 				table.search(this.value).draw();
 			});
 
-			// Select2 dropdowns
+			//dropdowns
 			$('#filter_company').select2({
 				dropdownParent: $('#filterOffcanvas'),
 				placeholder: 'Select...',
@@ -323,7 +323,7 @@
 				width: '100%'
 			});
 
-			// Filter Offcanvas
+			// Filter
 			var filterOffcanvas = new bootstrap.Offcanvas(document.getElementById('filterOffcanvas'));
 
 			$('#filter_options_btn').on('click', function () {
@@ -378,12 +378,12 @@
 				$('#coveringModal').modal('show');
 			});
 
-			// Edit action handler
+			// Edit action
 			$(document).on('click', '.editCovering', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `/attendance_leave/leaveinformation/coverup-details/${id}/edit`,
+					url: `/attendance_leave/leaveinformation/coverup_details/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						$('#covering_emp_id').val(data.emp_id).trigger('change');
@@ -407,7 +407,7 @@
 			});
 
 
-			// Delete action handler
+			// Delete action 
 			$(document).on('click', '.deleteCovering', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
