@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ActivityManagement\Iou\IouReasonController;
 use App\Http\Controllers\ActivityManagement\Iou\IouRequestController;
+use App\Http\Controllers\ActivityManagement\VisitPlaceController;
+
+
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])
@@ -27,6 +30,17 @@ Route::middleware(['auth'])
             Route::get('/iou_request/{iouRequest}/edit', [IouRequestController::class, 'edit'])->name('iou_request.edit');
             Route::put('/iou_request/{iouRequest}', [IouRequestController::class, 'update'])->name('iou_request.update');
             Route::delete('/iou_request/{iouRequest}', [IouRequestController::class, 'destroy'])->name('iou_request.destroy');
-            
+            });
+
+        // Visit Places
+        Route::prefix('visit_place')->name('visit_place.')->group(function () {
+        Route::get('/', [VisitPlaceController::class, 'index'])->name('index');
+        Route::get('/data', [VisitPlaceController::class, 'data'])->name('data');
+        Route::post('/', [VisitPlaceController::class, 'store'])->name('store');
+        Route::get('/{visitPlace}/edit', [VisitPlaceController::class, 'edit'])->name('edit');
+        Route::put('/{visitPlace}', [VisitPlaceController::class, 'update'])->name('update');
+        Route::delete('/{visitPlace}', [VisitPlaceController::class, 'destroy'])->name('destroy');
         });
+
+        
     });

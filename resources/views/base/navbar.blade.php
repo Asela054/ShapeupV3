@@ -4,10 +4,8 @@
     <!-- Logo (desktop only) -->
     <div class="designer-sidebar-logo">
         <a href="{{ route('dashboard') }}" class="logo-brand-text">
-            <img src="{{ asset('media/company_logo.webp') }}"
-                alt="Company Logo"
-                class="company-logo">
-            <span class="text-blue">Erav</span> 
+            <img src="{{ asset('media/company_logo.webp') }}" alt="Company Logo" class="company-logo">
+            <span class="text-blue">Erav</span>
         </a>
     </div>
 
@@ -18,7 +16,7 @@
             <!--Dashboard -->
             <li class="designer-nav-item">
                 <a href="{{ route('dashboard') }}"
-                   class="designer-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    class="designer-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <i data-lucide="layout-dashboard" class="nav-item-icon"></i>
                     <span>Dashboard</span>
                 </a>
@@ -26,7 +24,8 @@
 
             <!-- Organization  -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('organization.*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('organization.*') ? 'active' : '' }}">
                     <i data-lucide="building-2" class="nav-item-icon"></i>
                     <span style="flex: 1;">Organization</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -44,11 +43,21 @@
                             <h4>Organization Setup</h4>
                         </div>
                         <ul class="flyout-links-list">
-                            <li><a href="{{ route('organization.company') }}" class="{{ request()->routeIs('organization.company') ? 'text-white fw-bold' : '' }}">Company</a></li>
-                            <li><a href="{{ route('organization.bank') }}" class="{{ request()->routeIs('organization.bank') ? 'text-white fw-bold' : '' }}">Bank</a></li>
-                            <li><a href="{{ route('organization.jobcategory') }}" class="{{ request()->routeIs('organization.jobcategory') ? 'text-white fw-bold' : '' }}">Job Category</a></li>
-                            <li><a href="{{ route('organization.salaryadjustments') }}" class="{{ request()->routeIs('organization.salaryadjustments') ? 'text-white fw-bold' : '' }}">Salary Adjustments</a></li>
-                            <li><a href="{{ route('organization.leavededuction') }}" class="{{ request()->routeIs('organization.leavededuction') ? 'text-white fw-bold' : '' }}">Leave Deductions</a></li>
+                            <li><a href="{{ route('organization.company') }}"
+                                    class="{{ request()->routeIs('organization.company') ? 'text-white fw-bold' : '' }}">Company</a>
+                            </li>
+                            <li><a href="{{ route('organization.bank') }}"
+                                    class="{{ request()->routeIs('organization.bank') ? 'text-white fw-bold' : '' }}">Bank</a>
+                            </li>
+                            <li><a href="{{ route('organization.jobcategory') }}"
+                                    class="{{ request()->routeIs('organization.jobcategory') ? 'text-white fw-bold' : '' }}">Job
+                                    Category</a></li>
+                            <li><a href="{{ route('organization.salaryadjustments') }}"
+                                    class="{{ request()->routeIs('organization.salaryadjustments') ? 'text-white fw-bold' : '' }}">Salary
+                                    Adjustments</a></li>
+                            <li><a href="{{ route('organization.leavededuction') }}"
+                                    class="{{ request()->routeIs('organization.leavededuction') ? 'text-white fw-bold' : '' }}">Leave
+                                    Deductions</a></li>
                         </ul>
                     </div>
                 </div>
@@ -56,7 +65,8 @@
 
             <!-- Employee Management  -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('employee_management.*') || request()->routeIs('details') || request()->routeIs('letter_*') || request()->routeIs('issue_letter') || request()->routeIs('training_*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('employee_management.*') || request()->routeIs('details') || request()->routeIs('letter_*') || request()->routeIs('issue_letter') || request()->routeIs('training_*') ? 'active' : '' }}">
                     <i data-lucide="users" class="nav-item-icon"></i>
                     <span style="flex: 1;">Employee Management</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -78,14 +88,21 @@
                                 </div>
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('employee_management.masterdata.skill') }}">Skill</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.company_hierarchy') }}">Company Hierarchy</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.job_title') }}">Job Titles</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.pay_grade') }}">Pay Grades</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.employment_status') }}">Job Employment Status</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.financial_category') }}">Financial Category</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.exam_subject') }}">Exam Subjects</a></li>
-                                    <li><a href="{{ route('employee_management.masterdata.assigned_device') }}">Assigned Devices</a></li>
-									{{--
+                                    <li><a href="{{ route('employee_management.masterdata.company_hierarchy') }}">Company
+                                            Hierarchy</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.job_title') }}">Job
+                                            Titles</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.pay_grade') }}">Pay
+                                            Grades</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.employment_status') }}">Job
+                                            Employment Status</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.financial_category') }}">Financial
+                                            Category</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.exam_subject') }}">Exam
+                                            Subjects</a></li>
+                                    <li><a href="{{ route('employee_management.masterdata.assigned_device') }}">Assigned
+                                            Devices</a></li>
+                                    {{--
 									<li><a href="{{ route('ds_division') }}">DS Division</a></li>
 									<li><a href="{{ route('gns_division') }}">GNS Division</a></li>
 									<li><a href="{{ route('police_station') }}">Police Station</a></li>
@@ -94,13 +111,16 @@
                             </div>
 
                             <!-- Category 2: Employee Details -->
+                            <!-- Visit Places -->
                             <div>
                                 <div class="flyout-category-title">
-                                    <i data-lucide="user" class="icon-blue"></i>
-                                    <h4>Employee Details</h4>
+                                    <i data-lucide="map-pin" class="icon-blue"></i>
+                                    <h4>Visit Places</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('details') }}" class="{{ request()->routeIs('details') ? 'text-white fw-bold' : '' }}">Employee Details</a></li>
+                                    <li><a href="{{ route('activity_management.visit_place.index') }}"
+                                            class="{{ request()->routeIs('activity_management.visit_place.*') ? 'text-white fw-bold' : '' }}">Visit
+                                            Places</a></li>
                                 </ul>
                             </div>
 
@@ -137,7 +157,9 @@
 
             <!-- Attendance & Leave  -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('attendance_leave.*') || request()->routeIs('attendance_*') || request()->routeIs('leave_*') ? 'active' : '' }}" id="flyoutToggle">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('attendance_leave.*') || request()->routeIs('attendance_*') || request()->routeIs('leave_*') ? 'active' : '' }}"
+                    id="flyoutToggle">
                     <i data-lucide="user-check" class="nav-item-icon"></i>
                     <span style="flex: 1;">Attendance &amp; Leave</span>
                     <i data-lucide="chevron-right" id="flyoutIcon" class="nav-chevron"></i>
@@ -157,25 +179,34 @@
                                     <h4>Attendance Information</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('attendance_leave.attendanceinformation.fingerprint_device') }}">Fingerprint Device</a></li>
-                                    <li><a href="{{ route('attendance_leave.attendanceinformation.fingerprint_user') }}">Fingerprint User</a></li>
+                                    <li><a
+                                            href="{{ route('attendance_leave.attendanceinformation.fingerprint_device') }}">Fingerprint
+                                            Device</a></li>
+                                    <li><a
+                                            href="{{ route('attendance_leave.attendanceinformation.fingerprint_user') }}">Fingerprint
+                                            User</a></li>
                                     <li><a href="{{ route('attendance_sync') }}">Attendance Sync</a></li>
-                                    <li><a href="{{ route('attendance_add_edit') }}">Attendance Add &amp; Edit</a></li>
-									<li><a href="{{ route('late_attendance_mark') }}">Late Attendance Mark</a></li>
-									<li><a href="{{ route('late_attendance_approve') }}">Late Attendance Approve</a></li>
+                                    <li><a href="{{ route('attendance_add_edit') }}">Attendance Add &amp; Edit</a>
+                                    </li>
+                                    <li><a href="{{ route('late_attendance_mark') }}">Late Attendance Mark</a></li>
+                                    <li><a href="{{ route('late_attendance_approve') }}">Late Attendance Approve</a>
+                                    </li>
                                     <li><a href="{{ route('approved_late_attendance') }}">Late Attendances</a></li>
                                     <li><a href="{{ route('incomplete_attendance') }}">Incomplete Attendances</a></li>
                                     <li><a href="{{ route('absent_nopay_apply') }}">Absent Nopay Apply</a></li>
-									<li><a href="{{ route('ot_approve') }}">OT Approve</a></li>
+                                    <li><a href="{{ route('ot_approve') }}">OT Approve</a></li>
                                     <li><a href="{{ route('approved_ot') }}">Approved OT</a></li>
                                     <li><a href="{{ route('attendance_approve') }}">Attendance Approval</a></li>
-                                    <li><a href="{{ route('late_deduction_approval') }}">Late Deduction Approval</a></li>
-                                    <li><a href="{{ route('salary_adjustments_approval') }}">Salary Adjustments Approval</a></li>
-                                    <li><a href="{{ route('leave_deduction_approval') }}">Leave Deduction Approval</a></li>
+                                    <li><a href="{{ route('late_deduction_approval') }}">Late Deduction Approval</a>
+                                    </li>
+                                    <li><a href="{{ route('salary_adjustments_approval') }}">Salary Adjustments
+                                            Approval</a></li>
+                                    <li><a href="{{ route('leave_deduction_approval') }}">Leave Deduction Approval</a>
+                                    </li>
                                 </ul>
                             </div>
 
-                            
+
                             <div>
                                 <div class="flyout-category-title">
                                     <i data-lucide="calendar-check" class="icon-blue"></i>
@@ -185,25 +216,33 @@
                                     <li><a href="{{ route('leave_request') }}">Leave Request</a></li>
                                     <li><a href="{{ route('leave_apply') }}">Leave Apply</a></li>
                                     <li><a href="{{ route('leave_approvel') }}">Leave Approvals</a></li>
-                                    <li><a href="{{ route('attendance_leave.leaveinformation.leave_type') }}">Leave Type</a></li>
-                                    <li><a href="{{ route('attendance_leave.leaveinformation.holidays') }}">Holiday</a></li>
-                                    <li><a href="{{ route('attendance_leave.leaveinformation.ignore_days') }}">Ignore Days</a></li>
-                                    <li><a href="{{ route('attendance_leave.leaveinformation.coverup_details') }}">CoverUp Details</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.leave_type') }}">Leave
+                                            Type</a></li>
+                                    <li><a
+                                            href="{{ route('attendance_leave.leaveinformation.holidays') }}">Holiday</a>
+                                    </li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.ignore_days') }}">Ignore
+                                            Days</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.coverup_details') }}">CoverUp
+                                            Details</a></li>
                                     <!-- <li><a href="{{ route('attendance_leave.leaveinformation.holiday_deduction') }}">Holiday Deduction</a></li> -->
                                 </ul>
                             </div>
 
-							<div class="col-span-full mt-2">
+                            <div class="col-span-full mt-2">
                                 <div class="flyout-category-title">
                                     <i data-lucide="map-pin" class="icon-blue"></i>
                                     <h4>Location Wise Attendance</h4>
                                 </div>
                                 <ul class="flyout-links-list d-flex flex-wrap gap-2">
-									<li><a href="{{ route('allocation') }}">Allocation</a></li>
+                                    <li><a href="{{ route('allocation') }}">Allocation</a></li>
                                     <li><a href="{{ route('location_attendance') }}">Location Attendance</a></li>
-                                    <li><a href="{{ route('location_attendance_approve') }}">Location Attendance Approve</a></li>
-                                    <li><a href="{{ route('unauthorized_location_attendance_approve') }}">Unauthorized Location Attendance Approve</a></li>
-                                    <li><a href="{{ route('location_allowance_approval') }}">Location Allowance Approval</a></li>
+                                    <li><a href="{{ route('location_attendance_approve') }}">Location Attendance
+                                            Approve</a></li>
+                                    <li><a href="{{ route('unauthorized_location_attendance_approve') }}">Unauthorized
+                                            Location Attendance Approve</a></li>
+                                    <li><a href="{{ route('location_allowance_approval') }}">Location Allowance
+                                            Approval</a></li>
                                 </ul>
                             </div>
 
@@ -216,7 +255,7 @@
                                     <li><a href="{{ route('daily_summary_approve') }}">Daily Summary Approve</a></li>
                                 </ul>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -224,7 +263,8 @@
 
             <!--Shift Management  -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('shift_management.*') || request()->routeIs('month_shifts*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('shift_management.*') || request()->routeIs('month_shifts*') ? 'active' : '' }}">
                     <i data-lucide="calendar" class="nav-item-icon"></i>
                     <span style="flex: 1;">Shift Management</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -244,7 +284,8 @@
                         <ul class="flyout-links-list">
                             <li><a href="{{ route('shift_management.employee_shifts') }}">Employee Shifts</a></li>
                             <li><a href="{{ route('shift_management.work_shifts') }}">Work Shifts</a></li>
-                            <li><a href="{{ route('shift_management.additional_work_hours') }}">Additional Work Hours Assign</a></li>
+                            <li><a href="{{ route('shift_management.additional_work_hours') }}">Additional Work Hours
+                                    Assign</a></li>
                             <li><a href="{{ route('month_shifts') }}">Month Shifts</a></li>
                             <li><a href="{{ route('month_shifts_view') }}">Month Shifts View</a></li>
                             <li><a href="{{ route('month_shifts_approve') }}">Month Shifts Approve</a></li>
@@ -289,8 +330,10 @@
                                     <li><a href="{{ route('loan_approval') }}">Loan Approval</a></li>
                                     <li><a href="{{ route('loan_settlement') }}">Loan Settlement</a></li>
                                     <li><a href="{{ route('salary_advances') }}">Salary Advances</a></li>
-                                    <li><a href="{{ route('salary_advance_approval') }}">Salary Advance Approval</a></li>
-                                    <li><a href="{{ route('salary_additions_deductions') }}">Salary Additions / Deduction</a></li>
+                                    <li><a href="{{ route('salary_advance_approval') }}">Salary Advance Approval</a>
+                                    </li>
+                                    <li><a href="{{ route('salary_additions_deductions') }}">Salary Additions /
+                                            Deduction</a></li>
                                     <li><a href="{{ route('advance_payments') }}">Advance Payments</a></li>
                                     <li><a href="{{ route('other_facilities') }}">Other Facilities</a></li>
                                     <li><a href="{{ route('salary_increments') }}">Salary Increments</a></li>
@@ -349,7 +392,8 @@
 
             <!-- KPI -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->is('kpi*') || request()->routeIs('kpi.*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->is('kpi*') || request()->routeIs('kpi.*') ? 'active' : '' }}">
                     <i data-lucide="gauge" class="nav-item-icon"></i>
                     <span style="flex: 1;">KPI</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -410,7 +454,8 @@
 
             <!-- Reports -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('reports.*') || request()->is('reports*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('reports.*') || request()->is('reports*') ? 'active' : '' }}">
                     <i data-lucide="file-bar-chart" class="nav-item-icon"></i>
                     <span style="flex: 1;">Reports</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -432,12 +477,14 @@
                                 </div>
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('reports.attendance_report') }}">Attendance Report</a></li>
-                                    <li><a href="{{ route('reports.late_attendance_report') }}">Late Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.late_attendance_report') }}">Late Attendance
+                                            Report</a></li>
                                     <li><a href="{{ route('reports.leave_report') }}">Leave Report</a></li>
                                     <li><a href="{{ route('reports.leave_balance_report') }}">Leave Balance</a></li>
                                     <li><a href="{{ route('reports.ot_report') }}">O.T. Report</a></li>
                                     <li><a href="{{ route('reports.no_pay_report') }}">No Pay Report</a></li>
-                                    <li><a href="{{ route('reports.employee_absent_report') }}">Employee Absent Report</a></li>
+                                    <li><a href="{{ route('reports.employee_absent_report') }}">Employee Absent
+                                            Report</a></li>
                                 </ul>
                             </div>
 
@@ -450,12 +497,18 @@
                                 <ul class="flyout-links-list">
                                     <li><a href="{{ route('reports.employee_report') }}">Employees Report</a></li>
                                     <li><a href="{{ route('reports.employee_bank_report') }}">Employee Banks</a></li>
-                                    <li><a href="{{ route('reports.employee_resign_report') }}">Employee Resign Report</a></li>
-                                    <li><a href="{{ route('reports.employee_recruitment_report') }}">Employee Recruitment Report</a></li>
-                                    <li><a href="{{ route('reports.employee_time_in_out_report') }}">Employee Time In-Out Report</a></li>
-                                    <li><a href="{{ route('reports.employee_ot_report') }}">Employee Ot Report</a></li>
-                                    <li><a href="{{ route('reports.employee_attendance_time_sheet') }}">Employee Attendance Time Sheet</a></li>
-                                    <li><a href="{{ route('reports.employee_clearance_report') }}">Employee Clearance Report</a></li>
+                                    <li><a href="{{ route('reports.employee_resign_report') }}">Employee Resign
+                                            Report</a></li>
+                                    <li><a href="{{ route('reports.employee_recruitment_report') }}">Employee
+                                            Recruitment Report</a></li>
+                                    <li><a href="{{ route('reports.employee_time_in_out_report') }}">Employee Time
+                                            In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.employee_ot_report') }}">Employee Ot Report</a>
+                                    </li>
+                                    <li><a href="{{ route('reports.employee_attendance_time_sheet') }}">Employee
+                                            Attendance Time Sheet</a></li>
+                                    <li><a href="{{ route('reports.employee_clearance_report') }}">Employee Clearance
+                                            Report</a></li>
                                 </ul>
                             </div>
 
@@ -466,13 +519,20 @@
                                     <h4>Department Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('reports.department_wise_attendance_report') }}">Department-Wise Attendance Report</a></li>
-                                    <li><a href="{{ route('reports.department_wise_ot_report') }}">Department-Wise O.T. Report</a></li>
-                                    <li><a href="{{ route('reports.department_wise_leave_report') }}">Department-Wise Leave Report</a></li>
-                                    <li><a href="{{ route('reports.department_wise_employee_leave_report') }}">Department-Wise Employee Leave Report</a></li>
-                                    <li><a href="{{ route('reports.department_wise_employee_ot_report') }}">Department-Wise Employee O.T. Report</a></li>
-                                    <li><a href="{{ route('reports.department_wise_employee_late_report') }}">Department-Wise Employee Late Report</a></li>
-                                    <li><a href="{{ route('reports.job_allocation_report') }}">Job Allocation Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_attendance_report') }}">Department-Wise
+                                            Attendance Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_ot_report') }}">Department-Wise
+                                            O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_leave_report') }}">Department-Wise
+                                            Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_leave_report') }}">Department-Wise
+                                            Employee Leave Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_ot_report') }}">Department-Wise
+                                            Employee O.T. Report</a></li>
+                                    <li><a href="{{ route('reports.department_wise_employee_late_report') }}">Department-Wise
+                                            Employee Late Report</a></li>
+                                    <li><a href="{{ route('reports.job_allocation_report') }}">Job Allocation
+                                            Report</a></li>
                                 </ul>
                             </div>
 
@@ -483,9 +543,11 @@
                                     <h4>Audit Reports</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('reports.attendance_time_in_out_report') }}">Attendance Time In-Out Report</a></li>
+                                    <li><a href="{{ route('reports.attendance_time_in_out_report') }}">Attendance
+                                            Time In-Out Report</a></li>
                                     <li><a href="{{ route('reports.audit_pay_report') }}">Audit Pay Report</a></li>
-                                    <li><a href="{{ route('reports.audit_salary_sheet') }}">Audit Salary Sheet</a></li>
+                                    <li><a href="{{ route('reports.audit_salary_sheet') }}">Audit Salary Sheet</a>
+                                    </li>
                                 </ul>
                             </div>
 
@@ -508,7 +570,8 @@
 
             <!-- Activity Management -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('activity_management.*') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('activity_management.*') ? 'active' : '' }}">
                     <i data-lucide="activity" class="nav-item-icon"></i>
                     <span style="flex: 1;">Activity Management</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -529,17 +592,36 @@
                                 <h4>IOU</h4>
                             </div>
                             <ul class="flyout-links-list">
-                                <li><a href="{{ route('activity_management.iou.iou_reason') }}" class="{{ request()->routeIs('activity_management.iou.iou_reason') ? 'text-white fw-bold' : '' }}">IOU Reasons</a></li>
-                                <li><a href="{{ route('activity_management.iou.iou_request') }}" class="{{ request()->routeIs('activity_management.iou.iou_request') ? 'text-white fw-bold' : '' }}">IOU Requests</a></li>
+                                <li><a href="{{ route('activity_management.iou.iou_reason') }}"
+                                        class="{{ request()->routeIs('activity_management.iou.iou_reason') ? 'text-white fw-bold' : '' }}">IOU
+                                        Reasons</a></li>
+                                <li><a href="{{ route('activity_management.iou.iou_request') }}"
+                                        class="{{ request()->routeIs('activity_management.iou.iou_request') ? 'text-white fw-bold' : '' }}">IOU
+                                        Requests</a></li>
                             </ul>
                         </div>
+
+                        <!-- Visit Places -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="map-pin" class="icon-blue"></i>
+                                <h4>Visit Places</h4>
+                            </div>
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('activity_management.visit_place.index') }}"
+                                        class="{{ request()->routeIs('activity_management.visit_place.*') ? 'text-white fw-bold' : '' }}">Visit
+                                        Places</a></li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
             </li>
-             
+
             <!--  User Account  -->
             <li class="designer-nav-item">
-                <a href="#" class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? 'active' : '' }}">
+                <a href="#"
+                    class="designer-nav-link flyout-toggle-btn {{ request()->routeIs('userslist') || request()->routeIs('userstypelist') || request()->routeIs('usersprivilegelist') ? 'active' : '' }}">
                     <i data-lucide="user-cog" class="nav-item-icon"></i>
                     <span style="flex: 1;">User Account</span>
                     <i data-lucide="chevron-right" class="nav-chevron"></i>
@@ -557,9 +639,15 @@
                             <h4>Account &amp; Privileges</h4>
                         </div>
                         <ul class="flyout-links-list">
-                            <li><a href="{{ route('userslist') }}" class="{{ request()->routeIs('userslist') ? 'text-white fw-bold' : '' }}">User Account</a></li>
-                            <li><a href="{{ route('userstypelist') }}" class="{{ request()->routeIs('userstypelist') ? 'text-white fw-bold' : '' }}">Type</a></li>
-                            <li><a href="{{ route('usersprivilegelist') }}" class="{{ request()->routeIs('usersprivilegelist') ? 'text-white fw-bold' : '' }}">Privilege</a></li>
+                            <li><a href="{{ route('userslist') }}"
+                                    class="{{ request()->routeIs('userslist') ? 'text-white fw-bold' : '' }}">User
+                                    Account</a></li>
+                            <li><a href="{{ route('userstypelist') }}"
+                                    class="{{ request()->routeIs('userstypelist') ? 'text-white fw-bold' : '' }}">Type</a>
+                            </li>
+                            <li><a href="{{ route('usersprivilegelist') }}"
+                                    class="{{ request()->routeIs('usersprivilegelist') ? 'text-white fw-bold' : '' }}">Privilege</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
