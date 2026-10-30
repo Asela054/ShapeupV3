@@ -111,16 +111,15 @@
                             </div>
 
                             <!-- Category 2: Employee Details -->
-                            <!-- Visit Places -->
                             <div>
                                 <div class="flyout-category-title">
-                                    <i data-lucide="map-pin" class="icon-blue"></i>
-                                    <h4>Visit Places</h4>
+                                    <i data-lucide="user" class="icon-blue"></i>
+                                    <h4>Employee Details</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('activity_management.visit_place.index') }}"
-                                            class="{{ request()->routeIs('activity_management.visit_place.*') ? 'text-white fw-bold' : '' }}">Visit
-                                            Places</a></li>
+                                    <li><a href="{{ route('details') }}"
+                                            class="{{ request()->routeIs('details') ? 'text-white fw-bold' : '' }}">Employee
+                                            Details</a></li>
                                 </ul>
                             </div>
 
@@ -605,12 +604,25 @@
                         <div>
                             <div class="flyout-category-title">
                                 <i data-lucide="map-pin" class="icon-blue"></i>
-                                <h4>Visit Places</h4>
+                                <h4>My Visit Places</h4>
                             </div>
                             <ul class="flyout-links-list">
                                 <li><a href="{{ route('activity_management.visit_place.index') }}"
-                                        class="{{ request()->routeIs('activity_management.visit_place.*') ? 'text-white fw-bold' : '' }}">Visit
+                                        class="{{ request()->routeIs('activity_management.visit_place.*') ? 'text-white fw-bold' : '' }}">My
+                                        Visit
                                         Places</a></li>
+                            </ul>
+                        </div>
+                        <!-- My Calendar -->
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="calendar" class="icon-blue"></i>
+                                <h4>My Calendar</h4>
+                            </div>
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('activity_management.my_calendar.index') }}"
+                                        class="{{ request()->routeIs('activity_management.my_calendar.*') ? 'text-white fw-bold' : '' }}">My
+                                        Calendar</a></li>
                             </ul>
                         </div>
 
