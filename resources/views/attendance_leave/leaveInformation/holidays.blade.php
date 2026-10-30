@@ -142,7 +142,6 @@
 				}
 			});
 
-			// Create action
 			$('#create_record').on('click', function () {
 				$('#holidayForm')[0].reset();
 				$('#holidayForm').attr('action', "{{ route('attendance_leave.leaveinformation.holidays.store') }}");
@@ -152,7 +151,7 @@
 				$('#holidayModal').modal('show');
 			});
 
-			// Form submit handler
+			// Form submit
 			$('#holidayForm').on('submit', function (e) {
 				e.preventDefault();
 				const actionUrl = $(this).attr('action') || "{{ route('attendance_leave.leaveinformation.holidays.store') }}";
@@ -262,7 +261,7 @@
 				table.search(this.value).draw();
 			});
 
-			// Edit action handler
+			// Edit action
 			$(document).on('click', '.editHoliday', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
@@ -291,7 +290,7 @@
 				});
 			});
 
-			// Delete action handler
+			// Delete action
 			$(document).on('click', '.deleteHoliday', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');

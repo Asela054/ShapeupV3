@@ -136,14 +136,13 @@
 				$('#dates').prop('disabled', false);
 			});
 
-			// Multi-date picker (dates within selected month)
+			// Multi-date picker 
 			var datesPicker = flatpickr("#dates", {
 				mode: "multiple",
 				dateFormat: "Y-m-d",
 				disable: []
 			});
 
-			// Create action
 			$('#create_record').on('click', function () {
 				$('#ignoreDaysForm')[0].reset();
 				//monthPicker.clear();
@@ -155,7 +154,7 @@
 				$('#ignoreDaysModal').modal('show');
 			});
 
-			// Form submit handler
+			// Form submit
 			$('#ignoreDaysForm').on('submit', function (e) {
 				e.preventDefault();
 				const actionUrl = $(this).attr('action') || "{{ route('attendance_leave.leaveinformation.ignore_days.store') }}";

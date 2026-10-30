@@ -283,7 +283,6 @@
 				}
 			});
 
-			// Select2 init 
 			$('#filter_company, #filter_department, #filter_location, #filter_employee').each(function () {
 				$(this).select2({ dropdownParent: $('#filterOffcanvas'), width: '100%' });
 			});
@@ -291,7 +290,7 @@
 				$(this).select2({ dropdownParent: $('#leaveRequestModal'), width: '100%' });
 			});
 
-			// Populate dropdown data 
+			//dropdown data 
 			$.ajax({
 				url: "{{ route('leave_apply') }}/lookup",
 				type: 'GET',
@@ -539,7 +538,7 @@
 				table.search(this.value).draw();
 			});
 
-			//  Filter  ----------------
+			//  Filter 
 			$('#filter_options_btn').on('click', function () {
 				$('#filterOffcanvas').addClass('show');
 				$('body').append('<div class="offcanvas-backdrop fade show" id="filterBackdrop"></div>');

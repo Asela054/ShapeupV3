@@ -265,7 +265,6 @@
 				}
 			});
 
-			// Create action
 			$('#create_record').on('click', function () {
 				$('#leaveRequestForm')[0].reset();
 				$('#leaveRequestForm').attr('action', "");

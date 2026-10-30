@@ -236,7 +236,6 @@
 				}
 			});
 
-			// Select2 init 
 			$('.filter-select2').select2({
 				dropdownParent: $('#filterOffcanvas'),
 				placeholder: 'Select...',
@@ -244,7 +243,7 @@
 				width: '100%'
 			});
 
-			// Filter Offcanvas 
+			// Filter 
 			$('#filterOptionsBtn').on('click', function () {
 				$('#filterOffcanvas').addClass('show');
 				$('body').append('<div class="offcanvas-backdrop fade show" id="filterBackdrop"></div>');
