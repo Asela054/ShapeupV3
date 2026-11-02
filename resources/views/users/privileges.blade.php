@@ -32,7 +32,9 @@
 							</div>
 							@if (checkPrivilege(1, 'add'))
 							<div>
-								<button type="button" class="btn btn-primary" name="create_record" id="create_record"><i class="fas fa-plus mr-2"></i>Assign Privilege</button>
+								<button type="button" class="btn btn-primary" id="create_record">
+									<i class="fas fa-plus me-2"></i>Create Privilege
+								</button>
 							</div>
 							@endif
 						</div>
@@ -41,14 +43,8 @@
 							<table class="table align-middle table-row-dashed fs-6 gy-5" id="privilegeTable">
 								<thead>
 									<tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-										<th>User</th>
-										<th>Menu</th>
-										<th>Access</th>
-										<th>Add</th>
-										<th>Edit</th>
-										<th>Status Change</th>
-										<th>Delete</th>
-										<th>Active</th>
+										<th>Permission Name</th>
+										<th>Module</th>
 										<th class="text-end">Actions</th>
 									</tr>
 								</thead>
@@ -61,99 +57,153 @@
 		</div>
 	</div>
 
-	<!-- Privilege Modal -->
-	<div class="modal fade" id="privilegeModal" tabindex="-1" aria-hidden="true">
+	{{--  CREATE PRIVILEGE MODAL --}}
+	<div class="modal fade" id="createPrivilegeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-md">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h2 class="fw-bold" id="modalTitle">Assign Privileges to User</h2>
+					<h2 class="fw-bold">Create Privilege</h2>
 					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
-						<i class="ki-duotone ki-cross fs-1">
-							<span class="path1"></span>
-							<span class="path2"></span>
-						</i>
+						<i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="privilegeForm">
+					<form id="createPrivilegeForm">
 						@csrf
-						<input type="hidden" id="privilege_id" name="privilege_id" />
 						<div class="row g-4">
+
+							{{-- Permission base name --}}
 							<div class="col-md-12">
-								<label class="form-label required fw-bold">User</label>
-								<select name="user_id" id="user_id" class="form-select form-select-sm"
-									data-placeholder="Select user..." required>
-									<option value="">Select User</option>
-									@isset($users)
-										@foreach ($users as $user)
-											<option value="{{ $user->idtbl_user }}">{{ $user->name }} - {{ $user->username }}</option>
-										@endforeach
-									@else
-										<option value="">No users available</option>
-									@endisset
-								</select>
+								<label class="form-label required fw-bold">Permission Name</label>
+								<input type="text" name="name" id="create_name"
+									class="form-control form-control-sm"
+									placeholder="e.g. employees" required />
+								<small class="form-text text-muted">
+									Base name of the permission. If you select types below, they will be appended automatically
+									(e.g. <em>employees-list</em>, <em>employees-create</em>).
+									Leave types unchecked to save the name as-is.
+								</small>
 							</div>
 
+							{{-- Module --}}
 							<div class="col-md-12">
-								<label class="form-label required fw-bold">Access Menu</label>
-								<select class="form-select form-select-sm" id="menu_id" name="menu_id" multiple required>
-									@isset($menus)
-										@foreach ($menus as $menu)
-											<option value="{{ $menu->idtbl_menu_list }}">{{ $menu->menu }}</option>
+								<label class="form-label required fw-bold">Module</label>
+								<input list="modulesList" name="module_name" id="create_module_name"
+									class="form-control form-control-sm"
+									placeholder="e.g. Employees" required />
+								<datalist id="modulesList">
+									@isset($modules)
+										@foreach ($modules as $module)
+											@if ($module->module_name)
+												<option value="{{ $module->module_name }}"></option>
+											@endif
 										@endforeach
 									@endisset
-								</select>
-								<small class="form-text text-muted">Select one or more menus to assign permissions</small>
+								</datalist>
+								<small class="form-text text-muted">Select an existing module or type a new one.</small>
 							</div>
 
+							{{-- Permission type checkboxes --}}
 							<div class="col-md-12">
-								<label class="form-label required fw-bold">User Privilege</label>
-								<div class="d-flex flex-column gap-3">
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="access_status"
-											id="access_status" value="1" />
-										<label class="form-check-label" for="access_status">
-											Access Privilege
-										</label>
+								<label class="form-label fw-bold">Permission Types</label>
+								<small class="text-muted d-block mb-3">
+									If none are selected, only the base name will be saved.
+								</small>
+								<div class="row">
+									<div class="col-6 d-flex flex-column gap-2">
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_list" value="list">
+											<label class="form-check-label" for="perm_list">List</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_create" value="create">
+											<label class="form-check-label" for="perm_create">Create</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_edit" value="edit">
+											<label class="form-check-label" for="perm_edit">Edit</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_delete" value="delete">
+											<label class="form-check-label" for="perm_delete">Delete</label>
+										</div>
 									</div>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="add" id="add" value="1" />
-										<label class="form-check-label" for="add">
-											Add Privilege
-										</label>
-									</div>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="edit" id="edit"
-											value="1" />
-										<label class="form-check-label" for="edit">
-											Edit Privilege
-										</label>
-									</div>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="statuschange"
-											id="statuschange" value="1" />
-										<label class="form-check-label" for="statuschange">
-											Status Privilege
-										</label>
-									</div>
-
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" name="remove" id="remove"
-											value="1" />
-										<label class="form-check-label" for="remove">
-											Delete Privilege
-										</label>
+									<div class="col-6 d-flex flex-column gap-2">
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_status" value="status">
+											<label class="form-check-label" for="perm_status">Status Change</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_approve" value="approve">
+											<label class="form-check-label" for="perm_approve">Approve</label>
+										</div>
+										<div class="form-check">
+											<input class="form-check-input permission-type" type="checkbox"
+												name="permission_types[]" id="perm_check" value="check">
+											<label class="form-check-label" for="perm_check">Check</label>
+										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
-                        <br>
+						<br>
 						<div class="d-flex justify-content-end">
 							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
-							<button type="submit" id="submitBtn" class="btn btn-primary">Add Privilege</button>
+							<button type="submit" id="createSubmitBtn" class="btn btn-primary">
+								<i class="fas fa-plus me-1"></i>Add
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{--  EDIT PRIVILEGE MODAL  --}}
+	<div class="modal fade" id="editPrivilegeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-md">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h2 class="fw-bold">Edit Privilege</h2>
+					<button type="button" class="btn btn-sm btn-icon btn-active-color-primary" data-bs-dismiss="modal">
+						<i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span class="path2"></span></i>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="editPrivilegeForm">
+						@csrf
+						<input type="hidden" id="edit_privilege_id" name="privilege_id" />
+						<div class="row g-4">
+
+							<div class="col-md-12">
+								<label class="form-label required fw-bold">Permission Name</label>
+								<input type="text" name="name" id="edit_name"
+									class="form-control form-control-sm"
+									placeholder="e.g. employees-list" required />
+							</div>
+
+							<div class="col-md-12">
+								<label class="form-label required fw-bold">Module</label>
+								<input list="modulesList" name="module_name" id="edit_module_name"
+									class="form-control form-control-sm"
+									placeholder="e.g. Employees" required />
+								<small class="form-text text-muted">Select an existing module or type a new one.</small>
+							</div>
+
+						</div>
+						<br>
+						<div class="d-flex justify-content-end">
+							<button type="button" class="btn btn-light me-3" data-bs-dismiss="modal">Cancel</button>
+							<button type="submit" id="editSubmitBtn" class="btn btn-primary">
+								<i class="fas fa-pencil-alt me-1"></i>Update Privilege
+							</button>
 						</div>
 					</form>
 				</div>
@@ -164,359 +214,208 @@
 
 
 @section('scripts')
-
 	<script>
 		$(document).ready(function () {
-			$('#menu_id').select2({
-				placeholder: 'Select menus',
-				closeOnSelect: false,
-				allowClear: true,
-				minimumResultsForSearch: 0,
-				width: '100%',
-				dropdownParent: $('#privilegeModal')
-			});
-			$('#user_id').select2({
-				placeholder: 'Select user...',
-				allowClear: true,
-				minimumResultsForSearch: 0,
-				width: '100%',
-				dropdownParent: $('#privilegeModal')
-			});
-		});
-		$(document).ready(function () {
+
 			$.ajaxSetup({
-				headers: {
-					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-				}
+				headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
 			});
 
-			// Extract a readable error message from AJAX responses
 			function getErrorMessage(xhr, fallback = 'An error occurred') {
 				if (xhr && xhr.responseJSON) {
-					if (xhr.responseJSON.message) {
-						return xhr.responseJSON.message;
-					}
+					if (xhr.responseJSON.message) return xhr.responseJSON.message;
 					if (xhr.responseJSON.errors) {
 						const firstKey = Object.keys(xhr.responseJSON.errors)[0];
-						if (firstKey && xhr.responseJSON.errors[firstKey] && xhr.responseJSON.errors[firstKey][0]) {
+						if (firstKey && xhr.responseJSON.errors[firstKey][0])
 							return xhr.responseJSON.errors[firstKey][0];
-						}
 					}
 				}
 				return fallback;
 			}
 
-			// Initialize DataTable for privileges
 			let privilegeTable = $('#privilegeTable').DataTable({
 				processing: true,
 				serverSide: true,
 				ajax: "{{ route('users.privilege.data') }}",
 				columns: [
-
-					{ data: 'user.name', name: 'user.name' },
-					{ data: 'menu.menu', name: 'menu.menu' },
-
-					{
-						data: 'access_status',
-						name: 'access_status',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Yes</span>' : '<span class="badge badge-light-danger">No</span>';
-						}
-					},
-					{
-						data: 'add',
-						name: 'add',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Yes</span>' : '<span class="badge badge-light-danger">No</span>';
-						}
-					},
-					{
-						data: 'edit',
-						name: 'edit',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Yes</span>' : '<span class="badge badge-light-danger">No</span>';
-						}
-					},
-					{
-						data: 'statuschange',
-						name: 'statuschange',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Yes</span>' : '<span class="badge badge-light-danger">No</span>';
-						}
-					},
-					{
-						data: 'remove',
-						name: 'remove',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Yes</span>' : '<span class="badge badge-light-danger">No</span>';
-						}
-					},
-					{
-						data: 'status',
-						name: 'status',
-						orderable: false,
-						searchable: false,
-						render: function (data) {
-							return data == 1 ? '<span class="badge badge-light-success">Active</span>' : '<span class="badge badge-light-warning">Inactive</span>';
-						}
-					},
+					{ data: 'permission_name', name: 'name' },
+					{ data: 'module',          name: 'module_name' },
 					{
 						data: null,
 						className: 'text-end',
 						orderable: false,
 						searchable: false,
 						render: function (data, type, row) {
-							let statusAction = row.status == 1
-								? `<a class="menu-link deactivatePrivilege" href="#" data-id="${row.idtbl_user_privilege}">
-															   <span class="menu-icon"><i class="fa-solid fa-ban"></i></span>
-															   <span class="menu-title">Deactivate</span>
-														   </a>`
-								: `<a class="menu-link activatePrivilege" href="#" data-id="${row.idtbl_user_privilege}">
-															   <span class="menu-icon"><i class="fa-solid fa-check"></i></span>
-															   <span class="menu-title">Activate</span>
-														   </a>`;
 							return `
-													   <button class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-														   <i class="ki-duotone ki-down fs-5 ms-1"></i>
-													   </button>
-													   <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-														@if (checkPrivilege(1, 'edit'))
-															   <div class="menu-item">
-																   <a class="menu-link editPrivilege" href="#" data-id="${row.idtbl_user_privilege}">
-																	   <span class="menu-icon"><i class="fa-solid fa-pen"></i></span>
-																	   <span class="menu-title">Edit</span>
-																   </a>
-															   </div>
-														   @endif
-														   @if (checkPrivilege(1, 'statuschange'))
-															   <div class="menu-item">
-																   ${statusAction}
-															   </div>
-														   @endif
-														   @if (checkPrivilege(1, 'remove'))
-															   <div class="menu-item">
-																   <a class="menu-link deletePrivilege" href="#" data-id="${row.idtbl_user_privilege}">
-																	   <span class="menu-icon"><i class="fa-solid fa-trash-can"></i></span>
-																	   <span class="menu-title">Delete</span>
-																   </a>
-															   </div>
-														   @endif
-													   </div>
-												   `;
+								<button class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
+									data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+									Actions <i class="ki-duotone ki-down fs-5 ms-1"></i>
+								</button>
+								<div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4"
+									data-kt-menu="true">
+									@if (checkPrivilege(1, 'edit'))
+										<div class="menu-item">
+											<a class="menu-link editPrivilege" href="#" data-id="${row.idtbl_user_privilege}">
+												<span class="menu-icon"><i class="fa-solid fa-pen"></i></span>
+												<span class="menu-title">Edit</span>
+											</a>
+										</div>
+									@endif
+									@if (checkPrivilege(1, 'remove'))
+										<div class="menu-item">
+											<a class="menu-link deletePrivilege" href="#" data-id="${row.idtbl_user_privilege}">
+												<span class="menu-icon"><i class="fa-solid fa-trash-can"></i></span>
+												<span class="menu-title">Delete</span>
+											</a>
+										</div>
+									@endif
+								</div>
+							`;
 						}
 					}
 				],
-				drawCallback: function () {
-					KTMenu.createInstances();
-				}
+				drawCallback: function () { KTMenu.createInstances(); }
 			});
 
-			// Search functionality
 			$("input[data-kt-table-filter='search']").on('keyup change', function () {
 				privilegeTable.search(this.value).draw();
 			});
 
-			// Change status handler
-			$(document).on('click', '.activatePrivilege', function (e) {
-				e.preventDefault();
-				let id = $(this).data('id');
-				changePrivilegeStatus(id, 1);
-			});
-			$(document).on('click', '.deactivatePrivilege', function (e) {
-				e.preventDefault();
-				let id = $(this).data('id');
-				changePrivilegeStatus(id, 0);
+			$('#create_record').on('click', function () {
+				$('#createPrivilegeForm')[0].reset();
+				$('#createPrivilegeModal').modal('show');
 			});
 
-			function changePrivilegeStatus(id, status) {
-				Swal.fire({
-					title: 'Are you sure?',
-					text: status == 1 ? 'Activate this privilege?' : 'Deactivate this privilege?',
-					icon: 'warning',
-					showCancelButton: true,
-					confirmButtonText: 'Yes'
-				}).then((result) => {
-					if (!result.isConfirmed) return;
-					$.ajax({
-						url: `/users/privilege/${id}/status`,
-						type: 'POST',
-						data: { status: status, _token: '{{ csrf_token() }}' },
-						success: function (res) {
-							Swal.fire('Success', res.message, 'success');
-							$('#privilegeTable').DataTable().ajax.reload(null, false);
-						},
-						error: function (xhr) {
-							const message = getErrorMessage(xhr, 'Action failed');
-							Swal.fire('Error', message, 'error');
-						}
-					});
-				});
-			}
-
-			// Submit privilege form (create or update based on editingPrivilegeId)
-			let editingPrivilegeId = null;
-			$('#privilegeForm').on('submit', function (e) {
+			$('#createPrivilegeForm').on('submit', function (e) {
 				e.preventDefault();
 
-				const userId = $('#user_id').val();
-				const menuIds = $('#menu_id').val();
+				const name       = $('#create_name').val().trim();
+				const moduleName = $('#create_module_name').val().trim();
 
-				if (!userId || !menuIds || menuIds.length === 0) {
-					Swal.fire({
-						icon: 'warning',
-						title: 'Required Fields',
-						text: 'Please select user and at least one menu'
-					});
+				if (!name || !moduleName) {
+					Swal.fire({ icon: 'warning', title: 'Required Fields', text: 'Please fill in Permission Name and Module.' });
 					return;
 				}
 
+				// Collect checked permission types
+				const types = [];
+				$('.permission-type:checked').each(function () { types.push($(this).val()); });
+
 				const formData = {
-					_token: '{{ csrf_token() }}',
-					user_id: userId,
-					menu_id: menuIds,
-					access_status: $('#access_status').is(':checked') ? 1 : 0,
-					add: $('#add').is(':checked') ? 1 : 0,
-					edit: $('#edit').is(':checked') ? 1 : 0,
-					statuschange: $('#statuschange').is(':checked') ? 1 : 0,
-					remove: $('#remove').is(':checked') ? 1 : 0
+					_token:           '{{ csrf_token() }}',
+					name:             name,
+					module_name:      moduleName,
+					permission_types: types,   // array (may be empty)
 				};
 
-				let submitBtn = $('#submitBtn');
-				let originalText = submitBtn.text();
-				submitBtn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Processing...');
-
-				const isEditing = !!editingPrivilegeId;
-				let requestUrl = '{{ route('users.privilege.add') }}';
-				let requestType = 'POST';
-				if (isEditing) {
-					requestUrl = `/users/privilege/${editingPrivilegeId}`;
-					requestType = 'PUT';
-					formData._method = 'PUT';
-				}
+				let btn          = $('#createSubmitBtn');
+				let originalHtml = btn.html();
+				btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Processing...');
 
 				$.ajax({
-					url: requestUrl,
-					type: requestType,
+					url:  '{{ route('users.privilege.add') }}',
+					type: 'POST',
 					data: formData,
 					success: function (response) {
 						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: response.message || (isEditing ? 'Privilege updated successfully' : 'Privileges assigned successfully'),
+							icon: 'success', title: 'Success',
+							text: response.message || 'Privilege(s) created successfully.',
 							timer: 2000
 						}).then(() => {
-							$('#privilegeForm')[0].reset();
-							$('#user_id').val(null).trigger('change');
-							$('#menu_id').val(null).trigger('change');
-							editingPrivilegeId = null;
-							$('#submitBtn').text('Add Privilege');
-							$('#modalTitle').text('Assign Privileges to User');
-							$('#privilegeModal').modal('hide');
+							$('#createPrivilegeForm')[0].reset();
+							$('#createPrivilegeModal').modal('hide');
 						});
-						$('#privilegeTable').DataTable().ajax.reload(null, false);
+						privilegeTable.ajax.reload(null, false);
 					},
 					error: function (xhr) {
-						const errorMsg = getErrorMessage(xhr, isEditing ? 'An error occurred while updating privilege' : 'An error occurred while assigning privileges');
-						Swal.fire({
-							icon: 'error',
-							title: 'Error',
-							text: errorMsg
-						});
+						Swal.fire({ icon: 'error', title: 'Error', text: getErrorMessage(xhr, 'Failed to create privilege.') });
 					},
-					complete: function () {
-						submitBtn.prop('disabled', false).html(originalText);
-					}
+					complete: function () { btn.prop('disabled', false).html(originalHtml); }
 				});
 			});
 
-			// Reset form
-			$('#privilegeForm').on('reset', function () {
-				setTimeout(() => {
-					$('#user_id').val(null).trigger('change');
-					$('#menu_id').val(null).trigger('change');
-					$('#status').prop('checked', true);
-					editingPrivilegeId = null;
-					$('#submitBtn').text('Add Privilege');
-					$('#modalTitle').text('Assign Privileges to User');
-				}, 100);
-			});
-
-			// Edit privilege handler (reuse main form)
 			$(document).on('click', '.editPrivilege', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `/users/privilege/${id}/edit`,
+					url:  `/users/privilege/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
-						editingPrivilegeId = data.idtbl_user_privilege;
-						$('#privilege_id').val(editingPrivilegeId);
-						$('#user_id').val(data.tbl_user_idtbl_user).trigger('change');
-						$('#menu_id').val([data.tbl_menu_list_idtbl_menu_list]).trigger('change');
-						$('#access_status').prop('checked', data.access_status == 1);
-						$('#add').prop('checked', data.add == 1);
-						$('#edit').prop('checked', data.edit == 1);
-						$('#statuschange').prop('checked', data.statuschange == 1);
-						$('#remove').prop('checked', data.remove == 1);
-						$('#submitBtn').text('Update Privilege');
-						$('#modalTitle').text('Edit Privilege');
-						$('#privilegeModal').modal('show');
+						$('#edit_privilege_id').val(data.idtbl_user_privilege);
+						$('#edit_name').val(data.name);
+						$('#edit_module_name').val(data.module_name);
+						$('#editPrivilegeModal').modal('show');
 					},
 					error: function (xhr) {
-						const message = getErrorMessage(xhr, 'Failed to load privilege');
-						Swal.fire('Error', message, 'error');
+						Swal.fire('Error', getErrorMessage(xhr, 'Failed to load privilege.'), 'error');
 					}
 				});
 			});
 
-			// Delete privilege handler
+			$('#editPrivilegeForm').on('submit', function (e) {
+				e.preventDefault();
+
+				const id         = $('#edit_privilege_id').val();
+				const name       = $('#edit_name').val().trim();
+				const moduleName = $('#edit_module_name').val().trim();
+
+				if (!name || !moduleName) {
+					Swal.fire({ icon: 'warning', title: 'Required Fields', text: 'Please fill in Permission Name and Module.' });
+					return;
+				}
+
+				let btn          = $('#editSubmitBtn');
+				let originalHtml = btn.html();
+				btn.prop('disabled', true).html('<i class="fa-solid fa-spinner fa-spin me-2"></i>Processing...');
+
+				$.ajax({
+					url:  `/users/privilege/${id}`,
+					type: 'POST',
+					data: { _token: '{{ csrf_token() }}', _method: 'PUT', name: name, module_name: moduleName },
+					success: function (response) {
+						Swal.fire({
+							icon: 'success', title: 'Success',
+							text: response.message || 'Privilege updated successfully.',
+							timer: 2000
+						}).then(() => {
+							$('#editPrivilegeForm')[0].reset();
+							$('#editPrivilegeModal').modal('hide');
+						});
+						privilegeTable.ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						Swal.fire({ icon: 'error', title: 'Error', text: getErrorMessage(xhr, 'Failed to update privilege.') });
+					},
+					complete: function () { btn.prop('disabled', false).html(originalHtml); }
+				});
+			});
+
 			$(document).on('click', '.deletePrivilege', function (e) {
 				e.preventDefault();
 				const id = $(this).data('id');
 				Swal.fire({
 					title: 'Delete privilege?',
-					text: 'This will deactivate this privilege.',
-					icon: 'warning',
-					showCancelButton: true,
+					text:  'This will permanently remove this permission.',
+					icon:  'warning',
+					showCancelButton:  true,
 					confirmButtonText: 'Yes, delete'
 				}).then((result) => {
 					if (!result.isConfirmed) return;
 					$.ajax({
-						url: `/users/privilege/${id}/delete`,
+						url:  `/users/privilege/${id}/delete`,
 						type: 'DELETE',
 						data: { _token: '{{ csrf_token() }}' },
 						success: function (res) {
-							Swal.fire('Success', res.message, 'success');
-							$('#privilegeTable').DataTable().ajax.reload(null, false);
+							Swal.fire('Deleted!', res.message, 'success');
+							privilegeTable.ajax.reload(null, false);
 						},
 						error: function (xhr) {
-							const message = getErrorMessage(xhr, 'Delete failed');
-							Swal.fire('Error', message, 'error');
+							Swal.fire('Error', getErrorMessage(xhr, 'Delete failed.'), 'error');
 						}
 					});
 				});
 			});
 
-			// Create Privilege action handler
-			$('#create_record').on('click', function () {
-				$('#privilegeForm')[0].reset();
-				$('#user_id').val(null).trigger('change');
-				$('#menu_id').val(null).trigger('change');
-				editingPrivilegeId = null;
-				$('#submitBtn').text('Add Privilege');
-				$('#modalTitle').text('Assign Privileges to User');
-				$('#privilegeModal').modal('show');
-			});
 		});
 	</script>
 @endsection
