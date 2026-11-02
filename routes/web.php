@@ -39,6 +39,8 @@ Route::post('/users/{id}/status', [UserController::class, 'updateStatus'])->name
 Route::get('/userstypelist', [UserTypeController::class, 'typeIndex'])->name('userstypelist');
 Route::get('/users/typedata', [UserTypeController::class, 'getUsertypeData'])->name('users.typedata');
 Route::post('/users/addusertype', [UserTypeController::class, 'addUserType'])->name('users.addusertype');
+Route::get('/users/typedata/permissions/all', [UserTypeController::class, 'getAllPermissions'])->name('users.typedata.permissions.all');
+Route::get('/users/typedata/{id}/permissions', [UserTypeController::class, 'getTypePermissions'])->name('users.typedata.permissions');
 Route::get('/users/typedata/{id}/edit', [UserTypeController::class, 'editUserType'])->name('users.typedata.edit');
 Route::put('/users/typedata/{id}', [UserTypeController::class, 'updateUserType'])->name('users.typedata.update');
 Route::delete('/users/typedata/{id}', [UserTypeController::class, 'destroyUserType'])->name('users.typedata.destroy');
