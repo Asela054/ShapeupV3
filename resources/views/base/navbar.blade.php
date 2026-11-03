@@ -625,6 +625,20 @@
                                         Calendar</a></li>
                             </ul>
                         </div>
+                        <div>
+                            <div class="flyout-category-title">
+                                <i data-lucide="door-open" class="icon-blue"></i>
+                                <h4>Booking Rooms</h4>
+                            </div>
+                            <ul class="flyout-links-list">
+                                <li><a href="{{ route('activity_management.booking_rooms.meeting_room') }}"
+                                        class="{{ request()->routeIs('activity_management.booking_rooms.meeting_room') ? 'text-white fw-bold' : '' }}">Meeting
+                                        Rooms</a></li>
+                                <li><a href="{{ route('activity_management.booking_rooms.room_allocation') }}"
+                                        class="{{ request()->routeIs('activity_management.booking_rooms.room_allocation') ? 'text-white fw-bold' : '' }}">Room
+                                        Allocations</a></li>
+                            </ul>
+                        </div>
 
                     </div>
                 </div>
