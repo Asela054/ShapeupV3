@@ -2,6 +2,7 @@
 
 namespace App\Models\AttendanceLeave;
 
+use App\Models\EmpDetail\Employee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +26,14 @@ class LeaveRequest extends Model
         'updated_by',
         'approve_status',
         'request_approve_status',
+        'covering_emp_id',
     ];
+
+    /**
+     * leave_request.emp_id → employees.emp_id
+     */
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'emp_id', 'emp_id');
+    }
 }
