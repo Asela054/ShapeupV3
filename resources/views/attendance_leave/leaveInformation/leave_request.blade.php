@@ -233,6 +233,12 @@
 								<label class="form-label">Reason</label>
 								<input type="text" name="reason" id="reason" class="form-control" />
 							</div>
+							<div class="col-md-12">
+								<label class="form-label">Covering Employee</label>
+								<select name="covering_emp_id" id="covering_emp_id" class="form-select">
+									<option value="">Select...</option>
+								</select>
+							</div>
 						</div>
 						<br>
 						<div class="d-flex justify-content-end">
