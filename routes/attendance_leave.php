@@ -8,6 +8,7 @@ use App\Http\Controllers\AttendanceLeave\LeaveInformation\CoverupDetailControlle
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\IgnoreDayController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveTypeController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveRequestController;
 
 Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.attendanceinformation.')->group(function () {
     //fingerprint_device
@@ -80,9 +81,7 @@ Route::get('/leave_deduction_approval', function () {
     return view('attendance_leave/attendanceinformation/leave_deduction_approval');
 })->name('leave_deduction_approval');
 
-Route::get('/leave_request', function () {
-    return view('attendance_leave/leaveInformation/leave_request');
-})->name('leave_request');
+Route::get('/leave_request', [LeaveRequestController::class, 'index'])->name('leave_request');
 
 Route::get('/leave_apply', function () {
     return view('attendance_leave/leaveInformation/leave_apply');
@@ -101,6 +100,15 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::get('leave_type/{leaveType}/edit', [LeaveTypeController::class, 'edit'])->name('leave_type.edit');
     Route::put('leave_type/{leaveType}', [LeaveTypeController::class, 'update'])->name('leave_type.update');
     Route::delete('leave_type/{leaveType}', [LeaveTypeController::class, 'destroy'])->name('leave_type.destroy');
+
+    //leave_request
+    Route::get('leave_request/data', [LeaveRequestController::class, 'data'])->name('leaveinformation.leave_request.data');
+    Route::get('leave_request/leave-balance/{empId}', [LeaveRequestController::class, 'leaveBalance'])->name('leaveinformation.leave_request.leave_balance');
+    Route::get('leave_request/{leaveRequest}/edit', [LeaveRequestController::class, 'edit'])->name('leaveinformation.leave_request.edit');
+    Route::post('leave_request', [LeaveRequestController::class, 'store'])->name('leaveinformation.leave_request.store');
+    Route::put('leave_request/{leaveRequest}', [LeaveRequestController::class, 'update'])->name('leaveinformation.leave_request.update');
+    Route::delete('leave_request/{leaveRequest}', [LeaveRequestController::class, 'destroy'])->name('leaveinformation.leave_request.destroy');
+    Route::post('leave_request/{leaveRequest}/approve', [LeaveRequestController::class, 'approve'])->name('leaveinformation.leave_request.approve');
 
     //holidays
     Route::get('holidays', [HolidayController::class, 'index'])->name('holidays');
