@@ -13,8 +13,8 @@ return new class extends Migration
             $table->integer('emp_id');
             $table->date('from_date');
             $table->date('to_date');
-            $table->string('leave_category', 100);
-            $table->string('reason')->nullable();
+            $table->string('leave_category', 100)->charset('utf8');
+            $table->string('reason', 255)->charset('utf8')->nullable();
             $table->integer('leave_type')->nullable();
             $table->time('from_time')->nullable();
             $table->time('to_time')->nullable();
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->integer('updated_by')->nullable();
             $table->integer('approve_status');
             $table->integer('request_approve_status');
-            $table->timestamps();
+            $table->integer('covering_emp')->nullable();
+            $table->timestamps(); 
         });
     }
 
