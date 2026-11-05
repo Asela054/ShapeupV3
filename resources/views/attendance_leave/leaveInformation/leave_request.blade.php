@@ -273,7 +273,7 @@
 
 			$('#create_record').on('click', function () {
 				$('#leaveRequestForm')[0].reset();
-				$('#leaveRequestForm').attr('action', "");
+				$('#leaveRequestForm').attr('action', "/attendance_leave/leaveinformation/leave_request");
 				$('#leaveRequestForm input[name="_method"]').remove();
 				$('#emp_id').val(null).trigger('change');
 				$('#from_time_col, #to_time_col').addClass('d-none');
@@ -281,6 +281,29 @@
 				$('#leaveSubmitBtn').text('Add');
 				$('#modalTitle').text('Add Leave Request');
 				$('#leaveRequestModal').modal('show');
+			});
+
+			// Form submit via AJAX
+			$('#leaveRequestForm').on('submit', function (e) {
+				e.preventDefault();
+				var form = $(this);
+				var url = form.attr('action');
+				var hasMethod = form.find('input[name="_method"]').val();
+				var ajaxType = hasMethod === 'PUT' ? 'POST' : 'POST';
+				$.ajax({
+					url: url,
+					type: ajaxType,
+					data: form.serialize(),
+					success: function (response) {
+						$('#leaveRequestModal').modal('hide');
+						Swal.fire({ icon: 'success', title: 'Success', text: response.message, timer: 2000 });
+						table.ajax.reload(null, false);
+					},
+					error: function (xhr) {
+						var msg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Something went wrong.';
+						Swal.fire({ icon: 'error', title: 'Error', text: msg });
+					}
+				});
 			});
 
 			// Half Day/Short 
@@ -300,7 +323,7 @@
 					return;
 				}
 				$.ajax({
-					url: `/attendance_leave/leaverequest/leave-balance/${empId}`,
+					url: `/attendance_leave/leaveinformation/leave_request/leave-balance/${empId}`,
 					type: 'GET',
 					success: function (data) {
 						$('#annual_total').text(data.annual.total);
@@ -485,7 +508,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/leave_request/${id}/approve`,
+							url: `/attendance_leave/leaveinformation/leave_request/${id}/approve`,
 							type: 'POST',
 							success: function (response) {
 								Swal.fire({ icon: 'success', title: 'Approved!', text: response.message, timer: 2000 });
@@ -514,7 +537,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/leave_request/${id}/edit`,
+							url: `/attendance_leave/leaveinformation/leave_request/${id}/edit`,
 							type: 'GET',
 							success: function (data) {
 								$('#leave_type').val(data.leave_type);
@@ -531,7 +554,7 @@
 								$('#to_time').val(data.to_time);
 								$('#reason').val(data.reason);
 
-								$('#leaveRequestForm').attr('action', `/attendance_leave/leaveInformation/leave_request/${id}`);
+								$('#leaveRequestForm').attr('action', `/attendance_leave/leaveinformation/leave_request/${id}`);
 								if ($('#leaveRequestForm input[name="_method"]').length === 0) {
 									$('#leaveRequestForm').append('<input type="hidden" name="_method" value="PUT">');
 								}
@@ -563,7 +586,7 @@
 				}).then((result) => {
 					if (result.isConfirmed) {
 						$.ajax({
-							url: `/attendance_leave/leaveInformation/leave_request/${id}`,
+							url: `/attendance_leave/leaveinformation/leave_request/${id}`,
 							type: 'DELETE',
 							success: function (response) {
 								Swal.fire({ icon: 'success', title: 'Deleted!', text: response.message, timer: 2000 });
