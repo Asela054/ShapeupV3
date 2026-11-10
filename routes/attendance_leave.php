@@ -3,15 +3,18 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintDeviceController;
 use App\Http\Controllers\AttendanceLeave\AttendanceInformation\FingerprintUserController;
-use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayDeductionController;
+//use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayDeductionController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\CoverupDetailController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\IgnoreDayController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\HolidayController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveTypeController;
 use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveRequestController;
+use App\Http\Controllers\AttendanceLeave\LeaveInformation\LeaveApplyController;
 
+// Attendance Information 
 Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.attendanceinformation.')->group(function () {
-    //fingerprint_device
+
+    // fingerprint_device
     Route::get('fingerprint_device', [FingerprintDeviceController::class, 'index'])->name('fingerprint_device');
     Route::get('fingerprint_device/data', [FingerprintDeviceController::class, 'data'])->name('fingerprint_device.data');
     Route::post('fingerprint_device', [FingerprintDeviceController::class, 'store'])->name('fingerprint_device.store');
@@ -19,7 +22,7 @@ Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.
     Route::put('fingerprint_device/{fingerprintDevice}', [FingerprintDeviceController::class, 'update'])->name('fingerprint_device.update');
     Route::delete('fingerprint_device/{fingerprintDevice}', [FingerprintDeviceController::class, 'destroy'])->name('fingerprint_device.destroy');
 
-    //fingerprint_user
+    // fingerprint_user
     Route::get('fingerprint_user', [FingerprintUserController::class, 'index'])->name('fingerprint_user');
     Route::get('fingerprint_user/data', [FingerprintUserController::class, 'data'])->name('fingerprint_user.data');
     Route::get('fingerprint_user/locations', [FingerprintUserController::class, 'locations'])->name('fingerprint_user.locations');
@@ -28,72 +31,24 @@ Route::prefix('attendance_leave/attendanceinformation')->name('attendance_leave.
     Route::delete('fingerprint_user/{fingerprintUser}', [FingerprintUserController::class, 'destroy'])->name('fingerprint_user.destroy');
 });
 
-Route::get('/attendance_sync', function () {
-    return view('attendance_leave/attendanceinformation/attendance_sync');
-})->name('attendance_sync');
+Route::get('/attendance_sync', fn() => view('attendance_leave/attendanceinformation/attendance_sync'))->name('attendance_sync');
+Route::get('/attendance_add_edit', fn() => view('attendance_leave/attendanceinformation/attendance_add_edit'))->name('attendance_add_edit');
+Route::get('/late_attendance_mark', fn() => view('attendance_leave/attendanceinformation/late_attendance_mark'))->name('late_attendance_mark');
+Route::get('/late_attendance_approve', fn() => view('attendance_leave/attendanceinformation/late_attendance_approve'))->name('late_attendance_approve');
+Route::get('/approved_late_attendance', fn() => view('attendance_leave/attendanceinformation/approved_late_attendance'))->name('approved_late_attendance');
+Route::get('/incomplete_attendance', fn() => view('attendance_leave/attendanceinformation/incomplete_attendance'))->name('incomplete_attendance');
+Route::get('/absent_nopay_apply', fn() => view('attendance_leave/attendanceinformation/absent_nopay_apply'))->name('absent_nopay_apply');
+Route::get('/ot_approve', fn() => view('attendance_leave/attendanceinformation/ot_approve'))->name('ot_approve');
+Route::get('/approved_ot', fn() => view('attendance_leave/attendanceinformation/approved_ot'))->name('approved_ot');
+Route::get('/attendance_approve', fn() => view('attendance_leave/attendanceinformation/attendance_approve'))->name('attendance_approve');
+Route::get('/late_deduction_approval', fn() => view('attendance_leave/attendanceinformation/late_deduction_approval'))->name('late_deduction_approval');
+Route::get('/salary_adjustments_approval', fn() => view('attendance_leave/attendanceinformation/salary_adjustments_approval'))->name('salary_adjustments_approval');
+Route::get('/leave_deduction_approval', fn() => view('attendance_leave/attendanceinformation/leave_deduction_approval'))->name('leave_deduction_approval');
 
-Route::get('/attendance_add_edit', function () {
-    return view('attendance_leave/attendanceinformation/attendance_add_edit');
-})->name('attendance_add_edit');
-
-Route::get('/late_attendance_mark', function () {
-    return view('attendance_leave/attendanceinformation/late_attendance_mark');
-})->name('late_attendance_mark');
-
-Route::get('/late_attendance_approve', function () {
-    return view('attendance_leave/attendanceinformation/late_attendance_approve');
-})->name('late_attendance_approve');
-
-Route::get('/approved_late_attendance', function () {
-    return view('attendance_leave/attendanceinformation/approved_late_attendance');
-})->name('approved_late_attendance');
-
-Route::get('/incomplete_attendance', function () {
-    return view('attendance_leave/attendanceinformation/incomplete_attendance');
-})->name('incomplete_attendance');
-
-Route::get('/absent_nopay_apply', function () {
-    return view('attendance_leave/attendanceinformation/absent_nopay_apply');
-})->name('absent_nopay_apply');
-
-Route::get('/ot_approve', function () {
-    return view('attendance_leave/attendanceinformation/ot_approve');
-})->name('ot_approve');
-
-Route::get('/approved_ot', function () {
-    return view('attendance_leave/attendanceinformation/approved_ot');
-})->name('approved_ot');
-
-Route::get('/attendance_approve', function () {
-    return view('attendance_leave/attendanceinformation/attendance_approve');
-})->name('attendance_approve');
-
-Route::get('/late_deduction_approval', function () {
-    return view('attendance_leave/attendanceinformation/late_deduction_approval');
-})->name('late_deduction_approval');
-
-
-Route::get('/salary_adjustments_approval', function () {
-    return view('attendance_leave/attendanceinformation/salary_adjustments_approval');
-})->name('salary_adjustments_approval');
-
-Route::get('/leave_deduction_approval', function () {
-    return view('attendance_leave/attendanceinformation/leave_deduction_approval');
-})->name('leave_deduction_approval');
-
-Route::get('/leave_request', [LeaveRequestController::class, 'index'])->name('leave_request');
-
-Route::get('/leave_apply', function () {
-    return view('attendance_leave/leaveInformation/leave_apply');
-})->name('leave_apply');
-
-Route::get('/leave_approvel', function () {
-    return view('attendance_leave/leaveInformation/leave_approvel');
-})->name('leave_approvel');
-
-
+// Leave Information 
 Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leaveinformation.')->group(function () {
-    //leave_type
+
+    // leave_type
     Route::get('leave_type', [LeaveTypeController::class, 'index'])->name('leave_type');
     Route::get('leave_type/data', [LeaveTypeController::class, 'data'])->name('leave_type.data');
     Route::post('leave_type', [LeaveTypeController::class, 'store'])->name('leave_type.store');
@@ -101,16 +56,26 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::put('leave_type/{leaveType}', [LeaveTypeController::class, 'update'])->name('leave_type.update');
     Route::delete('leave_type/{leaveType}', [LeaveTypeController::class, 'destroy'])->name('leave_type.destroy');
 
-    //leave_request
-    Route::get('leave_request/data', [LeaveRequestController::class, 'data'])->name('leaveinformation.leave_request.data');
-    Route::get('leave_request/leave-balance/{empId}', [LeaveRequestController::class, 'leaveBalance'])->name('leaveinformation.leave_request.leave_balance');
-    Route::get('leave_request/{leaveRequest}/edit', [LeaveRequestController::class, 'edit'])->name('leaveinformation.leave_request.edit');
-    Route::post('leave_request', [LeaveRequestController::class, 'store'])->name('leaveinformation.leave_request.store');
-    Route::put('leave_request/{leaveRequest}', [LeaveRequestController::class, 'update'])->name('leaveinformation.leave_request.update');
-    Route::delete('leave_request/{leaveRequest}', [LeaveRequestController::class, 'destroy'])->name('leaveinformation.leave_request.destroy');
-    Route::post('leave_request/{leaveRequest}/approve', [LeaveRequestController::class, 'approve'])->name('leaveinformation.leave_request.approve');
+    // leave_request
+    Route::get('leave_request', [LeaveRequestController::class, 'index'])->name('leave_request');
+    Route::get('leave_request/data', [LeaveRequestController::class, 'data'])->name('leave_request.data');
+    Route::get('leave_request/leave-balance/{empId}', [LeaveRequestController::class, 'leaveBalance'])->name('leave_request.leave_balance');
+    Route::get('leave_request/{leaveRequest}/edit', [LeaveRequestController::class, 'edit'])->name('leave_request.edit');
+    Route::post('leave_request', [LeaveRequestController::class, 'store'])->name('leave_request.store');
+    Route::put('leave_request/{leaveRequest}', [LeaveRequestController::class, 'update'])->name('leave_request.update');
+    Route::delete('leave_request/{leaveRequest}', [LeaveRequestController::class, 'destroy'])->name('leave_request.destroy');
+    Route::post('leave_request/{leaveRequest}/approve', [LeaveRequestController::class, 'approve'])->name('leave_request.approve');
 
-    //holidays
+    // leave_apply
+    Route::get('leave_apply', [LeaveApplyController::class, 'index'])->name('leave_apply');
+    Route::get('leave_apply/lookup', [LeaveApplyController::class, 'lookup'])->name('leave_apply.lookup');
+    Route::get('leave_apply/leave-balance/{empId}', [LeaveApplyController::class, 'leaveBalance'])->name('leave_apply.leave_balance');
+    Route::get('leave_apply/{leaveApply}/edit', [LeaveApplyController::class, 'edit'])->name('leave_apply.edit');
+    Route::post('leave_apply', [LeaveApplyController::class, 'store'])->name('leave_apply.store');
+    Route::put('leave_apply/{leaveApply}', [LeaveApplyController::class, 'update'])->name('leave_apply.update');
+    Route::delete('leave_apply/{leaveApply}', [LeaveApplyController::class, 'destroy'])->name('leave_apply.destroy');
+
+    // holidays
     Route::get('holidays', [HolidayController::class, 'index'])->name('holidays');
     Route::get('holidays/data', [HolidayController::class, 'data'])->name('holidays.data');
     Route::post('holidays', [HolidayController::class, 'store'])->name('holidays.store');
@@ -118,7 +83,7 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::put('holidays/{holiday}', [HolidayController::class, 'update'])->name('holidays.update');
     Route::delete('holidays/{holiday}', [HolidayController::class, 'destroy'])->name('holidays.destroy');
 
-    //holiday_deduction
+    // holiday_deduction
     Route::get('holiday_deduction', [HolidayDeductionController::class, 'index'])->name('holiday_deduction');
     Route::get('holiday_deduction/data', [HolidayDeductionController::class, 'data'])->name('holiday_deduction.data');
     Route::post('holiday_deduction', [HolidayDeductionController::class, 'store'])->name('holiday_deduction.store');
@@ -126,7 +91,7 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::put('holiday_deduction/{holidayDeduction}', [HolidayDeductionController::class, 'update'])->name('holiday_deduction.update');
     Route::delete('holiday_deduction/{holidayDeduction}', [HolidayDeductionController::class, 'destroy'])->name('holiday_deduction.destroy');
 
-    //coverup_details
+    // coverup_details
     Route::get('coverup_details', [CoverupDetailController::class, 'index'])->name('coverup_details');
     Route::get('coverup_details/data', [CoverupDetailController::class, 'data'])->name('coverup_details.data');
     Route::post('coverup_details', [CoverupDetailController::class, 'store'])->name('coverup_details.store');
@@ -134,7 +99,7 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::put('coverup_details/{coverupDetail}', [CoverupDetailController::class, 'update'])->name('coverup_details.update');
     Route::delete('coverup_details/{coverupDetail}', [CoverupDetailController::class, 'destroy'])->name('coverup_details.destroy');
 
-    //ignore_days
+    // ignore_days
     Route::get('ignore_days', [IgnoreDayController::class, 'index'])->name('ignore_days');
     Route::get('ignore_days/data', [IgnoreDayController::class, 'data'])->name('ignore_days.data');
     Route::post('ignore_days', [IgnoreDayController::class, 'store'])->name('ignore_days.store');
@@ -143,28 +108,14 @@ Route::prefix('attendance_leave/leaveinformation')->name('attendance_leave.leave
     Route::delete('ignore_days/{ignoreDay}', [IgnoreDayController::class, 'destroy'])->name('ignore_days.destroy');
 });
 
-Route::get('/allocation', function () {
-    return view('attendance_leave/locationwiseattendance/allocation');
-})->name('allocation');
+Route::get('/leave_approvel', fn() => view('attendance_leave/leaveInformation/leave_approvel'))->name('leave_approvel');
 
-Route::get('/location_attendance', function () {
-    return view('attendance_leave/locationwiseattendance/location_attendance');
-})->name('location_attendance');
+// Location Wise Attendance
+Route::get('/allocation', fn() => view('attendance_leave/locationwiseattendance/allocation'))->name('allocation');
+Route::get('/location_attendance', fn() => view('attendance_leave/locationwiseattendance/location_attendance'))->name('location_attendance');
+Route::get('/location_attendance_approve', fn() => view('attendance_leave/locationwiseattendance/location_attendance_approve'))->name('location_attendance_approve');
+Route::get('/unauthorized_location_attendance_approve', fn() => view('attendance_leave/locationwiseattendance/unauthorized_location_attendance_approve'))->name('unauthorized_location_attendance_approve');
+Route::get('/location_allowance_approval', fn() => view('attendance_leave/locationwiseattendance/location_allowance_approval'))->name('location_allowance_approval');
 
-Route::get('/location_attendance_approve', function () {
-    return view('attendance_leave/locationwiseattendance/location_attendance_approve');
-})->name('location_attendance_approve');
-
-Route::get('/unauthorized_location_attendance_approve', function () {
-    return view('attendance_leave/locationwiseattendance/unauthorized_location_attendance_approve');
-})->name('unauthorized_location_attendance_approve');
-
-Route::get('/location_allowance_approval', function () {
-    return view('attendance_leave/locationwiseattendance/location_allowance_approval');
-})->name('location_allowance_approval');
-
-
-Route::get('/daily_summary_approve', function () {
-    return view('attendance_leave/daily_summary_approve');
-})->name('daily_summary_approve');
-
+// Daily Summary 
+Route::get('/daily_summary_approve', fn() => view('attendance_leave/daily_summary_approve'))->name('daily_summary_approve');
