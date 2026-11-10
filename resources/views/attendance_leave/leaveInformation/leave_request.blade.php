@@ -201,7 +201,12 @@
 							<div class="col-md-12">
 								<label class="form-label required">Select Employee</label>
 								<select name="emp_id" id="emp_id" class="form-select" required>
-									<option value="">Select...</option>
+									<option value="">Select employee</option>
+										@if(isset($employees) && count($employees) > 0)
+											@foreach($employees as $emp)
+												<option value="{{ $emp->id }}">{{ $emp->name }}</option>
+											@endforeach
+										@endif
 								</select>
 							</div>
 							<div class="col-md-6">
@@ -237,6 +242,11 @@
 								<label class="form-label">Covering Employee</label>
 								<select name="covering_emp_id" id="covering_emp_id" class="form-select">
 									<option value="">Select...</option>
+									@if(isset($employees) && count($employees) > 0)
+										@foreach($employees as $emp)
+											<option value="{{ $emp->id }}">{{ $emp->name }}</option>
+										@endforeach
+									@endif
 								</select>
 							</div>
 						</div>
@@ -354,7 +364,7 @@
 
 			// employee dropdowns
 			$.ajax({
-				url: "{{ route('leave_request') }}",
+				url: "{{ route('attendance_leave.leaveinformation.leave_request') }}",
 				type: 'GET',
 				success: function (list) {
 					list.forEach(function (emp) {
@@ -368,7 +378,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('leave_request') }}",
+					url: "{{ route('attendance_leave.leaveinformation.leave_request.data') }}",
 					data: function (d) {
 						d.company_id = $('#filter_company').val();
 						d.department_id = $('#filter_department').val();

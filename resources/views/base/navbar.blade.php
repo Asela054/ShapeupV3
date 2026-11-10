@@ -212,8 +212,8 @@
                                     <h4>Leave Information</h4>
                                 </div>
                                 <ul class="flyout-links-list">
-                                    <li><a href="{{ route('leave_request') }}">Leave Request</a></li>
-                                    <li><a href="{{ route('leave_apply') }}">Leave Apply</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.leave_request') }}">Leave Request</a></li>
+                                    <li><a href="{{ route('attendance_leave.leaveinformation.leave_apply') }}">Leave Apply</a></li>
                                     <li><a href="{{ route('leave_approvel') }}">Leave Approvals</a></li>
                                     <li><a href="{{ route('attendance_leave.leaveinformation.leave_type') }}">Leave
                                             Type</a></li>
