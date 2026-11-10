@@ -364,7 +364,7 @@
 
 			// employee dropdowns
 			$.ajax({
-				url: "{{ route('leave_request') }}",
+				url: "{{ route('attendance_leave.leaveinformation.leave_request') }}",
 				type: 'GET',
 				success: function (list) {
 					list.forEach(function (emp) {
@@ -378,7 +378,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('leave_request') }}",
+					url: "{{ route('attendance_leave.leaveinformation.leave_request.data') }}",
 					data: function (d) {
 						d.company_id = $('#filter_company').val();
 						d.department_id = $('#filter_department').val();
