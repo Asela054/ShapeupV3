@@ -18,10 +18,10 @@ class Leave extends Model
         'leave_to',
         'no_of_days',
         'half_short',
-        'reson',
+        'reason',
         'comment',
         'emp_covering',
-        'leave_approv_person',
+        'leave_approve_person',
         'leave_category',
         'status',
         'request_id',
@@ -45,7 +45,7 @@ class Leave extends Model
 
     public function approve_by()
     {
-        return $this->belongsTo(Employee::class, 'leave_approv_person', 'emp_id');
+        return $this->belongsTo(Employee::class, 'leave_approve_person', 'emp_id');
     }
 
     public function get_leave_days($emp_id, $month, $closedate)
