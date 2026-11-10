@@ -292,7 +292,7 @@
 
 			//dropdown data 
 			$.ajax({
-				url: "{{ route('leave_apply') }}/lookup",
+				url: "{{ route('attendance_leave.leaveinformation.leave_apply.lookup') }}",
 				type: 'GET',
 				success: function (list) {
 					list.employees.forEach(function (emp) {
@@ -325,7 +325,7 @@
 						processing: true,
 						serverSide: true,
 						ajax: {
-							url: "{{ route('leave_apply') }}"
+							url: "{{ route('attendance_leave.leaveinformation.leave_request') }}"
 						},
 						columns: [
 							{ data: 'id', name: 'id' },
@@ -361,7 +361,7 @@
 				var rowData = pendingTable.row($(this).closest('tr')).data();
 
 				$('#leaveRequestForm')[0].reset();
-				$('#leaveRequestForm').attr('action', "");
+				$('#leaveRequestForm').attr('action', "/attendance_leave/leaveInformation/leave_apply");
 				$('#leaveRequestForm input[name="_method"]').remove();
 				$('#leaveSubmitBtn').text('Add');
 
@@ -455,7 +455,7 @@
 				processing: true,
 				serverSide: true,
 				ajax: {
-					url: "{{ route('leave_apply') }}",
+					url: "{{ route('attendance_leave.leaveinformation.leave_apply') }}",
 					data: function (d) {
 						d.company_id = $('#filter_company').val();
 						d.department_id = $('#filter_department').val();
@@ -572,7 +572,7 @@
 				e.preventDefault();
 				const id = $(this).data('id');
 				$.ajax({
-					url: `/attendance_leave/leaveapply/${id}/edit`,
+					url: `/attendance_leave/leaveInformation/leave_apply/${id}/edit`,
 					type: 'GET',
 					success: function (data) {
 						$('#leave_request_id').val('');
